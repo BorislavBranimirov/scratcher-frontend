@@ -23,6 +23,7 @@ import { scratchPath, userPagePath } from '../common/routePaths';
 import Notification from '../features/notification/Notification';
 import SuggestedUsersPage from '../features/suggestedUsers/SuggestedUsersPage';
 import Modal from '../features/modal/Modal';
+import { Loader } from 'react-feather';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -37,36 +38,42 @@ const App = () => {
   }, [hasToken, isLogged, dispatch]);
 
   if ((hasToken && !isLogged) || isLoading) {
-    return <div>App is loading...</div>;
+    return (
+      <div className="bg-neutral text-primary min-h-screen pt-10">
+        <Loader size={32} className="animate-spin-slow w-full" />
+      </div>
+    );
   }
 
   return (
     <Router>
-      <div className="App">
+      <div className="bg-neutral grid grid-cols-12 text-primary min-h-screen">
         <SideBarMenu />
         <Notification />
         <Modal />
-        <Switch>
-          <PrivateRoute path="/home">
-            <Home />
-          </PrivateRoute>
-          <PrivateRoute path="/bookmarks">
-            <BookmarksPage />
-          </PrivateRoute>
-          <PrivateRoute path="/suggested-users">
-            <SuggestedUsersPage />
-          </PrivateRoute>
-          <Route path={scratchPath}>
-            <ScratchPage />
-          </Route>
-          <Route path={userPagePath}>
-            <UserPage />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Redirect to="/home" />
-        </Switch>
+        <main className="col-start-4 col-end-12 grid grid-cols-8">
+          <Switch>
+            <PrivateRoute path="/home">
+              <Home />
+            </PrivateRoute>
+            <PrivateRoute path="/bookmarks">
+              <BookmarksPage />
+            </PrivateRoute>
+            <PrivateRoute path="/suggested-users">
+              <SuggestedUsersPage />
+            </PrivateRoute>
+            <Route path={scratchPath}>
+              <ScratchPage />
+            </Route>
+            <Route path={userPagePath}>
+              <UserPage />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Redirect to="/home" />
+          </Switch>
+        </main>
       </div>
     </Router>
   );

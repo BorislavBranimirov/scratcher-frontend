@@ -6,7 +6,7 @@ const SuggestedUsersList = ({ extended }: { extended?: boolean }) => {
   const users = useAppSelector(selectSuggestedUsers);
 
   return (
-    <div>
+    <div className="pt-2">
       {users.map((user) => {
         return (
           <SuggestedUserItem key={user.id} user={user} extended={extended} />

@@ -40,7 +40,7 @@ const ScratchMainPost = ({
           dispatch(unbookmarkScratch({ id: scratch.id }));
         }}
       >
-        Unbookmark
+        Remove scratch from bookmarks
       </button>
     </li>
   ) : (
@@ -50,7 +50,7 @@ const ScratchMainPost = ({
           dispatch(bookmarkScratch({ id: scratch.id }));
         }}
       >
-        Bookmark
+        Add scratch to bookmarks
       </button>
     </li>
   );
@@ -63,7 +63,7 @@ const ScratchMainPost = ({
             dispatch(unpinScratch({ id: scratch.id }));
           }}
         >
-          Unpin
+          Unpin from your profile
         </button>
       </li>
     ) : (
@@ -73,7 +73,7 @@ const ScratchMainPost = ({
             dispatch(pinScratch({ id: scratch.id }));
           }}
         >
-          Pin
+          Pin to your profile
         </button>
       </li>
     );

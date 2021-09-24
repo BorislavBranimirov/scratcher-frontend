@@ -30,7 +30,6 @@ const UserProfile = () => {
         dispatch(unfollowUserPage({ id: user.id }));
       }}
     >
-      {' '}
       {followBtnHover ? 'Unfollow' : 'Following'}
     </button>
   ) : (

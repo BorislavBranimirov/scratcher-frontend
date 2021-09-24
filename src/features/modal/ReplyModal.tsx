@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import {
@@ -7,10 +8,14 @@ import {
   selectModal,
   selectModalScratchById,
 } from './modalSlice';
+import avatar from '../../images/avatarplaceholder.png';
+import TimeAgo from '../../common/TimeAgo';
+import { selectAuthUser } from '../auth/authSlice';
 
 const ReplyModal = () => {
   const dispatch = useAppDispatch();
   const { scratchId, scratches } = useAppSelector(selectModal);
+  const user = useAppSelector(selectAuthUser);
 
   const [body, setBody] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,49 +34,89 @@ const ReplyModal = () => {
   };
 
   if (!scratchId) {
-    return <div>Scratch not found</div>;
+    return (
+      <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden p-5">
+        Scratch not found
+      </div>
+    );
   }
 
   const parentScratch = scratches[scratchId];
 
   return (
-    <div>
-      <hr />
-      <hr />
-      Reply form
-      <button onClick={handleCloseModal}>X</button>
-      <div>
-        <p>
-          {parentScratch.author.name}@{parentScratch.author.username}
-          {parentScratch.createdAt}
-        </p>
-        <p>{parentScratch.body}</p>
-        {parentScratch.rescratchType === 'quote' &&
-          parentScratch.rescratchedId && (
-            <EmbeddedRescratch
-              rescratchedId={parentScratch.rescratchedId}
-              selector={selectModalScratchById}
-            />
-          )}
+    <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden lg:w-1/2">
+      <div className="border-b border-primary p-3 flex justify-start">
+        <button className="relative" onClick={handleCloseModal} title="Close">
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 active:bg-opacity-20"></div>
+          <X />
+        </button>
       </div>
-      <textarea
-        name="body"
-        id="body"
-        value={body}
-        onChange={(e) => {
-          setBody(e.target.value);
-        }}
-        disabled={isSubmitting}
-      />
-      {!isSubmitting && (
-        <div>
-          <button onClick={handleSubmit} disabled={!body}>
-            Reply
-          </button>
+      <div className="flex flex-col p-3">
+        <div className="flex gap-3">
+          <div className="flex flex-col items-center">
+            <div className="w-11 h-11 rounded-full overflow-hidden mt-1 flex-shrink-0">
+              <img
+                src={parentScratch.author.profileImageUrl || avatar}
+                alt="avatar"
+              />
+            </div>
+            <div className="w-0.5 bg-reply-line flex-grow"></div>
+          </div>
+          <div className="min-w-0 flex-grow mb-4">
+            <div className="text-secondary flex items-baseline">
+              <span className="font-bold text-primary hover:underline">
+                {parentScratch.author.name}
+              </span>
+              <span className="text-sm ml-1">
+                @{parentScratch.author.username}
+              </span>
+              <span className="text-sm px-1">·</span>
+              <div className="whitespace-nowrap">
+                <TimeAgo createdAt={parentScratch.createdAt} />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="break-words">{parentScratch.body}</p>
+              {parentScratch.rescratchType === 'quote' &&
+                parentScratch.rescratchedId && (
+                  <EmbeddedRescratch
+                    rescratchedId={parentScratch.rescratchedId}
+                    selector={selectModalScratchById}
+                  />
+                )}
+            </div>
+          </div>
         </div>
-      )}
-      <hr />
-      <hr />
+        <div className="flex gap-3">
+          <img
+            src={user?.profileImageUrl || avatar}
+            alt="avatar"
+            className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0"
+          />
+          <textarea
+            name="body"
+            id="body"
+            value={body}
+            placeholder="Scratch your reply"
+            className="bg-transparent resize-none flex-grow"
+            onChange={(e) => {
+              setBody(e.target.value);
+            }}
+            disabled={isSubmitting}
+          />
+        </div>
+        {!isSubmitting && (
+          <div className="flex justify-end">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-opacity-80 active:bg-opacity-60"
+              disabled={!body}
+            >
+              Reply
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
