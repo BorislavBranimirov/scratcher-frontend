@@ -51,7 +51,7 @@ const SuggestedUserItem = ({
 
   return (
     <div
-      className="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary hover:bg-opacity-5"
+      className="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary/5"
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(userPath);

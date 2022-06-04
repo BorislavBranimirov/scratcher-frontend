@@ -42,7 +42,7 @@ const MobileSideBar = () => {
   return (
     <>
       <div
-        className="sm:hidden fixed w-screen h-screen bg-primary bg-opacity-10 z-30"
+        className="sm:hidden fixed w-screen h-screen bg-primary/10 z-30"
         onClick={() => {
           setOpenSideBar(false);
         }}
@@ -60,7 +60,7 @@ const MobileSideBar = () => {
                   }}
                   title="Close"
                 >
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 active:bg-opacity-20"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-opacity-20"></div>
                   <X />
                 </button>
               </div>
@@ -82,7 +82,7 @@ const MobileSideBar = () => {
               </Link>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -93,7 +93,7 @@ const MobileSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -104,7 +104,7 @@ const MobileSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -115,7 +115,7 @@ const MobileSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -125,7 +125,7 @@ const MobileSideBar = () => {
                 <span>Settings</span>
               </NavLink>
               <button
-                className="border-t border-primary flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5"
+                className="border-t border-primary flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5"
                 onClick={() => {
                   dispatch(logout());
                 }}
@@ -137,7 +137,7 @@ const MobileSideBar = () => {
           ) : (
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
                   isActive && 'font-bold stroke-3'
                 }`
               }

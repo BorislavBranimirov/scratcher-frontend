@@ -26,14 +26,14 @@ const DefaultSideBar = () => {
     <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
       <div className="fixed h-screen flex flex-col justify-between pr-3 py-3 xl:w-1/6 z-20">
         <div className="flex flex-col items-center xl:items-start">
-          <p className="font-bold text-xl hidden xl:block p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5">
+          <p className="font-bold text-xl hidden xl:block p-3 rounded-full transition-colors hover:bg-primary/5">
             Scratcher
           </p>
           {user ? (
             <>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -44,7 +44,7 @@ const DefaultSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-4'
                   }`
                 }
@@ -55,7 +55,7 @@ const DefaultSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-4'
                   }`
                 }
@@ -66,7 +66,7 @@ const DefaultSideBar = () => {
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -80,7 +80,7 @@ const DefaultSideBar = () => {
             <>
               <NavLink
                 className={({ isActive }) =>
-                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 ${
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
                     isActive && 'font-bold stroke-3'
                   }`
                 }
@@ -93,13 +93,13 @@ const DefaultSideBar = () => {
           )}
           <NavLink
             to="/user/testUser1"
-            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5"
+            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5"
           >
             testUser1
           </NavLink>
           <NavLink
             to="/user/testUser2"
-            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5"
+            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5"
           >
             testUser2
           </NavLink>
@@ -121,7 +121,7 @@ const DefaultSideBar = () => {
                 }`}
               >
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={() => {
                     navigate(generateUserPath({ username: user.username }));
                     setUserOptionsToggle(false);
@@ -131,7 +131,7 @@ const DefaultSideBar = () => {
                   View profile
                 </button>
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={() => {
                     dispatch(logout());
                     setUserOptionsToggle(false);
@@ -143,7 +143,7 @@ const DefaultSideBar = () => {
               </div>
             </div>
             <div
-              className="flex items-center justify-between py-2.5 px-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 active:bg-opacity-10"
+              className="flex items-center justify-between py-2.5 px-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary/5 active:bg-opacity-10"
               onClick={() => {
                 setUserOptionsToggle(true);
               }}

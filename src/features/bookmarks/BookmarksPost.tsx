@@ -52,7 +52,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
 
   return (
     <div
-      className="border-b border-primary flex flex-row gap-3 px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary hover:bg-opacity-5"
+      className="border-b border-primary flex flex-row gap-3 px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary/5"
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(scratchPath);
@@ -87,7 +87,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative" title="More">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue hover:bg-opacity-10 active:bg-opacity-20"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-opacity-20"></div>
                   <MoreHorizontal size={16} className="stroke-current" />
                 </div>
               </button>
@@ -106,7 +106,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }`}
               >
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3 text-delete"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3 text-delete"
                   onClick={(e) => {
                     e.stopPropagation();
                     dispatch(removeScratch({ id: scratch.id }));
@@ -117,7 +117,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                   <span>Delete</span>
                 </button>
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={(e) => {
                     e.stopPropagation();
                     if (user?.pinnedId === scratch.id) {
@@ -157,7 +157,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative mr-3" title="Reply">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue group-hover:bg-opacity-10"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
                   <MessageCircle size={16} className="stroke-current" />
                 </div>
                 {scratch.replyCount}
@@ -176,7 +176,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative mr-3" title="Rescratch">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue group-hover:bg-opacity-10"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
                   <Repeat size={16} className="stroke-current" />
                 </div>
                 <span>{scratch.rescratchCount}</span>
@@ -196,7 +196,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }`}
               >
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={(e) => {
                     e.stopPropagation();
                     if (scratch.isRescratched) {
@@ -213,7 +213,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                   </span>
                 </button>
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={(e) => {
                     e.stopPropagation();
                     dispatch(openRescratchModal({ rescratchedId: scratch.id }));
@@ -242,7 +242,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative mr-3" title="Like">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue group-hover:bg-opacity-10"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
                   <Heart
                     size={16}
                     className={`stroke-current ${
@@ -262,7 +262,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative" title="Share">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue hover:bg-opacity-10"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10"></div>
                   <Share size={16} className="stroke-current" />
                 </div>
               </button>
@@ -282,7 +282,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
               >
                 {user && (
                   <button
-                    className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                    className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                     onClick={(e) => {
                       e.stopPropagation();
                       dispatch(unbookmarkScratch({ id: scratch.id }));
@@ -294,7 +294,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                   </button>
                 )}
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary hover:bg-opacity-5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                   onClick={(e) => {
                     e.stopPropagation();
                     const scratchUrl = window.location.origin + scratchPath;

@@ -36,7 +36,7 @@ const RescratchModal = () => {
     <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden lg:w-1/2">
       <div className="border-b border-primary p-3 flex justify-start">
         <button className="relative" onClick={handleCloseModal} title="Close">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary hover:bg-opacity-5 active:bg-opacity-20"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-opacity-20"></div>
           <X />
         </button>
       </div>
@@ -64,7 +64,7 @@ const RescratchModal = () => {
               selector={selectModalScratchById}
             />
           ) : (
-            <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-secondary text-sm transition-colors duration-200 hover:bg-primary hover:bg-opacity-5">
+            <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-secondary text-sm transition-colors duration-200 hover:bg-primary/5">
               Scratch not found
             </div>
           )}
