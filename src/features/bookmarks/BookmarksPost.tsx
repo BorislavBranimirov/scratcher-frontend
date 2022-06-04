@@ -11,7 +11,7 @@ import {
   selectBookmarkById,
 } from './bookmarksSlice';
 import { selectAuthUser } from '../auth/authSlice';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import { pushNotification } from '../notification/notificationSlice';
@@ -38,7 +38,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>
     selectBookmarkById(state, scratchId)
   );
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [moreOptionsToggle, setMoreOptionsToggle] = useState(false);
   const [rescratchToggle, setRescratchToggle] = useState(false);
@@ -55,7 +55,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
       className="border-b border-primary flex flex-row gap-3 px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary hover:bg-opacity-5"
       onClick={(e) => {
         const target = e.target as Element;
-        if (!target.closest('a')) history.push(scratchPath);
+        if (!target.closest('a')) navigate(scratchPath);
       }}
     >
       <div className="w-12 h-12 rounded-full overflow-hidden mt-1 flex-shrink-0">

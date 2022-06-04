@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { User } from '../../common/types';
 import { generateUserPath } from '../../common/routePaths';
@@ -15,7 +15,7 @@ const SuggestedUserItem = ({
 }) => {
   const dispatch = useAppDispatch();
   const [followBtnHover, setFollowBtnHover] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const followButton = user.isFollowing ? (
     <button
@@ -54,7 +54,7 @@ const SuggestedUserItem = ({
       className="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary hover:bg-opacity-5"
       onClick={(e) => {
         const target = e.target as Element;
-        if (!target.closest('a')) history.push(userPath);
+        if (!target.closest('a')) navigate(userPath);
       }}
     >
       <div className="flex items-center gap-3 min-w-0">
@@ -63,7 +63,7 @@ const SuggestedUserItem = ({
             <img src={user.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
-        <div className="overflow-hidden leading-5 hidden lg:block">
+        <div className="overflow-hidden leading-5">
           <Link className="truncate" to={userPath}>
             <span className="font-bold text-primary hover:underline">
               {user?.name}

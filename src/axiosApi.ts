@@ -52,6 +52,7 @@ const processQueue = (err: any, token?: string) => {
 };
 
 axiosApi.interceptors.request.use(async (config) => {
+  if (config.headers === undefined) return config;
   if (!isFetchingRefreshToken) {
     // if client has an access token saved, add it to each request
     const accessToken = store.getState().auth.token;

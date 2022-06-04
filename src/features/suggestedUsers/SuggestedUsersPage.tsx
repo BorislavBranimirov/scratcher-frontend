@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import SuggestedUsersList from './SuggestedUsersList';
 import {
@@ -10,7 +10,7 @@ import {
 const SuggestedUsersPage = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectSuggestedUsersIsLoading);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadSuggestedUsers({ limit: 10 }));
@@ -24,7 +24,7 @@ const SuggestedUsersPage = () => {
     <div>
       <button
         onClick={() => {
-          history.goBack();
+          navigate(-1);
         }}
       >
         {'<-'}

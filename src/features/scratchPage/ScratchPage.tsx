@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import ScratchParentChain from './ScratchParentChain';
 import ScratchReplies from './ScratchReplies';
@@ -17,8 +17,8 @@ const ScratchPage = () => {
   const scratchId = useAppSelector(selectScratchMainScratchId);
   const isLoading = useAppSelector(selectScratchIsLoading);
 
-  const { id } = useParams<{ username: string; id: string }>();
-  const history = useHistory();
+  const { id } = useParams() as { username: string; id: string };
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadScratchConversation({ id: parseInt(id, 10) }));
@@ -37,7 +37,7 @@ const ScratchPage = () => {
       <ScratchRedirect scratchId={scratchId} />
       <button
         onClick={() => {
-          history.goBack();
+          navigate(-1);
         }}
       >
         {'<-'}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { RootState } from '../../app/store';
 import { getScratch, postScratch } from '../../axiosApi';
 import {
+  apiError,
   PostReplyRequestObj,
   PostRescratchRequestObj,
   Scratch,
@@ -24,7 +25,7 @@ export const openReplyModal = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -43,7 +44,7 @@ export const replyToScratch = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -64,7 +65,7 @@ export const openRescratchModal = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -83,7 +84,7 @@ export const addQuoteRescratch = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }

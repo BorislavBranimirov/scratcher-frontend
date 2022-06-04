@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { RootState } from '../app/store';
 import { generateScratchPath, generateUserPath } from './routePaths';
@@ -16,7 +16,7 @@ const EmbeddedRescratch = ({
   selector,
 }: EmbeddedRescratchProps) => {
   const rescratch = useAppSelector((state) => selector(state, rescratchedId));
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (!rescratch) {
     return (
@@ -40,7 +40,7 @@ const EmbeddedRescratch = ({
       onClick={(e) => {
         e.stopPropagation();
         const target = e.target as Element;
-        if (!target.closest('a')) history.push(rescratchedScratchPath);
+        if (!target.closest('a')) navigate(rescratchedScratchPath);
       }}
     >
       <div className="flex items-center gap-1.5">

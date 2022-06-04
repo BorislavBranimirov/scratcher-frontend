@@ -24,7 +24,7 @@ const BookmarksPage = () => {
 
   return (
     <>
-      <div className="col-span-5 border-l border-r border-primary">
+      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
         <div className="sticky top-0 bg-neutral border-b border-primary px-4 pt-1 pb-2 z-10">
           <h2 className="text-lg font-bold leading-6">Bookmarks</h2>
           <p className="text-xs text-secondary">@{user?.username}</p>
@@ -37,7 +37,7 @@ const BookmarksPage = () => {
           })
         )}
       </div>
-      <div className="ml-6 col-span-3">
+      <div className="hidden lg:block lg:ml-6 lg:col-span-3 lg:mr-12 xl:mr-0">
         <SuggestedUsersWindow />
       </div>
     </>

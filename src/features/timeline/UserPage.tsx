@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   loadUserLikes,
@@ -12,7 +12,11 @@ import UserPosts from './UserPosts';
 import UserProfile from './UserProfile';
 import UserLikes from './UserLikes';
 import { selectAuthIsLogged } from '../auth/authSlice';
-import { generateUserPath } from '../../common/routePaths';
+import {
+  generateUserPath,
+  generateUserPathWithTab,
+  userPageTabValue,
+} from '../../common/routePaths';
 import { pushNotification } from '../notification/notificationSlice';
 
 const UserPage = () => {
@@ -21,24 +25,13 @@ const UserPage = () => {
   const isLoading = useAppSelector(selectTimelineIsLoading);
   const isLogged = useAppSelector(selectAuthIsLogged);
 
-  const { username, tab } = useParams<{ username: string; tab?: 'likes' }>();
-  const history = useHistory();
+  const { username, tab } = useParams() as {
+    username: string;
+    tab?: userPageTabValue;
+  };
+  const navigate = useNavigate();
   const userPath = generateUserPath({ username });
-  const userLikesPath = generateUserPath({ username, tab: 'likes' });
-
-  useEffect(() => {
-    // prevent navigation to likes tab if user is not authenticated
-    let unblock = history.block((nextLocation) => {
-      if (nextLocation.pathname === userLikesPath && !isLogged) {
-        dispatch(pushNotification('Log in to see user likes.'));
-        return false;
-      }
-    });
-
-    return () => {
-      unblock();
-    };
-  }, [isLogged, history, userLikesPath, dispatch]);
+  const userLikesPath = generateUserPathWithTab({ username, tab: 'likes' });
 
   useEffect(() => {
     if (!tab) {
@@ -48,10 +41,10 @@ const UserPage = () => {
       if (isLogged) {
         dispatch(loadUserLikes({ username }));
       } else {
-        history.replace(userPath);
+        navigate(userPath, { replace: true });
       }
     }
-  }, [tab, username, userPath, isLogged, history, dispatch]);
+  }, [tab, username, userPath, isLogged, navigate, dispatch]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,7 +58,7 @@ const UserPage = () => {
     <div>
       <button
         onClick={() => {
-          history.goBack();
+          navigate(-1);
         }}
       >
         {'<-'}
@@ -74,7 +67,17 @@ const UserPage = () => {
       <UserProfile />
       <SuggestedUsersWindow />
       <NavLink to={userPath}>scratches</NavLink> {' | '}
-      <NavLink to={userLikesPath}>likes</NavLink>
+      <NavLink
+        to={userLikesPath}
+        onClick={(e) => {
+          if (!isLogged) {
+            e.preventDefault();
+            dispatch(pushNotification('Log in to see user likes.'));
+          }
+        }}
+      >
+        likes
+      </NavLink>
       {!tab && <UserPosts />}
       {tab === 'likes' && <UserLikes />}
     </div>

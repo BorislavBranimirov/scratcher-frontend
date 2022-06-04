@@ -17,6 +17,7 @@ import {
 } from '../../axiosApi';
 import { scratchEntity } from '../../common/entities';
 import {
+  apiError,
   PostReplyRequestObj,
   Scratch,
   ScratchResponseObj,
@@ -65,7 +66,7 @@ export const loadScratchConversation = createAsyncThunk<
     return normalized;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -84,7 +85,7 @@ export const addScratch = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -100,7 +101,7 @@ export const removeScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -116,7 +117,7 @@ export const addRescratch = createAsyncThunk<
     return args;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -132,7 +133,7 @@ export const undoAddRescratch = createAsyncThunk<
     return { rescratchedId: args.id };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -148,7 +149,7 @@ export const likeScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -164,7 +165,7 @@ export const unlikeScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -180,7 +181,7 @@ export const bookmarkScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -196,7 +197,7 @@ export const unbookmarkScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -212,7 +213,7 @@ export const pinScratch = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -228,7 +229,7 @@ export const unpinScratch = createAsyncThunk<
     return { userId: res.data.id, scratchId: res.data.pinnedId };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }

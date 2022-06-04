@@ -6,7 +6,7 @@ import {
   getSuggestedUsers,
   setUserFollow,
 } from '../../axiosApi';
-import { User } from '../../common/types';
+import { apiError, User } from '../../common/types';
 
 export const loadSuggestedUsers = createAsyncThunk<
   User[],
@@ -18,7 +18,7 @@ export const loadSuggestedUsers = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -34,7 +34,7 @@ export const followUser = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -50,7 +50,7 @@ export const unfollowUser = createAsyncThunk<
     return args.id;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }

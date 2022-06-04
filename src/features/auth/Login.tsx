@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { login, selectAuthUser } from './authSlice';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectAuthUser);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      history.replace('/');
+      navigate('/');
     }
   });
 

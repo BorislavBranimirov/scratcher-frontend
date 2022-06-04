@@ -79,3 +79,7 @@ export interface decodedJWT {
   exp: number;
   iat: number;
 }
+
+export interface apiError {
+  err: string;
+}

@@ -8,7 +8,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { RootState } from '../../app/store';
 import { getUserByUsername } from '../../axiosApi';
-import { decodedJWT, User } from '../../common/types';
+import { apiError, decodedJWT, User } from '../../common/types';
 import {
   pinScratch as bookmarksPinScratch,
   unpinScratch as bookmarksUnpinScratch,
@@ -42,7 +42,7 @@ export const login = createAsyncThunk<
     return { user: res.data, token: accessToken };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }
@@ -66,7 +66,7 @@ export const loginFromToken = createAsyncThunk<
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue(err.response.data.err);
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
     }
     return Promise.reject(err);
   }

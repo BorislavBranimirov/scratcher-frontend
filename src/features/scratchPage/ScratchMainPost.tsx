@@ -13,7 +13,7 @@ import {
   selectScratchById,
 } from './scratchPageSlice';
 import { selectAuthUser } from '../auth/authSlice';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import { pushNotification } from '../notification/notificationSlice';
@@ -31,7 +31,7 @@ const ScratchMainPost = ({
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
   );
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const bookmarkButton = scratch.isBookmarked ? (
     <li>
@@ -103,7 +103,7 @@ const ScratchMainPost = ({
           onClick={async () => {
             const res = await dispatch(removeScratch({ id: scratch.id }));
             if (removeScratch.fulfilled.match(res)) {
-              history.goBack();
+              navigate(-1);
             }
           }}
         >

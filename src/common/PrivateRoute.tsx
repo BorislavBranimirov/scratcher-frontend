@@ -1,20 +1,15 @@
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { selectAuthIsLogged } from '../features/auth/authSlice';
 
-const PrivateRoute = (props: RouteProps) => {
+const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const isLogged = useAppSelector(selectAuthIsLogged);
 
   if (!isLogged) {
-    const { component, render, children, ...noComponentProps } = props;
-    return (
-      <Route {...noComponentProps}>
-        <Redirect to={'/login'} />
-      </Route>
-    );
+    return <Navigate to={'/login'} replace />;
   }
 
-  return <Route {...props} />;
+  return children;
 };
 
 export default PrivateRoute;
