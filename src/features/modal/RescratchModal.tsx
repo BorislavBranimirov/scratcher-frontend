@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
@@ -10,6 +10,7 @@ import {
 } from './modalSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { selectAuthUser } from '../auth/authSlice';
+import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 
 const RescratchModal = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,14 @@ const RescratchModal = () => {
 
   const [body, setBody] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const inputFieldRef = useSyncTextareaHeight(body);
+
+  useLayoutEffect(() => {
+    if (inputFieldRef.current) {
+      inputFieldRef.current.focus();
+    }
+  }, [inputFieldRef]);
 
   const handleSubmit = () => {
     if (!isSubmitting && scratchId) {
@@ -50,9 +59,10 @@ const RescratchModal = () => {
           <textarea
             name="body"
             id="body"
+            ref={inputFieldRef}
             value={body}
             placeholder="Add a comment"
-            className="bg-transparent resize-none"
+            className="my-2 bg-transparent border-none outline-none resize-none"
             onChange={(e) => {
               setBody(e.target.value);
             }}
@@ -72,7 +82,7 @@ const RescratchModal = () => {
             <div className="flex justify-end">
               <button
                 onClick={handleSubmit}
-                className="bg-blue rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+                className="bg-blue text-sm rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
               >
                 Scratch
               </button>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
@@ -11,6 +11,7 @@ import {
 import avatar from '../../images/avatarplaceholder.png';
 import TimeAgo from '../../common/TimeAgo';
 import { selectAuthUser } from '../auth/authSlice';
+import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 
 const ReplyModal = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,14 @@ const ReplyModal = () => {
 
   const [body, setBody] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const inputFieldRef = useSyncTextareaHeight(body);
+
+  useLayoutEffect(() => {
+    if (inputFieldRef.current) {
+      inputFieldRef.current.focus();
+    }
+  }, [inputFieldRef]);
 
   const handleSubmit = () => {
     if (!isSubmitting && scratchId) {
@@ -76,7 +85,9 @@ const ReplyModal = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <p className="break-words whitespace-pre-wrap">{parentScratch.body}</p>
+              <p className="break-words whitespace-pre-wrap">
+                {parentScratch.body}
+              </p>
               {parentScratch.rescratchType === 'quote' &&
                 parentScratch.rescratchedId && (
                   <EmbeddedRescratch
@@ -96,9 +107,10 @@ const ReplyModal = () => {
           <textarea
             name="body"
             id="body"
+            ref={inputFieldRef}
             value={body}
             placeholder="Scratch your reply"
-            className="bg-transparent resize-none flex-grow"
+            className="my-2 bg-transparent border-none outline-none resize-none flex-grow"
             onChange={(e) => {
               setBody(e.target.value);
             }}
@@ -109,7 +121,7 @@ const ReplyModal = () => {
           <div className="flex justify-end">
             <button
               onClick={handleSubmit}
-              className="bg-blue rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+              className="bg-blue text-sm rounded-full py-1.5 px-4 mt-2 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
               disabled={!body}
             >
               Reply

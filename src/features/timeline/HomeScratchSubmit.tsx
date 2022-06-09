@@ -1,26 +1,20 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addScratch } from '../../features/timeline/timelineSlice';
 import { selectAuthUser } from '../auth/authSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { Link } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
+import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 
 const HomeScratchSubmit = () => {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(selectAuthUser);
 
-  const inputFieldRef = useRef<HTMLTextAreaElement>(null);
   const [body, setBody] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useLayoutEffect(() => {
-    if (inputFieldRef.current) {
-      inputFieldRef.current.style.height = '0';
-      inputFieldRef.current.style.height =
-        inputFieldRef.current.scrollHeight + 'px';
-    }
-  });
+  const inputFieldRef = useSyncTextareaHeight(body);
 
   if (!loggedUser) {
     return <div>User not found</div>;

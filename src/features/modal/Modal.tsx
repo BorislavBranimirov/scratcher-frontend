@@ -11,7 +11,17 @@ const Modal = () => {
   const location = useLocation();
 
   useEffect(() => {
-    dispatch(closeModal());
+    if (show) {
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'unset';
+    }
+  }, [show]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(closeModal());
+    };
   }, [location, dispatch]);
 
   if (!show || !type) {
@@ -19,7 +29,7 @@ const Modal = () => {
   }
 
   return (
-    <div className="absolute h-full w-full z-30 mx-auto flex justify-center items-start">
+    <div className="fixed h-full w-full z-30 mx-auto flex justify-center items-start">
       {type && (
         <div
           className="fixed top-0 right-0 bottom-0 left-0 cursor-auto bg-primary/10"
