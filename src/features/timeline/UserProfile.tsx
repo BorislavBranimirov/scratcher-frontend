@@ -72,7 +72,7 @@ const UserProfile = () => {
           <h2 className="text-lg font-bold">{user.name}</h2>
           <p className="text-sm text-secondary">@{user.username}</p>
         </div>
-        <p className="break-words text-sm mb-2">{user.description}</p>
+        <p className="break-words whitespace-pre-wrap text-sm mb-2">{user.description}</p>
         <div className="flex gap-1.5 items-center text-sm text-secondary mb-2">
           <Calendar size={16} />
           <p>Joined {format(joinedDate, 'MMMM y')}</p>

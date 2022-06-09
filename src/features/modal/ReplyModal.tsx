@@ -76,7 +76,7 @@ const ReplyModal = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <p className="break-words">{parentScratch.body}</p>
+              <p className="break-words whitespace-pre-wrap">{parentScratch.body}</p>
               {parentScratch.rescratchType === 'quote' &&
                 parentScratch.rescratchedId && (
                   <EmbeddedRescratch

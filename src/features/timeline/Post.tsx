@@ -168,7 +168,7 @@ const Post = ({
             )}
           </div>
           <div className="flex flex-col">
-            <p className="break-words">{scratch.body}</p>
+            <p className="break-words whitespace-pre-wrap">{scratch.body}</p>
             {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
               <EmbeddedRescratch
                 rescratchedId={scratch.rescratchedId}

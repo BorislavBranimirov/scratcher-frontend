@@ -63,7 +63,7 @@ const EmbeddedRescratch = ({
           <TimeAgo createdAt={rescratch.createdAt} />
         </div>
       </div>
-      <p className="break-words">{rescratch.body}</p>
+      <p className="break-words whitespace-pre-wrap">{rescratch.body}</p>
     </div>
   );
 };
