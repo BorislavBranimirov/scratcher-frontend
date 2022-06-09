@@ -22,6 +22,14 @@ const BookmarksPage = () => {
     }
   }, [user?.id, dispatch]);
 
+  if (isLoading) {
+    return (
+      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
+        <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
@@ -29,13 +37,9 @@ const BookmarksPage = () => {
           <h2 className="text-lg font-bold leading-6">Bookmarks</h2>
           <p className="text-xs text-secondary">@{user?.username}</p>
         </div>
-        {isLoading ? (
-          <Loader size={32} className="animate-spin-slow w-full mt-10" />
-        ) : (
-          ids.map((id) => {
-            return <BookmarksPost key={id} scratchId={id} />;
-          })
-        )}
+        {ids.map((id) => {
+          return <BookmarksPost key={id} scratchId={id} />;
+        })}
       </div>
       <div className="hidden lg:block lg:ml-6 lg:col-span-3 lg:mr-12 xl:mr-0">
         <SuggestedUsersWindow />

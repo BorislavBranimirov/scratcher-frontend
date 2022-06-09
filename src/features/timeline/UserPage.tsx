@@ -1,5 +1,6 @@
+import { ArrowLeft, Loader } from 'react-feather';
 import { useEffect } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   loadUserLikes,
@@ -8,16 +9,11 @@ import {
   selectTimelineUser,
 } from '../timeline/timelineSlice';
 import SuggestedUsersWindow from '../suggestedUsers/SuggestedUsersWindow';
-import UserPosts from './UserPosts';
 import UserProfile from './UserProfile';
-import UserLikes from './UserLikes';
 import { selectAuthIsLogged } from '../auth/authSlice';
-import {
-  generateUserPath,
-  generateUserPathWithTab,
-  userPageTabValue,
-} from '../../common/routePaths';
-import { pushNotification } from '../notification/notificationSlice';
+import { generateUserPath, userPageTabValue } from '../../common/routePaths';
+import UserPageTabs from './UserPageTabs';
+import UserPagePosts from './UserPagePosts';
 
 const UserPage = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +27,6 @@ const UserPage = () => {
   };
   const navigate = useNavigate();
   const userPath = generateUserPath({ username });
-  const userLikesPath = generateUserPathWithTab({ username, tab: 'likes' });
 
   useEffect(() => {
     if (!tab) {
@@ -47,40 +42,51 @@ const UserPage = () => {
   }, [tab, username, userPath, isLogged, navigate, dispatch]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <p>User not found</p>;
+    return (
+      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
+        <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        {'<-'}
-      </button>
-      <span>{username}</span>
-      <UserProfile />
-      <SuggestedUsersWindow />
-      <NavLink to={userPath}>scratches</NavLink> {' | '}
-      <NavLink
-        to={userLikesPath}
-        onClick={(e) => {
-          if (!isLogged) {
-            e.preventDefault();
-            dispatch(pushNotification('Log in to see user likes.'));
-          }
-        }}
-      >
-        likes
-      </NavLink>
-      {!tab && <UserPosts />}
-      {tab === 'likes' && <UserLikes />}
-    </div>
+    <>
+      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
+        <div className="sticky top-0 bg-neutral border-b border-primary px-4 pt-1 pb-2 z-10 flex items-center">
+          <button
+            className="h-full my-2 mr-4"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <div className="relative" title="Back">
+              <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-primary/10 active:bg-primary/20"></div>
+              <ArrowLeft size={16} />
+            </div>
+          </button>
+          {user ? (
+            <h2 className="text-lg font-bold leading-6">{user.name}</h2>
+          ) : (
+            <h2 className="text-lg font-bold leading-6">Profile</h2>
+          )}
+        </div>
+        {user ? (
+          <>
+            <UserProfile />
+            <UserPageTabs />
+            <UserPagePosts />
+          </>
+        ) : (
+          <div className="mt-4 text-center">
+            <h2 className="text-lg font-bold">This account doesn't exist</h2>
+            <p className="text-sm text-secondary">Try searching for another.</p>
+          </div>
+        )}
+      </div>
+      <div className="hidden lg:block lg:ml-6 lg:col-span-3 lg:mr-12 xl:mr-0">
+        <SuggestedUsersWindow />
+      </div>
+    </>
   );
 };
 

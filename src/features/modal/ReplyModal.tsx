@@ -47,7 +47,7 @@ const ReplyModal = () => {
     <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden lg:w-1/2">
       <div className="border-b border-primary p-3 flex justify-start">
         <button className="relative" onClick={handleCloseModal} title="Close">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-opacity-20"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-primary/20"></div>
           <X />
         </button>
       </div>
@@ -109,7 +109,7 @@ const ReplyModal = () => {
           <div className="flex justify-end">
             <button
               onClick={handleSubmit}
-              className="bg-blue rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-opacity-80 active:bg-opacity-60"
+              className="bg-blue rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
               disabled={!body}
             >
               Reply

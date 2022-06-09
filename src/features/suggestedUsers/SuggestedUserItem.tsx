@@ -30,8 +30,10 @@ const SuggestedUserItem = ({
         dispatch(unfollowUser({ id: user.id }));
       }}
       className={`${
-        followBtnHover ? 'bg-red' : 'bg-blue'
-      } text-xs rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-opacity-80 active:bg-opacity-60`}
+        followBtnHover
+          ? 'bg-red hover:bg-red/80 active:bg-red/60'
+          : 'bg-blue hover:bg-blue/80 active:bg-blue/60'
+      } text-xs rounded-full py-1.5 px-4 font-bold transition-colors`}
     >
       {followBtnHover ? 'Unfollow' : 'Following'}
     </button>
@@ -41,7 +43,7 @@ const SuggestedUserItem = ({
         e.stopPropagation();
         dispatch(followUser({ id: user.id }));
       }}
-      className="bg-blue text-xs rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-opacity-80 active:bg-opacity-60"
+      className="bg-blue text-xs rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
     >
       Follow
     </button>

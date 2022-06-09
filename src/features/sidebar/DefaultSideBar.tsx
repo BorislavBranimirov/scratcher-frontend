@@ -143,7 +143,7 @@ const DefaultSideBar = () => {
               </div>
             </div>
             <div
-              className="flex items-center justify-between py-2.5 px-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary/5 active:bg-opacity-10"
+              className="flex items-center justify-between py-2.5 px-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10"
               onClick={() => {
                 setUserOptionsToggle(true);
               }}

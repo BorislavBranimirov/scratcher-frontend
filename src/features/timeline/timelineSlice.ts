@@ -403,6 +403,7 @@ export interface TimelineState {
   scratches: { [key: string]: Scratch };
   isFinished: boolean;
   isLoading: boolean;
+  isLoadingMore: boolean;
 }
 
 const initialState: TimelineState = {
@@ -413,6 +414,7 @@ const initialState: TimelineState = {
   scratches: {},
   isFinished: false,
   isLoading: false,
+  isLoadingMore: false,
 };
 
 export const timelineSlice = createSlice({
@@ -447,6 +449,9 @@ export const timelineSlice = createSlice({
     });
 
     builder.addCase(loadUserLikes.fulfilled, (state, action) => {
+      if (state.pinnedScratchId) {
+        state.pinnedScratchId = null;
+      }
       state.user = action.payload.user;
       state.ids = action.payload.result;
       state.scratches = action.payload.entities.scratches;
@@ -463,6 +468,15 @@ export const timelineSlice = createSlice({
         ...action.payload.entities.scratches,
       };
       state.isFinished = action.payload.isFinished;
+      state.isLoadingMore = false;
+    });
+
+    builder.addCase(loadMoreOfTimeline.pending, (state) => {
+      state.isLoadingMore = true;
+    });
+
+    builder.addCase(loadMoreOfTimeline.rejected, (state) => {
+      state.isLoadingMore = false;
     });
 
     builder.addCase(addScratch.fulfilled, (state, action) => {
@@ -673,8 +687,14 @@ export const selectTimelinePinnedScratchId = (state: RootState) =>
 
 export const selectTimelineIds = (state: RootState) => state.timeline.ids;
 
+export const selectTimelineLastId = (state: RootState) =>
+  state.timeline.ids[state.timeline.ids.length - 1];
+
 export const selectTimelineIsLoading = (state: RootState) =>
   state.timeline.isLoading;
+
+export const selectTimelineIsLoadingMore = (state: RootState) =>
+  state.timeline.isLoadingMore;
 
 export const selectTimelineIsFinished = (state: RootState) =>
   state.timeline.isFinished;

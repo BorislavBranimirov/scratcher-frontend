@@ -87,7 +87,7 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
                 }}
               >
                 <div className="relative" title="More">
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-opacity-20"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-blue/20"></div>
                   <MoreHorizontal size={16} className="stroke-current" />
                 </div>
               </button>

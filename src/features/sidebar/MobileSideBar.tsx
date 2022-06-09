@@ -60,7 +60,7 @@ const MobileSideBar = () => {
                   }}
                   title="Close"
                 >
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-opacity-20"></div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-primary/20"></div>
                   <X />
                 </button>
               </div>

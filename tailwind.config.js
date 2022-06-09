@@ -20,6 +20,7 @@ module.exports = {
     },
     borderColor: {
       primary: 'rgb(56, 68, 77)',
+      neutral: 'rgb(21, 32, 43)',
     },
     boxShadow: {
       DEFAULT: '0 0 10px rgba(255, 255, 255, 0.1)',

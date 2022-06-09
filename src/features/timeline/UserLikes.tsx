@@ -7,7 +7,6 @@ const UserLikes = () => {
 
   return (
     <div>
-      <p>Likes</p>
       {ids.map((id) => {
         return <Post key={id} scratchId={id} />;
       })}
