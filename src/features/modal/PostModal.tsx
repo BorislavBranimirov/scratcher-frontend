@@ -1,20 +1,13 @@
 import { useLayoutEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import EmbeddedRescratch from '../../common/EmbeddedRescratch';
-import {
-  addQuoteRescratch,
-  closeModal,
-  selectModal,
-  selectModalScratchById,
-} from './modalSlice';
+import { closeModal, addModalScratch } from './modalSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { selectAuthUser } from '../auth/authSlice';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 
-const RescratchModal = () => {
+const PostModal = () => {
   const dispatch = useAppDispatch();
-  const { scratchId } = useAppSelector(selectModal);
   const user = useAppSelector(selectAuthUser);
 
   const [body, setBody] = useState('');
@@ -29,9 +22,9 @@ const RescratchModal = () => {
   }, [inputFieldRef]);
 
   const handleSubmit = () => {
-    if (!isSubmitting && scratchId) {
+    if (!isSubmitting) {
       setIsSubmitting(true);
-      dispatch(addQuoteRescratch({ body, rescratchedId: scratchId }));
+      dispatch(addModalScratch({ body }));
     }
   };
 
@@ -49,49 +42,40 @@ const RescratchModal = () => {
           <X />
         </button>
       </div>
-      <div className="flex gap-3 p-3">
-        <img
-          src={user?.profileImageUrl || avatar}
-          alt="avatar"
-          className="w-11 h-11 rounded-full overflow-hidden shrink-0"
-        />
-        <div className="grow flex flex-col min-w-0">
+      <div className="flex flex-col p-3">
+        <div className="flex gap-3">
+          <img
+            src={user?.profileImageUrl || avatar}
+            alt="avatar"
+            className="w-11 h-11 rounded-full overflow-hidden shrink-0"
+          />
           <textarea
             name="body"
             id="body"
             ref={inputFieldRef}
             value={body}
-            placeholder="Add a comment"
-            className="my-2 bg-transparent border-none outline-none resize-none"
+            placeholder="What's happening?"
+            className="my-2 bg-transparent border-none outline-none resize-none grow"
             onChange={(e) => {
               setBody(e.target.value);
             }}
             disabled={isSubmitting}
           />
-          {scratchId ? (
-            <EmbeddedRescratch
-              rescratchedId={scratchId}
-              selector={selectModalScratchById}
-            />
-          ) : (
-            <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-secondary text-sm transition-colors duration-200 hover:bg-primary/5">
-              Scratch not found
-            </div>
-          )}
-          {!isSubmitting && (
-            <div className="flex justify-end">
-              <button
-                onClick={handleSubmit}
-                className="bg-blue text-sm rounded-full py-1.5 px-4 mt-2 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
-              >
-                Scratch
-              </button>
-            </div>
-          )}
         </div>
+        {!isSubmitting && (
+          <div className="flex justify-end">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue text-sm rounded-full py-1.5 px-4 mt-2 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+              disabled={!body}
+            >
+              Scratch
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default RescratchModal;
+export default PostModal;

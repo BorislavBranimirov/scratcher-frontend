@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   Bookmark,
+  Feather,
   Home,
   LogIn,
   LogOut,
@@ -15,6 +16,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { logout, selectAuthUser } from '../auth/authSlice';
 import { generateUserPath } from '../../common/routePaths';
+import { openPostModal } from '../modal/modalSlice';
 
 const MobileSideBar = () => {
   const dispatch = useAppDispatch();
@@ -124,6 +126,18 @@ const MobileSideBar = () => {
                 <Settings strokeWidth={undefined} />
                 <span>Settings</span>
               </NavLink>
+              <button
+                className="mx-auto w-[90%] bg-blue rounded-full my-2 p-3 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+                onClick={() => {
+                  setOpenSideBar(false);
+                  dispatch(openPostModal());
+                }}
+              >
+                <div className="flex items-center justify-center gap-3">
+                  <Feather />
+                  <span>Scratch</span>
+                </div>
+              </button>
               <button
                 className="border-t border-primary flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5"
                 onClick={() => {

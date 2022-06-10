@@ -6,9 +6,40 @@ import {
   apiError,
   PostReplyRequestObj,
   PostRescratchRequestObj,
+  PostScratchRequestObj,
   Scratch,
   ScratchResponseObj,
 } from '../../common/types';
+
+export const openPostModal = createAsyncThunk<
+  void,
+  undefined,
+  { rejectValue: string; state: RootState }
+>('modal/openPostModal', async (_, thunkApi) => {
+  const isLogged = thunkApi.getState().auth.user !== null;
+  if (!isLogged) {
+    return thunkApi.rejectWithValue('Log in to post.');
+  }
+});
+
+export const addModalScratch = createAsyncThunk<
+  ScratchResponseObj,
+  PostScratchRequestObj,
+  { rejectValue: string }
+>('modal/addScratch', async (args, thunkApi) => {
+  try {
+    const scratchId = (await postScratch(args)).data.id;
+
+    const res = await getScratch(scratchId);
+
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
+    }
+    return Promise.reject(err);
+  }
+});
 
 export const openReplyModal = createAsyncThunk<
   ScratchResponseObj,
@@ -92,7 +123,7 @@ export const addQuoteRescratch = createAsyncThunk<
 
 export interface ModalState {
   show: boolean;
-  type: 'reply' | 'rescratch' | null;
+  type: 'post' | 'reply' | 'rescratch' | null;
   scratchId: number | null;
   scratches: { [key: string]: Scratch };
 }
@@ -113,6 +144,11 @@ export const modalSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(openPostModal.fulfilled, (state) => {
+      state.show = true;
+      state.type = 'post';
+    });
+
     builder.addCase(openReplyModal.fulfilled, (state, action) => {
       state.show = true;
       state.type = 'reply';
@@ -134,7 +170,11 @@ export const modalSlice = createSlice({
     });
 
     builder.addMatcher(
-      isAnyOf(replyToScratch.fulfilled, addQuoteRescratch.fulfilled),
+      isAnyOf(
+        addModalScratch.fulfilled,
+        replyToScratch.fulfilled,
+        addQuoteRescratch.fulfilled
+      ),
       () => {
         return initialState;
       }

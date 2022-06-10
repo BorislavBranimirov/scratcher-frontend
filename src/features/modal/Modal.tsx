@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { closeModal, selectModal } from './modalSlice';
+import PostModal from './PostModal';
 import ReplyModal from './ReplyModal';
 import RescratchModal from './RescratchModal';
 
@@ -38,6 +39,7 @@ const Modal = () => {
           }}
         ></div>
       )}
+      {type === 'post' && <PostModal />}
       {type === 'reply' && <ReplyModal />}
       {type === 'rescratch' && <RescratchModal />}
     </div>

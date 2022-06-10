@@ -28,7 +28,11 @@ import {
   ScratchResponseObj,
   User,
 } from '../../common/types';
-import { addQuoteRescratch, replyToScratch } from '../modal/modalSlice';
+import {
+  addModalScratch,
+  addQuoteRescratch,
+  replyToScratch,
+} from '../modal/modalSlice';
 
 interface LoadHomeTimelineReturnObj {
   entities: { scratches: { [key: string]: Scratch } };
@@ -606,6 +610,23 @@ export const timelineSlice = createSlice({
     builder.addCase(unfollowUserPage.fulfilled, (state, action) => {
       if (state.user?.id === action.payload && state.type === 'userTimeline') {
         state.user.isFollowing = false;
+      }
+    });
+
+    builder.addCase(addModalScratch.fulfilled, (state, action) => {
+      const scratch = action.payload.scratch;
+
+      if (
+        state.type === 'home' ||
+        (state.type === 'userTimeline' && state.user?.id === scratch.authorId)
+      ) {
+        state.ids.unshift(scratch.id);
+        state.scratches[scratch.id] = scratch;
+
+        state.scratches = {
+          ...state.scratches,
+          ...action.payload.extraScratches,
+        };
       }
     });
 

@@ -5,6 +5,7 @@ import { logout } from '../auth/authSlice';
 import { generateUserPath } from '../../common/routePaths';
 import {
   Bookmark,
+  Feather,
   Home,
   LogIn,
   LogOut,
@@ -14,6 +15,7 @@ import {
 } from 'react-feather';
 import avatar from '../../images/avatarplaceholder.png';
 import { useState } from 'react';
+import { openPostModal } from '../modal/modalSlice';
 
 const DefaultSideBar = () => {
   const dispatch = useAppDispatch();
@@ -75,6 +77,17 @@ const DefaultSideBar = () => {
                 <Settings strokeWidth={undefined} />
                 <span className="hidden xl:block">Settings</span>
               </NavLink>
+              <button
+                className="xl:w-[90%] bg-blue rounded-full mt-2 p-3 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+                onClick={() => {
+                  dispatch(openPostModal());
+                }}
+              >
+                <span className="hidden xl:block">Scratch</span>
+                <span className="xl:hidden">
+                  <Feather />
+                </span>
+              </button>
             </>
           ) : (
             <>
