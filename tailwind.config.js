@@ -15,6 +15,7 @@ module.exports = {
       primary: 'rgb(255, 255, 255)',
       secondary: 'rgb(136, 153, 166)',
       delete: 'rgb(244, 33, 46)',
+      blue: 'rgb(29, 155, 240)',
       'post-btn-default': 'rgb(29, 155, 240)',
       'post-btn-green': 'rgb(0, 186, 124)',
       'post-btn-red': 'rgb(249, 24, 128)',

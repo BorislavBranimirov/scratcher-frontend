@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { login, selectAuthUser } from './authSlice';
@@ -24,32 +25,72 @@ const Login = () => {
   });
 
   return (
-    <div>
-      <p>Log in to Scratcher</p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          pattern="[a-zA-Z0-9]{6,25}"
-          title="Minimum of 6 characters, no spaces or special symbols"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          id="password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
-          title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input type="submit" value="Log in" />
-      </form>
+    <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 flex items-center">
+      <div className="grow flex flex-col rounded-2xl border border-primary p-3 h-[80%]">
+        <h2 className="text-center text-2xl font-bold leading-6 py-4">
+          Sign in to Scratcher
+        </h2>
+        <form
+          className="grow mx-auto mt-2 w-[80%] flex flex-col justify-between"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col gap-6">
+            <div className="relative">
+              <input
+                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-blue"
+                type="text"
+                name="username"
+                id="username"
+                pattern="[a-zA-Z0-9]{6,25}"
+                title="Minimum of 6 characters, no spaces or special symbols"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <label
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-blue"
+                htmlFor="username"
+              >
+                Username
+              </label>
+            </div>
+            <div className="relative">
+              <input
+                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-blue"
+                type="password"
+                name="password"
+                id="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
+                title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-blue"
+                htmlFor="password"
+              >
+                Password
+              </label>
+            </div>
+          </div>
+          <button
+            className="w-full bg-blue rounded-full py-3 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+            type="submit"
+            disabled={!username || !password}
+          >
+            Log in
+          </button>
+        </form>
+        <div className="my-4 flex gap-1 mx-auto w-[80%]">
+          <span>Don't have an account?</span>
+          <Link className="text-blue hover:underline" to="register">
+            Sign up
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
