@@ -71,7 +71,7 @@ const MobileSideBar = () => {
                 <img
                   src={user.profileImageUrl || avatar}
                   alt="avatar"
-                  className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
+                  className="w-9 h-9 rounded-full overflow-hidden shrink-0"
                 />
                 <div>
                   <p className="truncate">{user?.name}</p>

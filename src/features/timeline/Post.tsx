@@ -69,13 +69,13 @@ const Post = ({
       }}
     >
       {pinned && (
-        <div className="mb-1 flex flex-row gap-1.5 items-center text-sm text-secondary">
+        <div className="mb-1 flex gap-1.5 items-center text-sm text-secondary">
           <Paperclip size={12} />
           <span>Pinned Scratch</span>
         </div>
       )}
       {rescratchAuthor && (
-        <div className="mb-1 flex flex-row gap-1.5 items-center text-sm text-secondary">
+        <div className="mb-1 flex gap-1.5 items-center text-sm text-secondary">
           <Repeat size={12} />
           <Link
             className="hover:underline"
@@ -85,13 +85,13 @@ const Post = ({
           </Link>
         </div>
       )}
-      <div className="flex flex-row gap-3">
-        <div className="w-12 h-12 rounded-full overflow-hidden mt-1 flex-shrink-0">
+      <div className="flex gap-3">
+        <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
           <Link to={userPath}>
             <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
-        <div className="min-w-0 flex-grow">
+        <div className="min-w-0 grow">
           <div className="flex justify-between gap-3">
             <div className="text-secondary flex items-baseline min-w-0">
               <Link className="truncate" to={userPath}>

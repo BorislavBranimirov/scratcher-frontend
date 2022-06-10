@@ -52,18 +52,18 @@ const BookmarksPost = ({ scratchId }: { scratchId: number }) => {
 
   return (
     <div
-      className="border-b border-primary flex flex-row gap-3 px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary/5"
+      className="border-b border-primary flex gap-3 px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary/5"
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(scratchPath);
       }}
     >
-      <div className="w-12 h-12 rounded-full overflow-hidden mt-1 flex-shrink-0">
+      <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
         <Link to={userPath}>
           <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
         </Link>
       </div>
-      <div className="min-w-0 flex-grow">
+      <div className="min-w-0 grow">
         <div className="flex justify-between gap-3">
           <div className="text-secondary flex items-baseline min-w-0">
             <Link className="truncate" to={userPath}>

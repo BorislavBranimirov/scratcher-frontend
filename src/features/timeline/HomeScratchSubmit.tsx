@@ -34,13 +34,13 @@ const HomeScratchSubmit = () => {
   };
 
   return (
-    <div className="flex flex-row gap-3 px-4 py-3 border-b border-primary">
-      <div className="w-12 h-12 rounded-full overflow-hidden mt-1 flex-shrink-0">
+    <div className="flex gap-3 px-4 py-3 border-b border-primary">
+      <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
         <Link to={userPath}>
           <img src={loggedUser.profileImageUrl || avatar} alt="avatar" />
         </Link>
       </div>
-      <div className="min-w-0 flex-grow">
+      <div className="min-w-0 grow">
         <textarea
           className="my-2 w-full resize-none bg-transparent border-none outline-none"
           name="body"

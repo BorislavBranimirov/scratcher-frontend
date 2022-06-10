@@ -53,9 +53,9 @@ const RescratchModal = () => {
         <img
           src={user?.profileImageUrl || avatar}
           alt="avatar"
-          className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0"
+          className="w-11 h-11 rounded-full overflow-hidden shrink-0"
         />
-        <div className="flex-grow flex flex-col min-w-0">
+        <div className="grow flex flex-col min-w-0">
           <textarea
             name="body"
             id="body"

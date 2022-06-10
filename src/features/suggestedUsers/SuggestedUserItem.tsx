@@ -53,29 +53,39 @@ const SuggestedUserItem = ({
 
   return (
     <div
-      className="flex items-center justify-between py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary/5"
+      className="py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary/5"
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(userPath);
       }}
     >
-      <div className="flex items-center gap-3 min-w-0">
-        <div className="w-10 h-10 rounded-full overflow-hidden mt-1 flex-shrink-0">
+      <div className={`grow flex ${!extended && 'items-center'} gap-3 min-w-0`}>
+        <div
+          className={`${
+            extended ? 'w-12 h-12' : 'w-10 h-10'
+          } rounded-full overflow-hidden mt-1 shrink-0`}
+        >
           <Link to={userPath}>
             <img src={user.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
-        <div className="overflow-hidden leading-5">
-          <Link className="truncate" to={userPath}>
-            <span className="font-bold text-primary hover:underline">
-              {user?.name}
-            </span>
-          </Link>
-          <p className="text-secondary text-sm truncate">@{user?.username}</p>
-          {/*extended && <p>{user.description}</p>*/}
+        <div className="grow overflow-hidden leading-5">
+          <div className="flex gap-3 items-center justify-between">
+            <div className="truncate">
+              <Link to={userPath}>
+                <span className="font-bold text-primary hover:underline">
+                  {user?.name}
+                </span>
+              </Link>
+              <p className="text-secondary text-sm truncate">
+                @{user?.username}
+              </p>
+            </div>
+            {followButton}
+          </div>
+          {extended && <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">{user.description}</p>}
         </div>
       </div>
-      {followButton}
     </div>
   );
 };

@@ -52,9 +52,9 @@ const UserPage = () => {
   return (
     <>
       <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
-        <div className="sticky top-0 bg-neutral border-b border-primary px-4 pt-1 pb-2 z-10 flex items-center">
+        <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-3 z-10 flex items-center">
           <button
-            className="h-full my-2 mr-4"
+            className="h-full mr-4"
             onClick={() => {
               navigate(-1);
             }}

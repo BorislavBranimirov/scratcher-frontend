@@ -18,9 +18,9 @@ const SuggestedUsersWindow = () => {
 
   return (
     <div className="bg-secondary rounded-2xl overflow-hidden flex flex-col">
-      <h2 className="text-lg font-bold leading-6 pt-3 px-3">Who to follow</h2>
+      <h2 className="text-lg font-bold leading-6 pt-3 pb-2 px-3">Who to follow</h2>
       {isLoading ? (
-        <div className="mx-auto py-2">
+        <div className="mx-auto pt-2 pb-4">
           <Loader size={32} className="animate-spin-slow w-full" />
         </div>
       ) : (

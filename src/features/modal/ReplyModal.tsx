@@ -63,15 +63,15 @@ const ReplyModal = () => {
       <div className="flex flex-col p-3">
         <div className="flex gap-3">
           <div className="flex flex-col items-center">
-            <div className="w-11 h-11 rounded-full overflow-hidden mt-1 flex-shrink-0">
+            <div className="w-11 h-11 rounded-full overflow-hidden mt-1 shrink-0">
               <img
                 src={parentScratch.author.profileImageUrl || avatar}
                 alt="avatar"
               />
             </div>
-            <div className="w-0.5 bg-reply-line flex-grow"></div>
+            <div className="w-0.5 bg-reply-line grow"></div>
           </div>
-          <div className="min-w-0 flex-grow mb-4">
+          <div className="min-w-0 grow mb-4">
             <div className="text-secondary flex items-baseline">
               <span className="font-bold text-primary hover:underline">
                 {parentScratch.author.name}
@@ -102,7 +102,7 @@ const ReplyModal = () => {
           <img
             src={user?.profileImageUrl || avatar}
             alt="avatar"
-            className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0"
+            className="w-11 h-11 rounded-full overflow-hidden shrink-0"
           />
           <textarea
             name="body"
@@ -110,7 +110,7 @@ const ReplyModal = () => {
             ref={inputFieldRef}
             value={body}
             placeholder="Scratch your reply"
-            className="my-2 bg-transparent border-none outline-none resize-none flex-grow"
+            className="my-2 bg-transparent border-none outline-none resize-none grow"
             onChange={(e) => {
               setBody(e.target.value);
             }}

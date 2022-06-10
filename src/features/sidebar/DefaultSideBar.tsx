@@ -152,7 +152,7 @@ const DefaultSideBar = () => {
                 <img
                   src={user.profileImageUrl || avatar}
                   alt="avatar"
-                  className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
+                  className="w-9 h-9 rounded-full overflow-hidden shrink-0"
                 />
                 <div className="overflow-hidden leading-5 hidden xl:block">
                   <p className="truncate">{user?.name}</p>
@@ -163,7 +163,7 @@ const DefaultSideBar = () => {
               </div>
               <MoreHorizontal
                 size={16}
-                className="ml-3 flex-shrink-0 hidden xl:block"
+                className="ml-3 shrink-0 hidden xl:block"
               />
             </div>
           </div>
