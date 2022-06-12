@@ -1,22 +1,37 @@
+import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
+import { generateScratchPath } from '../../common/routePaths';
 import ScratchMainPost from './ScratchMainPost';
-import { selectScratchById } from './scratchPageSlice';
+import {
+  selectScratchById,
+  selectScratchParentChainIds,
+} from './scratchPageSlice';
 
 const ScratchMainPostWrapper = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
   );
+  const parentChainIds = useAppSelector(selectScratchParentChainIds);
 
   if (scratch.rescratchType === 'direct') {
-    return (
-      <ScratchMainPost
-        scratchId={scratch.rescratchedId}
-        rescratchAuthor={scratch.author}
-      />
-    );
+    const rescratchedPath = generateScratchPath({
+      username: scratch.author.username,
+      id: scratch.rescratchedId,
+    });
+
+    return <Navigate to={rescratchedPath} replace />;
   }
 
-  return <ScratchMainPost scratchId={scratchId} />;
+  return (
+    <ScratchMainPost
+      scratchId={scratchId}
+      ScratchIdToRedirectOnDelete={
+        parentChainIds.length === 0
+          ? null
+          : parentChainIds[parentChainIds.length - 1]
+      }
+    />
+  );
 };
 
 export default ScratchMainPostWrapper;

@@ -287,8 +287,18 @@ export const scratchSlice = createSlice({
       };
     });
 
-    builder.addCase(removeScratch.fulfilled, () => {
-      return initialState;
+    builder.addCase(removeScratch.fulfilled, (state, action) => {
+      if (
+        state.scratchId === action.payload ||
+        state.parentChainIds.includes(action.payload)
+      ) {
+        return initialState;
+      }
+
+      if (state.replyIds.includes(action.payload)) {
+        state.replyIds = state.replyIds.filter((id) => id !== action.payload);
+        delete state.scratches[action.payload];
+      }
     });
 
     builder.addCase(addRescratch.fulfilled, (state, action) => {

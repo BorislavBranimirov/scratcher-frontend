@@ -1,15 +1,23 @@
 import { useAppSelector } from '../../app/hooks';
-import ScratchPost from './ScratchPost';
-import { selectScratchReplyIds } from './scratchPageSlice';
+import ScratchRepliesPost from './ScratchRepliesPost';
+import { selectScratchById, selectScratchReplyIds } from './scratchPageSlice';
 
-const ScratchReplies = () => {
+const ScratchReplies = ({ parentScratchId }: { parentScratchId: number }) => {
+  const parentScratch = useAppSelector((state) =>
+    selectScratchById(state, parentScratchId)
+  );
   const replyIds = useAppSelector(selectScratchReplyIds);
 
   return (
     <div>
-      Scratch Replies
       {replyIds.map((scratchId) => {
-        return <ScratchPost key={scratchId} scratchId={scratchId} />;
+        return (
+          <ScratchRepliesPost
+            key={scratchId}
+            scratchId={scratchId}
+            parentUsername={parentScratch.author.username}
+          />
+        );
       })}
     </div>
   );
