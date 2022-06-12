@@ -12,6 +12,7 @@ import {
   MoreHorizontal,
   Settings,
   User,
+  UserPlus,
 } from 'react-feather';
 import avatar from '../../images/avatarplaceholder.png';
 import { useState } from 'react';
@@ -101,6 +102,17 @@ const DefaultSideBar = () => {
               >
                 <LogIn strokeWidth={undefined} />
                 <span className="hidden xl:block">Login</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
+                    isActive && 'font-bold stroke-3'
+                  }`
+                }
+                to="/signup"
+              >
+                <UserPlus strokeWidth={undefined} />
+                <span className="hidden xl:block">Sign up</span>
               </NavLink>
             </>
           )}

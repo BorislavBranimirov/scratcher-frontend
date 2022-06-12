@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { login, selectAuthUser } from './authSlice';
 
-const Login = () => {
+const SignUp = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectAuthUser);
   const navigate = useNavigate();
@@ -15,7 +16,15 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ username, password }));
+    const res = await axios.post<{
+      success: boolean;
+      id: number;
+      username: string;
+    }>('/api/users', { username, password });
+
+    if (res.data.success) {
+      dispatch(login({ username, password }));
+    }
   };
 
   useEffect(() => {
@@ -28,7 +37,7 @@ const Login = () => {
     <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 flex items-center">
       <div className="grow flex flex-col rounded-2xl border border-primary p-3 h-[80%]">
         <h2 className="text-center text-2xl font-bold leading-6 py-4">
-          Sign in to Scratcher
+          Create your account
         </h2>
         <form
           className="grow mx-auto mt-2 w-[80%] flex flex-col justify-between"
@@ -81,13 +90,13 @@ const Login = () => {
             type="submit"
             disabled={!username || !password}
           >
-            Log in
+            Sign up
           </button>
         </form>
         <div className="my-4 flex gap-1 mx-auto w-[80%]">
-          <span>Don't have an account?</span>
-          <Link className="text-blue hover:underline" to="/signup">
-            Sign up
+          <span>Already have an account?</span>
+          <Link className="text-blue hover:underline" to="/login">
+            Log in
           </Link>
         </div>
       </div>
@@ -95,4 +104,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

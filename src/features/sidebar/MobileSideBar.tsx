@@ -8,6 +8,7 @@ import {
   Menu,
   Settings,
   User,
+  UserPlus,
   X,
 } from 'react-feather';
 import avatar from '../../images/avatarplaceholder.png';
@@ -149,17 +150,30 @@ const MobileSideBar = () => {
               </button>
             </>
           ) : (
-            <NavLink
-              className={({ isActive }) =>
-                `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                  isActive && 'font-bold stroke-3'
-                }`
-              }
-              to="/login"
-            >
-              <LogIn strokeWidth={undefined} />
-              <span>Login</span>
-            </NavLink>
+            <>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
+                    isActive && 'font-bold stroke-3'
+                  }`
+                }
+                to="/login"
+              >
+                <LogIn strokeWidth={undefined} />
+                <span>Login</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
+                    isActive && 'font-bold stroke-3'
+                  }`
+                }
+                to="/signup"
+              >
+                <UserPlus strokeWidth={undefined} />
+                <span>Sign up</span>
+              </NavLink>
+            </>
           )}
         </div>
       </header>

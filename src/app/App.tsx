@@ -28,6 +28,7 @@ import Notification from '../features/notification/Notification';
 import SuggestedUsersPage from '../features/suggestedUsers/SuggestedUsersPage';
 import Modal from '../features/modal/Modal';
 import { Loader } from 'react-feather';
+import SignUp from '../features/auth/SignUp';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -85,6 +86,7 @@ const App = () => {
             <Route path={userPagePath} element={<UserPage />} />
             <Route path={userPagePathWithTab} element={<UserPage />} />
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
             <Route path="*" element={<Navigate to="home" replace />} />
           </Routes>
         </main>
