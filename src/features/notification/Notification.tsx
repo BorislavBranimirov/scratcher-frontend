@@ -23,7 +23,7 @@ const Notification = () => {
   }
 
   return (
-    <div className="fixed right-0 bottom-0 left-0 mx-auto mb-8 max-w-md flex justify-center">
+    <div className="fixed right-0 bottom-0 left-0 mx-auto mb-8 z-50 w-fit max-w-md flex justify-center">
       <div className="bg-blue py-3 px-6 rounded overflow-hidden">
         <p>{message}</p>
       </div>
