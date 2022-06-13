@@ -19,6 +19,8 @@ import {
   setUserFollow,
   deleteUserFollow,
   deleteDirectRescratch,
+  getUserFollowers,
+  getUserFollowed,
 } from '../../axiosApi';
 import { scratchEntity } from '../../common/entities';
 import {
@@ -367,7 +369,50 @@ export const unpinScratch = createAsyncThunk<
   }
 });
 
-export const followUserPage = createAsyncThunk<
+interface LoadUserFollowersReturnObj {
+  user: User;
+  followers: User[];
+}
+
+export const loadUserFollowers = createAsyncThunk<
+  LoadUserFollowersReturnObj,
+  { username: string },
+  { rejectValue: string }
+>('timeline/loadUserFollowers', async (args, thunkApi) => {
+  try {
+    const user = (await getUserByUsername(args.username)).data;
+
+    const res = await getUserFollowers(user.id);
+
+    return { user, followers: res.data };
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
+    }
+    return Promise.reject(err);
+  }
+});
+
+export const loadUserFollowing = createAsyncThunk<
+  LoadUserFollowersReturnObj,
+  { username: string },
+  { rejectValue: string }
+>('timeline/loadUserFollowing', async (args, thunkApi) => {
+  try {
+    const user = (await getUserByUsername(args.username)).data;
+
+    const res = await getUserFollowed(user.id);
+
+    return { user, followers: res.data };
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
+    }
+    return Promise.reject(err);
+  }
+});
+
+export const followUser = createAsyncThunk<
   number,
   { id: number },
   { rejectValue: string }
@@ -383,7 +428,7 @@ export const followUserPage = createAsyncThunk<
   }
 });
 
-export const unfollowUserPage = createAsyncThunk<
+export const unfollowUser = createAsyncThunk<
   number,
   { id: number },
   { rejectValue: string }
@@ -400,11 +445,18 @@ export const unfollowUserPage = createAsyncThunk<
 });
 
 export interface TimelineState {
-  type: 'home' | 'userTimeline' | 'userLikes' | null;
+  type:
+    | 'home'
+    | 'userTimeline'
+    | 'userLikes'
+    | 'followers'
+    | 'following'
+    | null;
   user: User | null;
   pinnedScratchId: number | null;
   ids: number[];
   scratches: { [key: string]: Scratch };
+  followers: User[];
   isFinished: boolean;
   isLoading: boolean;
   isLoadingMore: boolean;
@@ -416,6 +468,7 @@ const initialState: TimelineState = {
   pinnedScratchId: null,
   ids: [],
   scratches: {},
+  followers: [],
   isFinished: false,
   isLoading: false,
   isLoadingMore: false,
@@ -601,15 +654,43 @@ export const timelineSlice = createSlice({
       }
     });
 
-    builder.addCase(followUserPage.fulfilled, (state, action) => {
-      if (state.user?.id === action.payload && state.type === 'userTimeline') {
+    builder.addCase(loadUserFollowers.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.followers = action.payload.followers;
+
+      state.type = 'followers';
+      state.isLoading = false;
+    });
+
+    builder.addCase(loadUserFollowing.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.followers = action.payload.followers;
+
+      state.type = 'following';
+      state.isLoading = false;
+    });
+
+    builder.addCase(followUser.fulfilled, (state, action) => {
+      if (state.user?.id === action.payload) {
         state.user.isFollowing = true;
+      }
+
+      for (const user of state.followers) {
+        if (user.id === action.payload) {
+          user.isFollowing = true;
+        }
       }
     });
 
-    builder.addCase(unfollowUserPage.fulfilled, (state, action) => {
-      if (state.user?.id === action.payload && state.type === 'userTimeline') {
+    builder.addCase(unfollowUser.fulfilled, (state, action) => {
+      if (state.user?.id === action.payload) {
         state.user.isFollowing = false;
+      }
+
+      for (const user of state.followers) {
+        if (user.id === action.payload) {
+          user.isFollowing = false;
+        }
       }
     });
 
@@ -680,7 +761,9 @@ export const timelineSlice = createSlice({
       isAnyOf(
         loadHomeTimeline.pending,
         loadUserTimeline.pending,
-        loadUserLikes.pending
+        loadUserLikes.pending,
+        loadUserFollowers.pending,
+        loadUserFollowing.pending
       ),
       (state) => {
         state.isLoading = true;
@@ -690,7 +773,9 @@ export const timelineSlice = createSlice({
       isAnyOf(
         loadHomeTimeline.rejected,
         loadUserTimeline.rejected,
-        loadUserLikes.rejected
+        loadUserLikes.rejected,
+        loadUserFollowers.rejected,
+        loadUserFollowing.rejected
       ),
       (state) => {
         state.isLoading = false;
@@ -722,5 +807,8 @@ export const selectTimelineIsFinished = (state: RootState) =>
 
 export const selectTimelineScratchById = (state: RootState, id: number) =>
   state.timeline.scratches[id];
+
+export const selectUserFollowers = (state: RootState) =>
+  state.timeline.followers;
 
 export default timelineSlice.reducer;

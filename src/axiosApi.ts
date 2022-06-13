@@ -250,6 +250,14 @@ export const deleteUserFollow = (id: number) => {
   return axiosApi.delete<FollowResponseJson>(`/api/users/${id}/follow`);
 };
 
+export const getUserFollowers = (id: number) => {
+  return axiosApi.get<User[]>(`/api/users/${id}/followers`);
+};
+
+export const getUserFollowed = (id: number) => {
+  return axiosApi.get<User[]>(`/api/users/${id}/followed`);
+};
+
 interface UserScratchBookmarksReponseJson {
   bookmarks: Scratch[];
   extraScratches: { [key: string]: Scratch };

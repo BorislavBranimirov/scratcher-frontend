@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
+  loadUserFollowers,
+  loadUserFollowing,
   loadUserLikes,
   loadUserTimeline,
   selectTimelineIsLoading,
@@ -14,6 +16,7 @@ import { selectAuthIsLogged } from '../auth/authSlice';
 import { generateUserPath, userPageTabValue } from '../../common/routePaths';
 import UserPageTabs from './UserPageTabs';
 import UserPagePosts from './UserPagePosts';
+import FollowersList from './FollowersList';
 
 const UserPage = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +42,20 @@ const UserPage = () => {
         navigate(userPath, { replace: true });
       }
     }
+    if (tab === 'followers') {
+      if (isLogged) {
+        dispatch(loadUserFollowers({ username }));
+      } else {
+        navigate(userPath, { replace: true });
+      }
+    }
+    if (tab === 'following') {
+      if (isLogged) {
+        dispatch(loadUserFollowing({ username }));
+      } else {
+        navigate(userPath, { replace: true });
+      }
+    }
   }, [tab, username, userPath, isLogged, navigate, dispatch]);
 
   if (isLoading) {
@@ -56,7 +73,11 @@ const UserPage = () => {
           <button
             className="h-full mr-4"
             onClick={() => {
-              navigate(-1);
+              if (!tab) {
+                navigate(-1);
+              } else {
+                navigate(userPath);
+              }
             }}
           >
             <div className="relative" title="Back">
@@ -72,9 +93,13 @@ const UserPage = () => {
         </div>
         {user ? (
           <>
-            <UserProfile />
+            {!(tab === 'followers' || tab === 'following') && <UserProfile />}
             <UserPageTabs />
-            <UserPagePosts />
+            {tab === 'followers' || tab === 'following' ? (
+              <FollowersList />
+            ) : (
+              <UserPagePosts />
+            )}
           </>
         ) : (
           <div className="mt-4 text-center">

@@ -1,18 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { User } from '../../common/types';
 import { generateUserPath } from '../../common/routePaths';
-import { followUser, unfollowUser } from './suggestedUsersSlice';
+import { User } from '../../common/types';
 import avatar from '../../images/avatarplaceholder.png';
+import { followUser, unfollowUser } from './timelineSlice';
 
-const SuggestedUserItem = ({
-  user,
-  extended,
-}: {
-  user: User;
-  extended?: boolean;
-}) => {
+const FollowersItem = ({ user }: { user: User }) => {
   const dispatch = useAppDispatch();
   const [followBtnHover, setFollowBtnHover] = useState(false);
   const navigate = useNavigate();
@@ -59,12 +53,8 @@ const SuggestedUserItem = ({
         if (!target.closest('a')) navigate(userPath);
       }}
     >
-      <div className={`grow flex ${!extended && 'items-center'} gap-3 min-w-0`}>
-        <div
-          className={`${
-            extended ? 'w-12 h-12' : 'w-10 h-10'
-          } rounded-full overflow-hidden mt-1 shrink-0`}
-        >
+      <div className="grow flex gap-3 min-w-0">
+        <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
           <Link to={userPath}>
             <img src={user.profileImageUrl || avatar} alt="avatar" />
           </Link>
@@ -83,15 +73,13 @@ const SuggestedUserItem = ({
             </div>
             {followButton}
           </div>
-          {extended && (
-            <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">
-              {user.description}
-            </p>
-          )}
+          <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">
+            {user.description}
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default SuggestedUserItem;
+export default FollowersItem;

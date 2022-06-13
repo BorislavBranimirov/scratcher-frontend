@@ -17,6 +17,65 @@ const UserPageTabs = () => {
   };
   const userPath = generateUserPath({ username });
   const userLikesPath = generateUserPathWithTab({ username, tab: 'likes' });
+  const userFollowersPath = generateUserPathWithTab({
+    username,
+    tab: 'followers',
+  });
+  const userFollowingPath = generateUserPathWithTab({
+    username,
+    tab: 'following',
+  });
+
+  if (tab === 'followers' || tab === 'following') {
+    return (
+      <div className="flex border-b border-primary">
+        <div
+          className={`grow flex justify-center transition-colors ${
+            tab === 'followers' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          }`}
+        >
+          <NavLink
+            className={({ isActive }) =>
+              `px-4 text-center w-full ${
+                isActive ? 'font-bold' : 'text-secondary'
+              }`
+            }
+            to={userFollowersPath}
+            end
+          >
+            <div className="relative py-3 w-fit mx-auto">
+              <span>Followers</span>
+              {tab === 'followers' && (
+                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              )}
+            </div>
+          </NavLink>
+        </div>
+        <div
+          className={`grow flex justify-center transition-colors ${
+            tab === 'following' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          }`}
+        >
+          <NavLink
+            className={({ isActive }) =>
+              `px-4 text-center w-full ${
+                isActive ? 'font-bold' : 'text-secondary'
+              }`
+            }
+            to={userFollowingPath}
+            end
+          >
+            <div className="relative py-3 w-fit mx-auto">
+              <span>Following</span>
+              {tab === 'following' && (
+                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              )}
+            </div>
+          </NavLink>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex border-b border-primary">
