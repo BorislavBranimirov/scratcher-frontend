@@ -1,10 +1,11 @@
 import { useLayoutEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { closeModal, addModalScratch } from './modalSlice';
+import { closeModal } from './modalSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { selectAuthUser } from '../auth/authSlice';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
+import { addScratch } from '../scratches/scratchesSlice';
 
 const PostModal = () => {
   const dispatch = useAppDispatch();
@@ -21,10 +22,15 @@ const PostModal = () => {
     }
   }, [inputFieldRef]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      dispatch(addModalScratch({ body }));
+      const res = await dispatch(addScratch({ body }));
+      if (addScratch.fulfilled.match(res)) {
+        dispatch(closeModal());
+      } else {
+        setIsSubmitting(false);
+      }
     }
   };
 

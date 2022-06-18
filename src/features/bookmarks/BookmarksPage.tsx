@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Loader } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectAuthUser } from '../auth/authSlice';
+import { selectAuthUser, selectAuthUserId } from '../auth/authSlice';
 import SuggestedUsersWindow from '../suggestedUsers/SuggestedUsersWindow';
 import BookmarksPost from './BookmarksPost';
 import {
@@ -12,15 +12,16 @@ import {
 
 const BookmarksPage = () => {
   const dispatch = useAppDispatch();
+  const userId = useAppSelector(selectAuthUserId);
   const user = useAppSelector(selectAuthUser);
   const ids = useAppSelector(selectBookmarkIds);
   const isLoading = useAppSelector(selectBookmarksIsLoading);
 
   useEffect(() => {
-    if (user?.id) {
-      dispatch(loadBookmarks({ id: user.id }));
+    if (userId) {
+      dispatch(loadBookmarks({ id: userId }));
     }
-  }, [user?.id, dispatch]);
+  }, [userId, dispatch]);
 
   if (isLoading) {
     return (
@@ -33,9 +34,9 @@ const BookmarksPage = () => {
   return (
     <>
       <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
-        <div className="sticky top-0 bg-neutral border-b border-primary px-4 pt-1 pb-2 z-10">
+        <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10">
           <h2 className="text-lg font-bold leading-6">Bookmarks</h2>
-          <p className="text-xs text-secondary">@{user?.username}</p>
+          <p className="pb-1 text-xs text-secondary">@{user?.username}</p>
         </div>
         {ids.map((id) => {
           return <BookmarksPost key={id} scratchId={id} />;

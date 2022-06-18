@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { Calendar } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
-import { followUser, selectTimelineUser, unfollowUser } from './timelineSlice';
+import { selectTimelineUser } from './timelineSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import banner from '../../images/bannerplaceholder.png';
 import { Link } from 'react-router-dom';
 import { generateUserPathWithTab } from '../../common/routePaths';
 import { pushNotification } from '../notification/notificationSlice';
+import { followUser, unfollowUser } from '../users/usersSlice';
 
 const UserProfile = () => {
   const dispatch = useAppDispatch();

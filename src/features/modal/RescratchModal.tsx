@@ -2,19 +2,15 @@ import { useLayoutEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
-import {
-  addQuoteRescratch,
-  closeModal,
-  selectModal,
-  selectModalScratchById,
-} from './modalSlice';
+import { closeModal, selectModalScratchId } from './modalSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { selectAuthUser } from '../auth/authSlice';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
+import { addQuoteRescratch } from '../scratches/scratchesSlice';
 
 const RescratchModal = () => {
   const dispatch = useAppDispatch();
-  const { scratchId } = useAppSelector(selectModal);
+  const rescratchedId = useAppSelector(selectModalScratchId);
   const user = useAppSelector(selectAuthUser);
 
   const [body, setBody] = useState('');
@@ -28,10 +24,15 @@ const RescratchModal = () => {
     }
   }, [inputFieldRef]);
 
-  const handleSubmit = () => {
-    if (!isSubmitting && scratchId) {
+  const handleSubmit = async () => {
+    if (!isSubmitting && rescratchedId) {
       setIsSubmitting(true);
-      dispatch(addQuoteRescratch({ body, rescratchedId: scratchId }));
+      const res = await dispatch(addQuoteRescratch({ body, rescratchedId }));
+      if (addQuoteRescratch.fulfilled.match(res)) {
+        dispatch(closeModal());
+      } else {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -68,11 +69,8 @@ const RescratchModal = () => {
             }}
             disabled={isSubmitting}
           />
-          {scratchId ? (
-            <EmbeddedRescratch
-              rescratchedId={scratchId}
-              selector={selectModalScratchById}
-            />
+          {rescratchedId ? (
+            <EmbeddedRescratch rescratchedId={rescratchedId} />
           ) : (
             <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-secondary text-sm transition-colors duration-200 hover:bg-primary/5">
               Scratch not found

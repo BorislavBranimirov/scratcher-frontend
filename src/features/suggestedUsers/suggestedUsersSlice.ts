@@ -1,53 +1,31 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { normalize } from 'normalizr';
 import { RootState } from '../../app/store';
-import {
-  deleteUserFollow,
-  getSuggestedUsers,
-  setUserFollow,
-} from '../../axiosApi';
+import { getSuggestedUsers } from '../../axiosApi';
+import { userEntity } from '../../common/entities';
 import { apiError, User } from '../../common/types';
 
+interface LoadSuggestedUsersReturnObj {
+  entities: { users: { [key: string]: User } };
+  result: number[];
+}
+
 export const loadSuggestedUsers = createAsyncThunk<
-  User[],
+  LoadSuggestedUsersReturnObj,
   { limit?: number },
   { rejectValue: string }
 >('suggestedUsers/loadSuggestedUsers', async (args, thunkApi) => {
   try {
     const res = await getSuggestedUsers(args.limit);
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
 
-export const followUser = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('suggestedUsers/followUser', async (args, thunkApi) => {
-  try {
-    await setUserFollow(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
+    const normalized = normalize<
+      User,
+      LoadSuggestedUsersReturnObj['entities'],
+      LoadSuggestedUsersReturnObj['result']
+    >(res.data, [userEntity]);
 
-export const unfollowUser = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('suggestedUsers/unfollowUser', async (args, thunkApi) => {
-  try {
-    await deleteUserFollow(args.id);
-    return args.id;
+    return normalized;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -57,12 +35,12 @@ export const unfollowUser = createAsyncThunk<
 });
 
 export interface SuggestedUsersState {
-  users: User[];
+  ids: number[];
   isLoading: boolean;
 }
 
 const initialState: SuggestedUsersState = {
-  users: [],
+  ids: [],
   isLoading: false,
 };
 
@@ -75,34 +53,18 @@ export const suggestedUsersSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(loadSuggestedUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.ids = action.payload.result;
 
       state.isLoading = false;
     });
     builder.addCase(loadSuggestedUsers.rejected, (state) => {
       state.isLoading = false;
     });
-
-    builder.addCase(followUser.fulfilled, (state, action) => {
-      for (const user of state.users) {
-        if (user.id === action.payload) {
-          user.isFollowing = true;
-        }
-      }
-    });
-
-    builder.addCase(unfollowUser.fulfilled, (state, action) => {
-      for (const user of state.users) {
-        if (user.id === action.payload) {
-          user.isFollowing = false;
-        }
-      }
-    });
   },
 });
 
-export const selectSuggestedUsers = (state: RootState) =>
-  state.suggestedUsers.users;
+export const selectSuggestedUserIds = (state: RootState) =>
+  state.suggestedUsers.ids;
 
 export const selectSuggestedUsersIsLoading = (state: RootState) =>
   state.suggestedUsers.isLoading;

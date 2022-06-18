@@ -6,12 +6,16 @@ import bookmarkReducer from '../features/bookmarks/bookmarksSlice';
 import scratchPageReducer from '../features/scratchPage/scratchPageSlice';
 import suggestedUsersReducer from '../features/suggestedUsers/suggestedUsersSlice';
 import modalReducer from '../features/modal/modalSlice';
+import scratchesReducer from '../features/scratches/scratchesSlice';
+import usersReducer from '../features/users/usersSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     notification: notificationReducer,
     modal: modalReducer,
+    users: usersReducer,
+    scratches: scratchesReducer,
     timeline: timelineReducer,
     bookmarks: bookmarkReducer,
     scratchPage: scratchPageReducer,

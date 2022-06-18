@@ -60,11 +60,9 @@ const ScratchPage = () => {
               <ArrowLeft size={16} />
             </div>
           </button>
-          {parentChainIds.length === 0 ? (
-            <h2 className="text-lg font-bold leading-6">Scratch</h2>
-          ) : (
-            <h2 className="text-lg font-bold leading-6">Thread</h2>
-          )}
+          <h2 className="text-lg font-bold leading-6">
+            {parentChainIds.length === 0 ? 'Scratch' : 'Thread'}
+          </h2>
         </div>
         <ScratchParentChain />
         <ScratchMainPostWrapper scratchId={scratchId} />

@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { generateScratchPath } from '../../common/routePaths';
-import { selectScratchById } from './scratchPageSlice';
+import { selectScratchById } from '../scratches/scratchesSlice';
 
 const ScratchRedirect = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>

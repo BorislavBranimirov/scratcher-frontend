@@ -6,27 +6,15 @@ import {
 } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import {
-  removeScratch as bookmarksRemoveScratch,
-  pinScratch as bookmarksPinScratch,
-  unpinScratch as bookmarksUnpinScratch,
-  unbookmarkScratch as bookmarksUnbookmarkScratch,
-} from '../bookmarks/bookmarksSlice';
-import {
-  addScratch as scratchAddScratch,
-  removeScratch as scratchRemoveScratch,
-  bookmarkScratch as scratchBookmarkScratch,
-  unbookmarkScratch as scratchUnbookmarkScratch,
-  pinScratch as scratchPinScratch,
-  unpinScratch as scratchUnpinScratch,
-} from '../scratchPage/scratchPageSlice';
-import {
-  addScratch as timelineAddScratch,
-  removeScratch as timelineRemoveScratch,
-  bookmarkScratch as timelineBookmarkScratch,
-  unbookmarkScratch as timelineUnbookmarkScratch,
-  pinScratch as timelinePinScratch,
-  unpinScratch as timelineUnpinScratch,
-} from '../timeline/timelineSlice';
+  addQuoteRescratch,
+  addReplyScratch,
+  addScratch,
+  bookmarkScratch,
+  pinScratch,
+  removeScratch,
+  unbookmarkScratch,
+  unpinScratch,
+} from '../scratches/scratchesSlice';
 
 export interface NotificationState {
   messages: string[];
@@ -48,64 +36,34 @@ export const notificationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(removeScratch.fulfilled, (state) => {
+      state.messages.push('Your scratch was deleted.');
+    });
+
+    builder.addCase(bookmarkScratch.fulfilled, (state) => {
+      state.messages.push('Scratch was added to your bookmarks.');
+    });
+
+    builder.addCase(unbookmarkScratch.fulfilled, (state) => {
+      state.messages.push('Scratch was removed from your bookmarks.');
+    });
+
+    builder.addCase(pinScratch.fulfilled, (state) => {
+      state.messages.push('Your scratch was pinned to your profile.');
+    });
+
+    builder.addCase(unpinScratch.fulfilled, (state) => {
+      state.messages.push('Your scratch was unpinned from your profile.');
+    });
+
     builder.addMatcher(
-      isAnyOf(timelineAddScratch.fulfilled, scratchAddScratch.fulfilled),
+      isAnyOf(
+        addScratch.fulfilled,
+        addReplyScratch.fulfilled,
+        addQuoteRescratch.fulfilled
+      ),
       (state) => {
         state.messages.push('Your scratch was sent.');
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelineRemoveScratch.fulfilled,
-        scratchRemoveScratch.fulfilled,
-        bookmarksRemoveScratch.fulfilled
-      ),
-      (state) => {
-        state.messages.push('Your scratch was deleted.');
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelineBookmarkScratch.fulfilled,
-        scratchBookmarkScratch.fulfilled
-      ),
-      (state) => {
-        state.messages.push('Scratch was added to your bookmarks.');
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelineUnbookmarkScratch.fulfilled,
-        scratchUnbookmarkScratch.fulfilled,
-        bookmarksUnbookmarkScratch.fulfilled
-      ),
-      (state) => {
-        state.messages.push('Scratch was removed from your bookmarks.');
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelinePinScratch.fulfilled,
-        scratchPinScratch.fulfilled,
-        bookmarksPinScratch.fulfilled
-      ),
-      (state) => {
-        state.messages.push('Your scratch was pinned to your profile.');
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelineUnpinScratch.fulfilled,
-        scratchUnpinScratch.fulfilled,
-        bookmarksUnpinScratch.fulfilled
-      ),
-      (state) => {
-        state.messages.push('Your scratch was unpinned from your profile.');
       }
     );
 

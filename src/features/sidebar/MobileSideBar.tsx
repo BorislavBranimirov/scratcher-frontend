@@ -77,9 +77,9 @@ const MobileSideBar = () => {
                   className="w-9 h-9 rounded-full overflow-hidden shrink-0"
                 />
                 <div>
-                  <p className="truncate">{user?.name}</p>
+                  <p className="truncate">{user.name}</p>
                   <p className="text-secondary text-sm truncate">
-                    @{user?.username}
+                    @{user.username}
                   </p>
                 </div>
               </Link>

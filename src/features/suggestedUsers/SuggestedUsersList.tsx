@@ -1,16 +1,14 @@
 import { useAppSelector } from '../../app/hooks';
 import SuggestedUserItem from './SuggestedUserItem';
-import { selectSuggestedUsers } from './suggestedUsersSlice';
+import { selectSuggestedUserIds } from './suggestedUsersSlice';
 
 const SuggestedUsersList = ({ extended }: { extended?: boolean }) => {
-  const users = useAppSelector(selectSuggestedUsers);
+  const ids = useAppSelector(selectSuggestedUserIds);
 
   return (
     <div>
-      {users.map((user) => {
-        return (
-          <SuggestedUserItem key={user.id} user={user} extended={extended} />
-        );
+      {ids.map((id) => {
+        return <SuggestedUserItem key={id} userId={id} extended={extended} />;
       })}
     </div>
   );

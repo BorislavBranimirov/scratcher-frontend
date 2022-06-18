@@ -1,11 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { generateScratchPath } from '../../common/routePaths';
+import { selectScratchById } from '../scratches/scratchesSlice';
 import ScratchMainPost from './ScratchMainPost';
-import {
-  selectScratchById,
-  selectScratchParentChainIds,
-} from './scratchPageSlice';
+import { selectScratchParentChainIds } from './scratchPageSlice';
 
 const ScratchMainPostWrapper = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>

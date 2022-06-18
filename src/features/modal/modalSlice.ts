@@ -1,43 +1,17 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../app/store';
-import { getScratch, postScratch } from '../../axiosApi';
-import {
-  apiError,
-  PostReplyRequestObj,
-  PostRescratchRequestObj,
-  PostScratchRequestObj,
-  Scratch,
-  ScratchResponseObj,
-} from '../../common/types';
+import { getScratch } from '../../axiosApi';
+import { apiError, ScratchResponseObj } from '../../common/types';
 
 export const openPostModal = createAsyncThunk<
   void,
   undefined,
   { rejectValue: string; state: RootState }
 >('modal/openPostModal', async (_, thunkApi) => {
-  const isLogged = thunkApi.getState().auth.user !== null;
+  const isLogged = thunkApi.getState().auth.userId !== null;
   if (!isLogged) {
     return thunkApi.rejectWithValue('Log in to post.');
-  }
-});
-
-export const addModalScratch = createAsyncThunk<
-  ScratchResponseObj,
-  PostScratchRequestObj,
-  { rejectValue: string }
->('modal/addScratch', async (args, thunkApi) => {
-  try {
-    const scratchId = (await postScratch(args)).data.id;
-
-    const res = await getScratch(scratchId);
-
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
   }
 });
 
@@ -46,7 +20,7 @@ export const openReplyModal = createAsyncThunk<
   { parentId: number },
   { rejectValue: string; state: RootState }
 >('modal/openReplyModal', async (args, thunkApi) => {
-  const isLogged = thunkApi.getState().auth.user !== null;
+  const isLogged = thunkApi.getState().auth.userId !== null;
   if (!isLogged) {
     return thunkApi.rejectWithValue('Log in to reply.');
   }
@@ -62,31 +36,12 @@ export const openReplyModal = createAsyncThunk<
   }
 });
 
-export const replyToScratch = createAsyncThunk<
-  ScratchResponseObj,
-  PostReplyRequestObj,
-  { rejectValue: string }
->('modal/addReply', async (args, thunkApi) => {
-  try {
-    const scratchId = (await postScratch(args)).data.id;
-
-    const res = await getScratch(scratchId);
-
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
 export const openRescratchModal = createAsyncThunk<
   ScratchResponseObj,
   { rescratchedId: number },
   { rejectValue: string; state: RootState }
 >('modal/openRescratchModal', async (args, thunkApi) => {
-  const isLogged = thunkApi.getState().auth.user !== null;
+  const isLogged = thunkApi.getState().auth.userId !== null;
   if (!isLogged) {
     return thunkApi.rejectWithValue('Log in to rescratch.');
   }
@@ -102,37 +57,16 @@ export const openRescratchModal = createAsyncThunk<
   }
 });
 
-export const addQuoteRescratch = createAsyncThunk<
-  ScratchResponseObj,
-  PostRescratchRequestObj,
-  { rejectValue: string }
->('modal/addQuoteRescratch', async (args, thunkApi) => {
-  try {
-    const scratchId = (await postScratch(args)).data.id;
-
-    const res = await getScratch(scratchId);
-
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
 export interface ModalState {
   show: boolean;
   type: 'post' | 'reply' | 'rescratch' | null;
   scratchId: number | null;
-  scratches: { [key: string]: Scratch };
 }
 
 const initialState: ModalState = {
   show: false,
   type: null,
   scratchId: null,
-  scratches: {},
 };
 
 export const modalSlice = createSlice({
@@ -153,40 +87,27 @@ export const modalSlice = createSlice({
       state.show = true;
       state.type = 'reply';
       state.scratchId = action.payload.scratch.id;
-      state.scratches = {
-        [action.payload.scratch.id]: action.payload.scratch,
-        ...action.payload.extraScratches,
-      };
     });
 
     builder.addCase(openRescratchModal.fulfilled, (state, action) => {
       state.show = true;
       state.type = 'rescratch';
       state.scratchId = action.payload.scratch.id;
-      state.scratches = {
-        [action.payload.scratch.id]: action.payload.scratch,
-        ...action.payload.extraScratches,
-      };
     });
-
-    builder.addMatcher(
-      isAnyOf(
-        addModalScratch.fulfilled,
-        replyToScratch.fulfilled,
-        addQuoteRescratch.fulfilled
-      ),
-      () => {
-        return initialState;
-      }
-    );
   },
 });
 
 export const { closeModal } = modalSlice.actions;
 
-export const selectModal = (state: RootState) => state.modal;
+export const selectModalShow = (state: RootState) => state.modal.show;
 
-export const selectModalScratchById = (state: RootState, id: number) =>
-  state.modal.scratches[id];
+export const selectModalType = (state: RootState) => state.modal.type;
+
+export const selectModalScratchId = (state: RootState) => state.modal.scratchId;
+
+export const selectModalScratch = (state: RootState) =>
+  state.modal.scratchId
+    ? state.scratches.entities[state.modal.scratchId]
+    : null;
 
 export default modalSlice.reducer;

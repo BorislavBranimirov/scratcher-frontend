@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
-import { User } from '../../common/types';
 import avatar from '../../images/avatarplaceholder.png';
-import { followUser, unfollowUser } from './timelineSlice';
+import { followUser, selectUserById, unfollowUser } from '../users/usersSlice';
 
-const FollowersItem = ({ user }: { user: User }) => {
+const FollowersItem = ({ userId }: { userId: number }) => {
   const dispatch = useAppDispatch();
-  const [followBtnHover, setFollowBtnHover] = useState(false);
+  const user = useAppSelector((state) => selectUserById(state, userId));
   const navigate = useNavigate();
+  const [followBtnHover, setFollowBtnHover] = useState(false);
 
   const followButton = user.isFollowing ? (
     <button

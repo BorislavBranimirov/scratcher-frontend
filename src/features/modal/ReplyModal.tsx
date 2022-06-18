@@ -4,18 +4,19 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import {
   closeModal,
-  replyToScratch,
-  selectModal,
-  selectModalScratchById,
+  selectModalScratch,
+  selectModalScratchId,
 } from './modalSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import TimeAgo from '../../common/TimeAgo';
 import { selectAuthUser } from '../auth/authSlice';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
+import { addReplyScratch } from '../scratches/scratchesSlice';
 
 const ReplyModal = () => {
   const dispatch = useAppDispatch();
-  const { scratchId, scratches } = useAppSelector(selectModal);
+  const parentScratchId = useAppSelector(selectModalScratchId);
+  const parentScratch = useAppSelector(selectModalScratch);
   const user = useAppSelector(selectAuthUser);
 
   const [body, setBody] = useState('');
@@ -29,10 +30,17 @@ const ReplyModal = () => {
     }
   }, [inputFieldRef]);
 
-  const handleSubmit = () => {
-    if (!isSubmitting && scratchId) {
+  const handleSubmit = async () => {
+    if (!isSubmitting && parentScratchId) {
       setIsSubmitting(true);
-      dispatch(replyToScratch({ body, parentId: scratchId }));
+      const res = await dispatch(
+        addReplyScratch({ body, parentId: parentScratchId })
+      );
+      if (addReplyScratch.fulfilled.match(res)) {
+        dispatch(closeModal());
+      } else {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -42,15 +50,13 @@ const ReplyModal = () => {
     dispatch(closeModal());
   };
 
-  if (!scratchId) {
+  if (!parentScratchId || !parentScratch) {
     return (
       <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden p-5">
         Scratch not found
       </div>
     );
   }
-
-  const parentScratch = scratches[scratchId];
 
   return (
     <div className="bg-neutral mt-10 flex flex-col z-30 rounded-2xl overflow-hidden w-full md:w-2/3 lg:w-1/2 xl:w-2/5">
@@ -92,7 +98,6 @@ const ReplyModal = () => {
                 parentScratch.rescratchedId && (
                   <EmbeddedRescratch
                     rescratchedId={parentScratch.rescratchedId}
-                    selector={selectModalScratchById}
                   />
                 )}
             </div>

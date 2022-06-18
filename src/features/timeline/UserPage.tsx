@@ -69,7 +69,7 @@ const UserPage = () => {
   return (
     <>
       <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
-        <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-3 z-10 flex items-center">
+        <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10 flex items-center">
           <button
             className="h-full mr-4"
             onClick={() => {
@@ -86,9 +86,12 @@ const UserPage = () => {
             </div>
           </button>
           {user ? (
-            <h2 className="text-lg font-bold leading-6">{user.name}</h2>
+            <div>
+              <h2 className="text-lg font-bold leading-6">{user.name}</h2>
+              <p className="pb-1 text-xs text-secondary">@{user?.username}</p>
+            </div>
           ) : (
-            <h2 className="text-lg font-bold leading-6">Profile</h2>
+            <h2 className="py-2 text-lg font-bold leading-6">Profile</h2>
           )}
         </div>
         {user ? (

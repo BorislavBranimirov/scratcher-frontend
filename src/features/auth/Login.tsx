@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { login, selectAuthUser } from './authSlice';
+import { login, selectAuthIsLogged } from './authSlice';
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectAuthUser);
+  const isLogged = useAppSelector(selectAuthIsLogged);
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -19,14 +19,14 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (isLogged) {
       navigate('/');
     }
   });
 
   return (
     <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 flex items-center">
-      <div className="grow flex flex-col rounded-2xl border border-primary p-3 h-[80%]">
+      <div className="grow flex flex-col p-3 h-[80%] md:border md:border-primary md:rounded-2xl">
         <h2 className="text-center text-2xl font-bold leading-6 py-4">
           Sign in to Scratcher
         </h2>

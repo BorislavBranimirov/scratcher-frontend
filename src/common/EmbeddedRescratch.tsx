@@ -1,21 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
-import { RootState } from '../app/store';
 import { generateScratchPath, generateUserPath } from './routePaths';
 import TimeAgo from './TimeAgo';
-import { Scratch } from './types';
 import avatar from '../images/avatarplaceholder.png';
+import { selectScratchById } from '../features/scratches/scratchesSlice';
 
-interface EmbeddedRescratchProps {
-  rescratchedId: number;
-  selector: (state: RootState, id: number) => Scratch;
-}
-
-const EmbeddedRescratch = ({
-  rescratchedId,
-  selector,
-}: EmbeddedRescratchProps) => {
-  const rescratch = useAppSelector((state) => selector(state, rescratchedId));
+const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
+  const rescratch = useAppSelector((state) =>
+    selectScratchById(state, rescratchedId)
+  );
   const navigate = useNavigate();
 
   if (!rescratch) {

@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectAuthUser } from '../auth/authSlice';
-import { addScratch, selectScratchById } from './scratchPageSlice';
 import avatar from '../../images/avatarplaceholder.png';
+import { addScratch, selectScratchById } from '../scratches/scratchesSlice';
 
 const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,9 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
   const handleSubmit = async () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      const res = await dispatch(addScratch({ body, parentId: parentScratchId }));
+      const res = await dispatch(
+        addScratch({ body, parentId: parentScratchId })
+      );
       if (addScratch.fulfilled.match(res)) {
         setBody('');
       }

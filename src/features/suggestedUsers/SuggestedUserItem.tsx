@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
-import { User } from '../../common/types';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
-import { followUser, unfollowUser } from './suggestedUsersSlice';
 import avatar from '../../images/avatarplaceholder.png';
+import { followUser, selectUserById, unfollowUser } from '../users/usersSlice';
 
 const SuggestedUserItem = ({
-  user,
+  userId,
   extended,
 }: {
-  user: User;
+  userId: number;
   extended?: boolean;
 }) => {
   const dispatch = useAppDispatch();
-  const [followBtnHover, setFollowBtnHover] = useState(false);
+  const user = useAppSelector((state) => selectUserById(state, userId));
   const navigate = useNavigate();
+  const [followBtnHover, setFollowBtnHover] = useState(false);
 
   const followButton = user.isFollowing ? (
     <button

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addScratch } from '../../features/timeline/timelineSlice';
 import { selectAuthUser } from '../auth/authSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import { Link } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
+import { addScratch } from '../scratches/scratchesSlice';
 
 const HomeScratchSubmit = () => {
   const dispatch = useAppDispatch();

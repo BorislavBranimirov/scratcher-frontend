@@ -9,18 +9,6 @@ import jwt_decode from 'jwt-decode';
 import { RootState } from '../../app/store';
 import { getUserByUsername } from '../../axiosApi';
 import { apiError, decodedJWT, User } from '../../common/types';
-import {
-  pinScratch as bookmarksPinScratch,
-  unpinScratch as bookmarksUnpinScratch,
-} from '../bookmarks/bookmarksSlice';
-import {
-  pinScratch as timelinePinScratch,
-  unpinScratch as timelineUnpinScratch,
-} from '../timeline/timelineSlice';
-import {
-  pinScratch as scratchPinScratch,
-  unpinScratch as scratchUnpinScratch,
-} from '../scratchPage/scratchPageSlice';
 
 interface loginReturnObj {
   user: User;
@@ -49,7 +37,7 @@ export const login = createAsyncThunk<
 });
 
 export const loginFromToken = createAsyncThunk<
-  User,
+  { user: User },
   undefined,
   { rejectValue: string; state: RootState }
 >('auth/loginFromToken', async (_, thunkApi) => {
@@ -63,7 +51,7 @@ export const loginFromToken = createAsyncThunk<
 
     const res = await getUserByUsername(userData.username);
 
-    return res.data;
+    return { user: res.data };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -79,13 +67,13 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 
 export interface AuthState {
   token: string | null;
-  user: User | null;
+  userId: number | null;
   isLoading: boolean;
 }
 
 const initialState: AuthState = {
   token: localStorage.getItem('accessToken'),
-  user: null,
+  userId: null,
   isLoading: false,
 };
 
@@ -102,18 +90,18 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      state.userId = action.payload.user.id;
       state.token = action.payload.token;
       state.isLoading = false;
     });
 
     builder.addCase(loginFromToken.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.userId = action.payload.user.id;
       state.isLoading = false;
     });
 
     builder.addCase(logout.fulfilled, (state) => {
-      state.user = null;
+      state.userId = null;
       state.token = null;
     });
 
@@ -130,32 +118,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
       }
     );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelinePinScratch.fulfilled,
-        bookmarksPinScratch.fulfilled,
-        scratchPinScratch.fulfilled
-      ),
-      (state, action) => {
-        if (state.user) {
-          state.user.pinnedId = action.payload;
-        }
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(
-        timelineUnpinScratch.fulfilled,
-        bookmarksUnpinScratch.fulfilled,
-        scratchUnpinScratch.fulfilled
-      ),
-      (state) => {
-        if (state.user) {
-          state.user.pinnedId = null;
-        }
-      }
-    );
   },
 });
 
@@ -163,12 +125,18 @@ export const { setAccessToken, clearAccessToken } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;
 
-export const selectAuthUser = (state: RootState) => state.auth.user;
+export const selectAuthUserId = (state: RootState) => state.auth.userId;
+
+export const selectAuthUser = (state: RootState) =>
+  state.auth.userId ? state.users.entities[state.auth.userId] : null;
+
+export const selectAuthUserPinnedId = (state: RootState) =>
+  state.auth.userId ? state.users.entities[state.auth.userId].pinnedId : null;
 
 export const selectAuthIsLoading = (state: RootState) => state.auth.isLoading;
 
 export const selectAuthIsLogged = (state: RootState) =>
-  state.auth.user !== null;
+  state.auth.userId !== null;
 
 export const selectAuthHasToken = (state: RootState) =>
   state.auth.token !== null;

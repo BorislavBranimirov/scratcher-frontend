@@ -7,34 +7,22 @@ import {
   getScratch,
   getUserByUsername,
   getUserTimeline,
-  setScratchLike,
-  deleteScratchLike,
-  setScratchPin,
-  deleteScratchPin,
-  setScratchBookmark,
-  deleteScratchBookmark,
   getUserLikes,
-  deleteScratch,
-  postScratch,
-  setUserFollow,
-  deleteUserFollow,
-  deleteDirectRescratch,
   getUserFollowers,
   getUserFollowed,
 } from '../../axiosApi';
-import { scratchEntity } from '../../common/entities';
+import { scratchEntity, userEntity } from '../../common/entities';
+import { apiError, Scratch, User } from '../../common/types';
 import {
-  apiError,
-  PostScratchRequestObj,
-  Scratch,
-  ScratchResponseObj,
-  User,
-} from '../../common/types';
-import {
-  addModalScratch,
   addQuoteRescratch,
-  replyToScratch,
-} from '../modal/modalSlice';
+  addReplyScratch,
+  addRescratch,
+  addScratch,
+  pinScratch,
+  removeScratch,
+  undoAddRescratch,
+  unpinScratch,
+} from '../scratches/scratchesSlice';
 
 interface LoadHomeTimelineReturnObj {
   entities: { scratches: { [key: string]: Scratch } };
@@ -71,7 +59,7 @@ export const loadHomeTimeline = createAsyncThunk<
 });
 
 interface LoadUserTimelineReturnObj {
-  user: User | null;
+  user: User;
   pinnedScratchId: number | null;
   entities: { scratches: { [key: string]: Scratch } };
   result: number[];
@@ -174,7 +162,7 @@ export const loadMoreOfTimeline = createAsyncThunk<
   { rejectValue: string; state: RootState }
 >('timeline/loadMoreOfTimeline', async (args, thunkApi) => {
   try {
-    const userId = thunkApi.getState().timeline.user?.id;
+    const userId = thunkApi.getState().timeline.userId;
 
     let res;
     if (userId) {
@@ -203,175 +191,10 @@ export const loadMoreOfTimeline = createAsyncThunk<
   }
 });
 
-export const addScratch = createAsyncThunk<
-  ScratchResponseObj,
-  PostScratchRequestObj,
-  { rejectValue: string }
->('timeline/addScratch', async (args, thunkApi) => {
-  try {
-    const scratchId = (await postScratch(args)).data.id;
-
-    const res = await getScratch(scratchId);
-
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const removeScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/removeScratch', async (args, thunkApi) => {
-  try {
-    await deleteScratch(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const addRescratch = createAsyncThunk<
-  ScratchResponseObj,
-  { rescratchedId: number },
-  { rejectValue: string }
->('timeline/addRescratch', async (args, thunkApi) => {
-  try {
-    const scratchId = (await postScratch(args)).data.id;
-
-    const res = await getScratch(scratchId);
-
-    return res.data;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const undoAddRescratch = createAsyncThunk<
-  { id: number; rescratchedId: number },
-  { id: number },
-  { rejectValue: string }
->('timeline/undoAddRescratch', async (args, thunkApi) => {
-  try {
-    const res = await deleteDirectRescratch(args.id);
-    return { id: res.data.id, rescratchedId: args.id };
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const likeScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/likeScratch', async (args, thunkApi) => {
-  try {
-    await setScratchLike(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const unlikeScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/unlikeScratch', async (args, thunkApi) => {
-  try {
-    await deleteScratchLike(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const bookmarkScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/bookmarkScratch', async (args, thunkApi) => {
-  try {
-    await setScratchBookmark(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const unbookmarkScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/unbookmarkScratch', async (args, thunkApi) => {
-  try {
-    await deleteScratchBookmark(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const pinScratch = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/pinScratch', async (args, thunkApi) => {
-  try {
-    await setScratchPin(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const unpinScratch = createAsyncThunk<
-  { userId: number; scratchId: number },
-  { id: number },
-  { rejectValue: string }
->('timeline/unpinScratch', async (args, thunkApi) => {
-  try {
-    const res = await deleteScratchPin(args.id);
-    return { userId: res.data.id, scratchId: res.data.pinnedId };
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
 interface LoadUserFollowersReturnObj {
-  user: User;
-  followers: User[];
+  userId: number;
+  entities: { users: { [key: string]: User } };
+  followerIds: number[];
 }
 
 export const loadUserFollowers = createAsyncThunk<
@@ -384,7 +207,17 @@ export const loadUserFollowers = createAsyncThunk<
 
     const res = await getUserFollowers(user.id);
 
-    return { user, followers: res.data };
+    const normalized = normalize<
+      User,
+      LoadUserFollowersReturnObj['entities'],
+      LoadUserFollowersReturnObj['followerIds']
+    >(res.data, [userEntity]);
+
+    return {
+      userId: user.id,
+      entities: { ...normalized.entities, [user.id]: user },
+      followerIds: normalized.result,
+    };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -403,39 +236,17 @@ export const loadUserFollowing = createAsyncThunk<
 
     const res = await getUserFollowed(user.id);
 
-    return { user, followers: res.data };
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
+    const normalized = normalize<
+      User,
+      LoadUserFollowersReturnObj['entities'],
+      LoadUserFollowersReturnObj['followerIds']
+    >(res.data, [userEntity]);
 
-export const followUser = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/followUser', async (args, thunkApi) => {
-  try {
-    await setUserFollow(args.id);
-    return args.id;
-  } catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      return thunkApi.rejectWithValue((err.response.data as apiError).err);
-    }
-    return Promise.reject(err);
-  }
-});
-
-export const unfollowUser = createAsyncThunk<
-  number,
-  { id: number },
-  { rejectValue: string }
->('timeline/unfollowUser', async (args, thunkApi) => {
-  try {
-    await deleteUserFollow(args.id);
-    return args.id;
+    return {
+      userId: user.id,
+      entities: { ...normalized.entities, [user.id]: user },
+      followerIds: normalized.result,
+    };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -452,11 +263,10 @@ export interface TimelineState {
     | 'followers'
     | 'following'
     | null;
-  user: User | null;
+  userId: number | null;
   pinnedScratchId: number | null;
   ids: number[];
-  scratches: { [key: string]: Scratch };
-  followers: User[];
+  followerIds: number[];
   isFinished: boolean;
   isLoading: boolean;
   isLoadingMore: boolean;
@@ -464,11 +274,10 @@ export interface TimelineState {
 
 const initialState: TimelineState = {
   type: null,
-  user: null,
+  userId: null,
   pinnedScratchId: null,
   ids: [],
-  scratches: {},
-  followers: [],
+  followerIds: [],
   isFinished: false,
   isLoading: false,
   isLoadingMore: false,
@@ -481,13 +290,12 @@ export const timelineSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loadHomeTimeline.fulfilled, (state, action) => {
       // clear user timeline fields if previously set
-      if (state.user || state.pinnedScratchId) {
-        state.user = null;
+      if (state.userId || state.pinnedScratchId) {
+        state.userId = null;
         state.pinnedScratchId = null;
       }
 
       state.ids = action.payload.result;
-      state.scratches = action.payload.entities.scratches;
       state.isFinished = action.payload.isFinished;
 
       state.type = 'home';
@@ -495,10 +303,9 @@ export const timelineSlice = createSlice({
     });
 
     builder.addCase(loadUserTimeline.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      state.userId = action.payload.user.id;
       state.pinnedScratchId = action.payload.pinnedScratchId;
       state.ids = action.payload.result;
-      state.scratches = action.payload.entities.scratches;
       state.isFinished = action.payload.isFinished;
 
       state.type = 'userTimeline';
@@ -509,45 +316,24 @@ export const timelineSlice = createSlice({
       if (state.pinnedScratchId) {
         state.pinnedScratchId = null;
       }
-      state.user = action.payload.user;
+      state.userId = action.payload.user.id;
       state.ids = action.payload.result;
-      state.scratches = action.payload.entities.scratches;
       state.isFinished = true;
 
       state.type = 'userLikes';
       state.isLoading = false;
     });
 
-    builder.addCase(loadMoreOfTimeline.fulfilled, (state, action) => {
-      state.ids.push(...action.payload.result);
-      state.scratches = {
-        ...state.scratches,
-        ...action.payload.entities.scratches,
-      };
-      state.isFinished = action.payload.isFinished;
-      state.isLoadingMore = false;
-    });
-
     builder.addCase(loadMoreOfTimeline.pending, (state) => {
       state.isLoadingMore = true;
     });
-
-    builder.addCase(loadMoreOfTimeline.rejected, (state) => {
+    builder.addCase(loadMoreOfTimeline.fulfilled, (state, action) => {
+      state.ids.push(...action.payload.result);
+      state.isFinished = action.payload.isFinished;
       state.isLoadingMore = false;
     });
-
-    builder.addCase(addScratch.fulfilled, (state, action) => {
-      if (state.type === 'home') {
-        const scratch = action.payload.scratch;
-
-        state.ids.unshift(scratch.id);
-        state.scratches[scratch.id] = scratch;
-
-        state.scratches = {
-          ...state.scratches,
-          ...action.payload.extraScratches,
-        };
-      }
+    builder.addCase(loadMoreOfTimeline.rejected, (state) => {
+      state.isLoadingMore = false;
     });
 
     builder.addCase(removeScratch.fulfilled, (state, action) => {
@@ -555,206 +341,51 @@ export const timelineSlice = createSlice({
         state.pinnedScratchId = null;
       }
 
-      if (action.payload in state.scratches) {
+      if (state.ids.includes(action.payload)) {
         state.ids = state.ids.filter((id) => id !== action.payload);
-        delete state.scratches[action.payload];
-      }
-    });
-
-    builder.addCase(addRescratch.fulfilled, (state, action) => {
-      const scratch = action.payload.scratch;
-
-      if (scratch.rescratchedId && scratch.rescratchedId in state.scratches) {
-        state.scratches[scratch.rescratchedId].isRescratched = true;
-        state.scratches[scratch.rescratchedId].rescratchCount += 1;
-      }
-
-      if (
-        state.type === 'home' ||
-        (state.type === 'userTimeline' && state.user?.id === scratch.authorId)
-      ) {
-        state.ids.unshift(scratch.id);
-        state.scratches[scratch.id] = scratch;
-
-        state.scratches = {
-          ...state.scratches,
-          ...action.payload.extraScratches,
-        };
       }
     });
 
     builder.addCase(undoAddRescratch.fulfilled, (state, action) => {
-      if (state.pinnedScratchId === action.payload.id) {
-        state.pinnedScratchId = null;
-      }
+      const id = action.payload.id;
 
-      if (action.payload.rescratchedId in state.scratches) {
-        state.scratches[action.payload.rescratchedId].isRescratched = false;
-        state.scratches[action.payload.rescratchedId].rescratchCount -= 1;
-      }
-
-      if (action.payload.id) {
+      if (state.ids.includes(id)) {
         state.ids = state.ids.filter((id) => id !== action.payload.id);
-        delete state.scratches[action.payload.id];
-      }
-    });
-
-    builder.addCase(likeScratch.fulfilled, (state, action) => {
-      if (action.payload in state.scratches) {
-        state.scratches[action.payload].isLiked = true;
-        state.scratches[action.payload].likeCount += 1;
-      }
-    });
-
-    builder.addCase(unlikeScratch.fulfilled, (state, action) => {
-      if (action.payload in state.scratches) {
-        state.scratches[action.payload].isLiked = false;
-        state.scratches[action.payload].likeCount -= 1;
-      }
-    });
-
-    builder.addCase(bookmarkScratch.fulfilled, (state, action) => {
-      if (action.payload in state.scratches) {
-        state.scratches[action.payload].isBookmarked = true;
-      }
-    });
-
-    builder.addCase(unbookmarkScratch.fulfilled, (state, action) => {
-      if (action.payload in state.scratches) {
-        state.scratches[action.payload].isBookmarked = false;
       }
     });
 
     builder.addCase(pinScratch.fulfilled, (state, action) => {
-      if (action.payload in state.scratches) {
-        const scratch = state.scratches[action.payload];
-
-        if (
-          state.user?.id === scratch.authorId &&
-          state.type === 'userTimeline'
-        ) {
-          state.pinnedScratchId = scratch.id;
-        }
+      if (
+        state.type === 'userTimeline' &&
+        state.userId === action.payload.userId
+      ) {
+        state.pinnedScratchId = action.payload.scratchId;
       }
     });
 
     builder.addCase(unpinScratch.fulfilled, (state, action) => {
       if (
-        state.user?.id === action.payload.userId &&
-        state.type === 'userTimeline'
+        state.type === 'userTimeline' &&
+        state.userId === action.payload.userId
       ) {
         state.pinnedScratchId = null;
-
-        if (
-          !state.ids.includes(action.payload.scratchId) &&
-          action.payload.scratchId in state.scratches
-        ) {
-          delete state.scratches[action.payload.scratchId];
-        }
       }
     });
 
     builder.addCase(loadUserFollowers.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-      state.followers = action.payload.followers;
+      state.userId = action.payload.userId;
+      state.followerIds = action.payload.followerIds;
 
       state.type = 'followers';
       state.isLoading = false;
     });
 
     builder.addCase(loadUserFollowing.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-      state.followers = action.payload.followers;
+      state.userId = action.payload.userId;
+      state.followerIds = action.payload.followerIds;
 
       state.type = 'following';
       state.isLoading = false;
-    });
-
-    builder.addCase(followUser.fulfilled, (state, action) => {
-      if (state.user?.id === action.payload) {
-        state.user.isFollowing = true;
-      }
-
-      for (const user of state.followers) {
-        if (user.id === action.payload) {
-          user.isFollowing = true;
-        }
-      }
-    });
-
-    builder.addCase(unfollowUser.fulfilled, (state, action) => {
-      if (state.user?.id === action.payload) {
-        state.user.isFollowing = false;
-      }
-
-      for (const user of state.followers) {
-        if (user.id === action.payload) {
-          user.isFollowing = false;
-        }
-      }
-    });
-
-    builder.addCase(addModalScratch.fulfilled, (state, action) => {
-      const scratch = action.payload.scratch;
-
-      if (
-        state.type === 'home' ||
-        (state.type === 'userTimeline' && state.user?.id === scratch.authorId)
-      ) {
-        state.ids.unshift(scratch.id);
-        state.scratches[scratch.id] = scratch;
-
-        state.scratches = {
-          ...state.scratches,
-          ...action.payload.extraScratches,
-        };
-      }
-    });
-
-    builder.addCase(replyToScratch.fulfilled, (state, action) => {
-      const scratch = action.payload.scratch;
-
-      if (scratch.parentId && scratch.parentId in state.scratches) {
-        state.scratches[scratch.parentId].replyCount += 1;
-      }
-
-      if (
-        state.type === 'home' ||
-        (state.type === 'userTimeline' && state.user?.id === scratch.authorId)
-      ) {
-        state.ids.unshift(scratch.id);
-        state.scratches[scratch.id] = scratch;
-
-        state.scratches = {
-          ...state.scratches,
-          ...action.payload.extraScratches,
-        };
-      }
-    });
-
-    builder.addCase(addQuoteRescratch.fulfilled, (state, action) => {
-      const scratch = action.payload.scratch;
-
-      if (scratch.rescratchedId && scratch.rescratchedId in state.scratches) {
-        if (scratch.rescratchType === 'direct') {
-          state.scratches[scratch.rescratchedId].isRescratched = true;
-        }
-
-        state.scratches[scratch.rescratchedId].rescratchCount += 1;
-      }
-
-      if (
-        state.type === 'home' ||
-        (state.type === 'userTimeline' && state.user?.id === scratch.authorId)
-      ) {
-        state.ids.unshift(scratch.id);
-        state.scratches[scratch.id] = scratch;
-
-        state.scratches = {
-          ...state.scratches,
-          ...action.payload.extraScratches,
-        };
-      }
     });
 
     builder.addMatcher(
@@ -781,12 +412,31 @@ export const timelineSlice = createSlice({
         state.isLoading = false;
       }
     );
+
+    builder.addMatcher(
+      isAnyOf(
+        addScratch.fulfilled,
+        addReplyScratch.fulfilled,
+        addRescratch.fulfilled,
+        addQuoteRescratch.fulfilled
+      ),
+      (state, action) => {
+        const scratch = action.payload.scratch;
+        if (
+          state.type === 'home' ||
+          (state.type === 'userTimeline' && state.userId === scratch.authorId)
+        ) {
+          state.ids.unshift(scratch.id);
+        }
+      }
+    );
   },
 });
 
-export const selectTimeline = (state: RootState) => state.timeline;
+export const selectTimelineUserId = (state: RootState) => state.timeline.userId;
 
-export const selectTimelineUser = (state: RootState) => state.timeline.user;
+export const selectTimelineUser = (state: RootState) =>
+  state.timeline.userId ? state.users.entities[state.timeline.userId] : null;
 
 export const selectTimelinePinnedScratchId = (state: RootState) =>
   state.timeline.pinnedScratchId;
@@ -805,10 +455,7 @@ export const selectTimelineIsLoadingMore = (state: RootState) =>
 export const selectTimelineIsFinished = (state: RootState) =>
   state.timeline.isFinished;
 
-export const selectTimelineScratchById = (state: RootState, id: number) =>
-  state.timeline.scratches[id];
-
-export const selectUserFollowers = (state: RootState) =>
-  state.timeline.followers;
+export const selectUserFollowerIds = (state: RootState) =>
+  state.timeline.followerIds;
 
 export default timelineSlice.reducer;

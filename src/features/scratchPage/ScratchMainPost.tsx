@@ -1,17 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  likeScratch,
-  pinScratch,
-  bookmarkScratch,
-  unbookmarkScratch,
-  unlikeScratch,
-  unpinScratch,
-  removeScratch,
-  undoAddRescratch,
-  addRescratch,
-  selectScratchById,
-} from './scratchPageSlice';
-import { selectAuthUser } from '../auth/authSlice';
+import { selectAuthUserId, selectAuthUserPinnedId } from '../auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
@@ -32,6 +20,18 @@ import {
   Trash2,
 } from 'react-feather';
 import { format, parseISO } from 'date-fns';
+import {
+  addRescratch,
+  bookmarkScratch,
+  likeScratch,
+  pinScratch,
+  removeScratch,
+  selectScratchById,
+  unbookmarkScratch,
+  undoAddRescratch,
+  unlikeScratch,
+  unpinScratch,
+} from '../scratches/scratchesSlice';
 
 const ScratchMainPost = ({
   scratchId,
@@ -41,7 +41,8 @@ const ScratchMainPost = ({
   ScratchIdToRedirectOnDelete: number | null;
 }) => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectAuthUser);
+  const userId = useAppSelector(selectAuthUserId);
+  const userPinnedId = useAppSelector(selectAuthUserPinnedId);
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
   );
@@ -87,7 +88,7 @@ const ScratchMainPost = ({
                 <span className="text-sm">@{scratch.author.username}</span>
               </Link>
             </div>
-            {user?.id === scratch.authorId && (
+            {userId === scratch.authorId && (
               <div className="relative">
                 <button
                   className="text-secondary transition-colors hover:text-post-btn-default h-full"
@@ -144,7 +145,7 @@ const ScratchMainPost = ({
                     className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (user?.pinnedId === scratch.id) {
+                      if (userPinnedId === scratch.id) {
                         dispatch(unpinScratch({ id: scratch.id }));
                       } else {
                         dispatch(pinScratch({ id: scratch.id }));
@@ -154,7 +155,7 @@ const ScratchMainPost = ({
                   >
                     <Paperclip size={16} />
                     <span>
-                      {user?.pinnedId === scratch.id
+                      {userPinnedId === scratch.id
                         ? 'Unpin from your profile'
                         : 'Pin to your profile'}
                     </span>
@@ -168,10 +169,7 @@ const ScratchMainPost = ({
       <div className="flex flex-col mt-3 text-lg">
         <p className="break-words whitespace-pre-wrap">{scratch.body}</p>
         {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
-          <EmbeddedRescratch
-            rescratchedId={scratch.rescratchedId}
-            selector={selectScratchById}
-          />
+          <EmbeddedRescratch rescratchedId={scratch.rescratchedId} />
         )}
       </div>
       <div className="my-3 whitespace-nowrap text-secondary text-sm">
@@ -325,25 +323,27 @@ const ScratchMainPost = ({
               !shareToggle && 'hidden'
             }`}
           >
-            <button
-              className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (scratch.isBookmarked) {
-                  dispatch(unbookmarkScratch({ id: scratch.id }));
-                } else {
-                  dispatch(bookmarkScratch({ id: scratch.id }));
-                }
-                setShareToggle(false);
-              }}
-            >
-              <Bookmark size={16} />
-              <span>
-                {scratch.isBookmarked
-                  ? 'Remove scratch from bookmarks'
-                  : 'Add scratch to bookmarks'}
-              </span>
-            </button>
+            {userId && (
+              <button
+                className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (scratch.isBookmarked) {
+                    dispatch(unbookmarkScratch({ id: scratch.id }));
+                  } else {
+                    dispatch(bookmarkScratch({ id: scratch.id }));
+                  }
+                  setShareToggle(false);
+                }}
+              >
+                <Bookmark size={16} />
+                <span>
+                  {scratch.isBookmarked
+                    ? 'Remove scratch from bookmarks'
+                    : 'Add scratch to bookmarks'}
+                </span>
+              </button>
+            )}
             <button
               className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
               onClick={(e) => {
