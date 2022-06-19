@@ -8,6 +8,7 @@ import suggestedUsersReducer from '../features/suggestedUsers/suggestedUsersSlic
 import modalReducer from '../features/modal/modalSlice';
 import scratchesReducer from '../features/scratches/scratchesSlice';
 import usersReducer from '../features/users/usersSlice';
+import searchReducer from '../features/search/searchSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     bookmarks: bookmarkReducer,
     scratchPage: scratchPageReducer,
     suggestedUsers: suggestedUsersReducer,
+    search: searchReducer,
   },
 });
 

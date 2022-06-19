@@ -25,6 +25,10 @@ import { loadBookmarks } from '../bookmarks/bookmarksSlice';
 import { openReplyModal, openRescratchModal } from '../modal/modalSlice';
 import { loadScratchConversation } from '../scratchPage/scratchPageSlice';
 import {
+  loadMoreOfScratchSearch,
+  loadScratchSearch,
+} from '../search/searchSlice';
+import {
   loadHomeTimeline,
   loadMoreOfTimeline,
   loadUserLikes,
@@ -358,7 +362,9 @@ export const scratchesSlice = createSlice({
         loadUserLikes.fulfilled,
         loadMoreOfTimeline.fulfilled,
         loadBookmarks.fulfilled,
-        loadScratchConversation.fulfilled
+        loadScratchConversation.fulfilled,
+        loadScratchSearch.fulfilled,
+        loadMoreOfScratchSearch.fulfilled
       ),
       (state, action) => {
         state.entities = {

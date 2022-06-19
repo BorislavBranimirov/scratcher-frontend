@@ -3,8 +3,8 @@ import {
   selectTimelineIds,
   selectTimelinePinnedScratchId,
 } from './timelineSlice';
-import PostWrapper from './PostWrapper';
-import useTimelineScroll from '../../common/useTimelineScroll';
+import PostWrapper from '../../common/PostWrapper';
+import useTimelineScroll from './useTimelineScroll';
 import Post from '../scratches/Post';
 
 const UserPagePosts = () => {

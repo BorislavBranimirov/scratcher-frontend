@@ -34,27 +34,14 @@ const UserPage = () => {
   useEffect(() => {
     if (!tab) {
       dispatch(loadUserTimeline({ username }));
-    }
-    if (tab === 'likes') {
-      if (isLogged) {
-        dispatch(loadUserLikes({ username }));
-      } else {
-        navigate(userPath, { replace: true });
-      }
-    }
-    if (tab === 'followers') {
-      if (isLogged) {
-        dispatch(loadUserFollowers({ username }));
-      } else {
-        navigate(userPath, { replace: true });
-      }
-    }
-    if (tab === 'following') {
-      if (isLogged) {
-        dispatch(loadUserFollowing({ username }));
-      } else {
-        navigate(userPath, { replace: true });
-      }
+    } else if (!isLogged) {
+      navigate(userPath, { replace: true });
+    } else if (tab === 'likes') {
+      dispatch(loadUserLikes({ username }));
+    } else if (tab === 'followers') {
+      dispatch(loadUserFollowers({ username }));
+    } else if (tab === 'following') {
+      dispatch(loadUserFollowing({ username }));
     }
   }, [tab, username, userPath, isLogged, navigate, dispatch]);
 

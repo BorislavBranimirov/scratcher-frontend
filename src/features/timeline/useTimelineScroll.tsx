@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   loadMoreOfTimeline,
   selectTimelineIsFinished,
   selectTimelineIsLoadingMore,
   selectTimelineLastId,
-} from '../features/timeline/timelineSlice';
+} from './timelineSlice';
 
 function useTimelineScroll() {
   const dispatch = useAppDispatch();

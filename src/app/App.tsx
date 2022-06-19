@@ -21,6 +21,7 @@ import BookmarksPage from '../features/bookmarks/BookmarksPage';
 import ScratchPage from '../features/scratchPage/ScratchPage';
 import {
   scratchPath,
+  searchPagePath,
   userPagePath,
   userPagePathWithTab,
 } from '../common/routePaths';
@@ -29,6 +30,7 @@ import SuggestedUsersPage from '../features/suggestedUsers/SuggestedUsersPage';
 import Modal from '../features/modal/Modal';
 import { Loader } from 'react-feather';
 import SignUp from '../features/auth/SignUp';
+import SearchPage from '../features/search/SearchPage';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -85,6 +87,7 @@ const App = () => {
             <Route path={scratchPath} element={<ScratchPage />} />
             <Route path={userPagePath} element={<UserPage />} />
             <Route path={userPagePathWithTab} element={<UserPage />} />
+            <Route path={searchPagePath} element={<SearchPage />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="*" element={<Navigate to="home" replace />} />

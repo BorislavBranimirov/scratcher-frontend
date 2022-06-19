@@ -62,7 +62,7 @@ export const ScratchMoreButton = ({
       </button>
       <div
         className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
-          !moreOptionsToggle && 'hidden'
+          !moreOptionsToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
           e.stopPropagation();
@@ -71,7 +71,7 @@ export const ScratchMoreButton = ({
       ></div>
       <div
         className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
-          !moreOptionsToggle && 'hidden'
+          !moreOptionsToggle ? 'hidden' : ''
         }`}
       >
         <button
@@ -138,7 +138,7 @@ export const ScratchReplyButton = ({
     <div>
       <button
         className={`text-secondary transition-colors hover:text-post-btn-default group ${
-          !!text && 'text-sm flex items-center'
+          !!text ? 'text-sm flex items-center' : ''
         }`}
         onClick={(e) => {
           e.stopPropagation();
@@ -176,7 +176,7 @@ export const ScratchRescratchButton = ({
           scratchIsRescratched
             ? 'text-post-btn-green'
             : 'text-secondary transition-colors hover:text-post-btn-green'
-        } group ${!!text && 'text-sm flex items-center'}`}
+        } group ${!!text ? 'text-sm flex items-center' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
           setRescratchToggle(true);
@@ -190,7 +190,7 @@ export const ScratchRescratchButton = ({
       </button>
       <div
         className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
-          !rescratchToggle && 'hidden'
+          !rescratchToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
           e.stopPropagation();
@@ -199,7 +199,7 @@ export const ScratchRescratchButton = ({
       ></div>
       <div
         className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
-          !rescratchToggle && 'hidden'
+          !rescratchToggle ? 'hidden' : ''
         }`}
       >
         <button
@@ -253,7 +253,7 @@ export const ScratchLikeButton = ({
           scratchIsLiked
             ? 'text-post-btn-red'
             : 'text-secondary transition-colors hover:text-post-btn-red'
-        } group ${!!text && 'text-sm flex items-center'}`}
+        } group ${!!text ? 'text-sm flex items-center' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
           if (scratchIsLiked) {
@@ -267,7 +267,7 @@ export const ScratchLikeButton = ({
           <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
           <Heart
             size={iconSize}
-            className={`stroke-current ${scratchIsLiked && 'fill-current'}`}
+            className={`stroke-current ${scratchIsLiked ? 'fill-current' : ''}`}
           />
         </div>
         {text}
@@ -313,7 +313,7 @@ export const ScratchShareButton = ({
       </button>
       <div
         className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
-          !shareToggle && 'hidden'
+          !shareToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
           e.stopPropagation();
@@ -322,7 +322,7 @@ export const ScratchShareButton = ({
       ></div>
       <div
         className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
-          !shareToggle && 'hidden'
+          !shareToggle ? 'hidden' : ''
         }`}
       >
         {isLogged && (

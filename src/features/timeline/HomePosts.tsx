@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../app/hooks';
-import useTimelineScroll from '../../common/useTimelineScroll';
+import useTimelineScroll from './useTimelineScroll';
 import { selectTimelineIds } from '../../features/timeline/timelineSlice';
-import PostWrapper from './PostWrapper';
+import PostWrapper from '../../common/PostWrapper';
 
 const HomePosts = () => {
   const ids = useAppSelector(selectTimelineIds);

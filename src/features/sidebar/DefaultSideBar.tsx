@@ -2,10 +2,11 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
 import { logout } from '../auth/authSlice';
-import { generateUserPath } from '../../common/routePaths';
+import { generateSearchPath, generateUserPath } from '../../common/routePaths';
 import {
   Bookmark,
   Feather,
+  Hash,
   Home,
   LogIn,
   LogOut,
@@ -24,6 +25,7 @@ const DefaultSideBar = () => {
   const navigate = useNavigate();
 
   const [userOptionsToggle, setUserOptionsToggle] = useState(false);
+  const searchScratchesPath = generateSearchPath({ tab: 'scratches' });
 
   return (
     <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
@@ -37,7 +39,7 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/home"
@@ -48,7 +50,18 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-4'
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={searchScratchesPath}
+              >
+                <Hash strokeWidth={undefined} />
+                <span className="hidden xl:block">Explore</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
+                    isActive ? 'font-bold stroke-4' : ''
                   }`
                 }
                 to="/bookmarks"
@@ -59,7 +72,7 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-4'
+                    isActive ? 'font-bold stroke-4' : ''
                   }`
                 }
                 to={generateUserPath({ username: user.username })}
@@ -71,7 +84,7 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/settings"
@@ -96,7 +109,7 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/login"
@@ -107,7 +120,7 @@ const DefaultSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/signup"
@@ -115,27 +128,26 @@ const DefaultSideBar = () => {
                 <UserPlus strokeWidth={undefined} />
                 <span className="hidden xl:block">Sign up</span>
               </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5 ${
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={searchScratchesPath}
+              >
+                <Hash strokeWidth={undefined} />
+                <span className="hidden xl:block">Explore</span>
+              </NavLink>
             </>
           )}
-          <NavLink
-            to="/user/testUser1"
-            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5"
-          >
-            testUser1
-          </NavLink>
-          <NavLink
-            to="/user/testUser2"
-            className="hidden xl:block text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-primary/5"
-          >
-            testUser2
-          </NavLink>
         </div>
         {user && (
           <div>
             <div className="relative">
               <div
                 className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto ${
-                  !userOptionsToggle && 'hidden'
+                  !userOptionsToggle ? 'hidden' : ''
                 }`}
                 onClick={() => {
                   setUserOptionsToggle(false);
@@ -143,7 +155,7 @@ const DefaultSideBar = () => {
               ></div>
               <div
                 className={`absolute bottom-0 left-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
-                  !userOptionsToggle && 'hidden'
+                  !userOptionsToggle ? 'hidden' : ''
                 }`}
               >
                 <button

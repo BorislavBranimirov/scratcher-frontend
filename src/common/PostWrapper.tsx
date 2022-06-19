@@ -1,6 +1,6 @@
-import { useAppSelector } from '../../app/hooks';
-import Post from '../scratches/Post';
-import { selectScratchById } from '../scratches/scratchesSlice';
+import { useAppSelector } from '../app/hooks';
+import Post from '../features/scratches/Post';
+import { selectScratchById } from '../features/scratches/scratchesSlice';
 
 const PostWrapper = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>

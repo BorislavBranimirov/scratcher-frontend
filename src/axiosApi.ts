@@ -269,4 +269,55 @@ export const getBookmarks = (id: number) => {
   );
 };
 
+interface SearchScratchesResponseJson {
+  scratches: Scratch[];
+  isFinished: boolean;
+  extraScratches: { [key: string]: Scratch };
+}
+
+export const getSearchScratches = (
+  searchPattern: string,
+  limit?: number,
+  after?: number
+) => {
+  const queryParams: { query: string; limit?: number; after?: number } = {
+    query: searchPattern,
+  };
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<SearchScratchesResponseJson>(`/api/scratches/search`, {
+    params: queryParams,
+  });
+};
+
+interface SearchUsersResponseJson {
+  users: User[];
+  isFinished: boolean;
+}
+
+export const getSearchUsers = (
+  searchPattern: string,
+  limit?: number,
+  after?: string
+) => {
+  const queryParams: { query: string; limit?: number; after?: string } = {
+    query: searchPattern,
+  };
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<SearchUsersResponseJson>(`/api/users/search`, {
+    params: queryParams,
+  });
+};
+
 export default axiosApi;

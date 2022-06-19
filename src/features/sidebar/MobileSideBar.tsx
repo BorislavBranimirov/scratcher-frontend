@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   Bookmark,
   Feather,
+  Hash,
   Home,
   LogIn,
   LogOut,
@@ -16,7 +17,7 @@ import { useLocation } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { logout, selectAuthUser } from '../auth/authSlice';
-import { generateUserPath } from '../../common/routePaths';
+import { generateSearchPath, generateUserPath } from '../../common/routePaths';
 import { openPostModal } from '../modal/modalSlice';
 
 const MobileSideBar = () => {
@@ -24,6 +25,7 @@ const MobileSideBar = () => {
   const user = useAppSelector(selectAuthUser);
   const location = useLocation();
   const [openSideBar, setOpenSideBar] = useState(window.innerWidth >= 640);
+  const searchScratchesPath = generateSearchPath({ tab: 'scratches' });
 
   useEffect(() => {
     setOpenSideBar(false);
@@ -86,7 +88,7 @@ const MobileSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/home"
@@ -97,7 +99,18 @@ const MobileSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={searchScratchesPath}
+              >
+                <Hash strokeWidth={undefined} />
+                <span>Explore</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/bookmarks"
@@ -108,7 +121,7 @@ const MobileSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to={generateUserPath({ username: user.username })}
@@ -120,7 +133,7 @@ const MobileSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/settings"
@@ -152,10 +165,23 @@ const MobileSideBar = () => {
             </>
           ) : (
             <>
+              <div className="border-b border-primary p-3 flex justify-between">
+                <p className="font-bold">Not logged in</p>
+                <button
+                  className="relative"
+                  onClick={() => {
+                    setOpenSideBar(false);
+                  }}
+                  title="Close"
+                >
+                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-primary/5 active:bg-primary/20"></div>
+                  <X />
+                </button>
+              </div>
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/login"
@@ -166,13 +192,24 @@ const MobileSideBar = () => {
               <NavLink
                 className={({ isActive }) =>
                   `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
-                    isActive && 'font-bold stroke-3'
+                    isActive ? 'font-bold stroke-3' : ''
                   }`
                 }
                 to="/signup"
               >
                 <UserPlus strokeWidth={undefined} />
                 <span>Sign up</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-primary/5 ${
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={searchScratchesPath}
+              >
+                <Hash strokeWidth={undefined} />
+                <span>Explore</span>
               </NavLink>
             </>
           )}

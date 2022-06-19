@@ -8,6 +8,10 @@ export const userPagePathWithTab = `/user/:username/:tab`;
 
 export type userPageTabValue = 'likes' | 'followers' | 'following';
 
+export const searchPagePath = `/search/:tab`;
+
+export type searchPagePathValue = 'scratches' | 'users';
+
 export const generateScratchPath = ({
   username,
   id,
@@ -30,4 +34,8 @@ export const generateUserPathWithTab = ({
   tab: userPageTabValue;
 }) => {
   return generatePath(userPagePathWithTab, { username, tab });
+};
+
+export const generateSearchPath = ({ tab }: { tab: searchPagePathValue }) => {
+  return generatePath(searchPagePath, { tab });
 };

@@ -59,7 +59,9 @@ const UserItem = ({
         if (!target.closest('a')) navigate(userPath);
       }}
     >
-      <div className={`grow flex ${!extended && 'items-center'} gap-3 min-w-0`}>
+      <div
+        className={`grow flex ${!extended ? 'items-center' : ''} gap-3 min-w-0`}
+      >
         <div
           className={`${
             extended ? 'w-12 h-12' : 'w-10 h-10'

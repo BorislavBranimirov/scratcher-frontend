@@ -5,6 +5,7 @@ import { deleteUserFollow, setUserFollow } from '../../axiosApi';
 import { apiError, User } from '../../common/types';
 import { login, loginFromToken } from '../auth/authSlice';
 import { pinScratch, unpinScratch } from '../scratches/scratchesSlice';
+import { loadMoreOfUserSearch, loadUserSearch } from '../search/searchSlice';
 import { loadSuggestedUsers } from '../suggestedUsers/suggestedUsersSlice';
 import {
   loadUserFollowers,
@@ -103,7 +104,9 @@ export const usersSlice = createSlice({
       isAnyOf(
         loadUserFollowers.fulfilled,
         loadUserFollowing.fulfilled,
-        loadSuggestedUsers.fulfilled
+        loadSuggestedUsers.fulfilled,
+        loadUserSearch.fulfilled,
+        loadMoreOfUserSearch.fulfilled
       ),
       (state, action) => {
         state.entities = {

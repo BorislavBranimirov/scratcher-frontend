@@ -82,7 +82,7 @@ const Post = ({
           </Link>
         </div>
       )}
-      <div className={`${timelineScratch && 'relative'} flex gap-3`}>
+      <div className={`${timelineScratch ? 'relative ' : ''}flex gap-3`}>
         <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
           <Link to={userPath}>
             <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
