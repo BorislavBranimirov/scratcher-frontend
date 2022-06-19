@@ -10,13 +10,13 @@ import {
   selectTimelineIsLoading,
   selectTimelineUser,
 } from '../timeline/timelineSlice';
-import SuggestedUsersWindow from '../suggestedUsers/SuggestedUsersWindow';
 import UserProfile from './UserProfile';
 import { selectAuthIsLogged } from '../auth/authSlice';
 import { generateUserPath, userPageTabValue } from '../../common/routePaths';
 import UserPageTabs from './UserPageTabs';
 import UserPagePosts from './UserPagePosts';
 import FollowersList from './FollowersList';
+import PageLayout from '../../common/PageLayout';
 
 const UserPage = () => {
   const dispatch = useAppDispatch();
@@ -60,61 +60,56 @@ const UserPage = () => {
 
   if (isLoading) {
     return (
-      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
+      <PageLayout>
         <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
-      </div>
+      </PageLayout>
     );
   }
 
   return (
-    <>
-      <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 border-l border-r border-primary">
-        <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10 flex items-center">
-          <button
-            className="h-full mr-4"
-            onClick={() => {
-              if (!tab) {
-                navigate(-1);
-              } else {
-                navigate(userPath);
-              }
-            }}
-          >
-            <div className="relative" title="Back">
-              <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-primary/10 active:bg-primary/20"></div>
-              <ArrowLeft size={16} />
-            </div>
-          </button>
-          {user ? (
-            <div>
-              <h2 className="text-lg font-bold leading-6">{user.name}</h2>
-              <p className="pb-1 text-xs text-secondary">@{user?.username}</p>
-            </div>
-          ) : (
-            <h2 className="py-2 text-lg font-bold leading-6">Profile</h2>
-          )}
-        </div>
-        {user ? (
-          <>
-            {!(tab === 'followers' || tab === 'following') && <UserProfile />}
-            <UserPageTabs />
-            {tab === 'followers' || tab === 'following' ? (
-              <FollowersList />
-            ) : (
-              <UserPagePosts />
-            )}
-          </>
-        ) : (
-          <div className="mt-4 text-center">
-            <h2 className="text-lg font-bold">This account doesn't exist</h2>
-            <p className="text-sm text-secondary">Try searching for another.</p>
+    <PageLayout>
+      <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10 flex items-center">
+        <button
+          className="h-full mr-4"
+          onClick={() => {
+            if (!tab) {
+              navigate(-1);
+            } else {
+              navigate(userPath);
+            }
+          }}
+        >
+          <div className="relative" title="Back">
+            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-primary/10 active:bg-primary/20"></div>
+            <ArrowLeft size={16} />
           </div>
+        </button>
+        {user ? (
+          <div>
+            <h2 className="text-lg font-bold leading-6">{user.name}</h2>
+            <p className="pb-1 text-xs text-secondary">@{user.username}</p>
+          </div>
+        ) : (
+          <h2 className="py-2 text-lg font-bold leading-6">Profile</h2>
         )}
       </div>
-      <div className="hidden lg:block lg:ml-6 lg:col-span-3 lg:mr-12 xl:mr-0">
-        <SuggestedUsersWindow />
-      </div>
-    </>
+      {user ? (
+        <>
+          {!(tab === 'followers' || tab === 'following') && <UserProfile />}
+          <UserPageTabs />
+          {tab === 'followers' || tab === 'following' ? (
+            <FollowersList />
+          ) : (
+            <UserPagePosts />
+          )}
+        </>
+      ) : (
+        <div className="mt-4 text-center">
+          <h2 className="text-lg font-bold">This account doesn't exist</h2>
+          <p className="text-sm text-secondary">Try searching for another.</p>
+        </div>
+      )}
+    </PageLayout>
   );
 };
 

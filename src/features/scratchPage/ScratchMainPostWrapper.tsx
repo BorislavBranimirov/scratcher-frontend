@@ -20,14 +20,12 @@ const ScratchMainPostWrapper = ({ scratchId }: { scratchId: number }) => {
     return <Navigate to={rescratchedPath} replace />;
   }
 
-  return (
+  return parentChainIds.length === 0 ? (
+    <ScratchMainPost scratchId={scratchId} />
+  ) : (
     <ScratchMainPost
       scratchId={scratchId}
-      ScratchIdToRedirectOnDelete={
-        parentChainIds.length === 0
-          ? null
-          : parentChainIds[parentChainIds.length - 1]
-      }
+      ScratchIdToRedirectOnDelete={parentChainIds[parentChainIds.length - 1]}
     />
   );
 };

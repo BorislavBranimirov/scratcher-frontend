@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../app/hooks';
-import SuggestedUserItem from './SuggestedUserItem';
+import UserItem from '../users/UserItem';
 import { selectSuggestedUserIds } from './suggestedUsersSlice';
 
 const SuggestedUsersList = ({ extended }: { extended?: boolean }) => {
@@ -8,7 +8,7 @@ const SuggestedUsersList = ({ extended }: { extended?: boolean }) => {
   return (
     <div>
       {ids.map((id) => {
-        return <SuggestedUserItem key={id} userId={id} extended={extended} />;
+        return <UserItem key={id} userId={id} extended={extended} />;
       })}
     </div>
   );

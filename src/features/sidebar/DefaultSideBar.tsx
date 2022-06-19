@@ -63,6 +63,7 @@ const DefaultSideBar = () => {
                   }`
                 }
                 to={generateUserPath({ username: user.username })}
+                end
               >
                 <User strokeWidth={undefined} />
                 <span className="hidden xl:block">Profile</span>
@@ -146,7 +147,7 @@ const DefaultSideBar = () => {
                 }`}
               >
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
                   onClick={() => {
                     navigate(generateUserPath({ username: user.username }));
                     setUserOptionsToggle(false);
@@ -156,7 +157,7 @@ const DefaultSideBar = () => {
                   View profile
                 </button>
                 <button
-                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 flex items-center gap-3"
+                  className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
                   onClick={() => {
                     dispatch(logout());
                     setUserOptionsToggle(false);
@@ -168,7 +169,7 @@ const DefaultSideBar = () => {
               </div>
             </div>
             <div
-              className="flex items-center justify-between py-2.5 px-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10"
+              className="flex items-center justify-between p-3 rounded-full cursor-pointer bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10"
               onClick={() => {
                 setUserOptionsToggle(true);
               }}

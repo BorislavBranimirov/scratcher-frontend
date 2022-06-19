@@ -3,9 +3,9 @@ import {
   selectTimelineIds,
   selectTimelinePinnedScratchId,
 } from './timelineSlice';
-import Post from './Post';
 import PostWrapper from './PostWrapper';
 import useTimelineScroll from '../../common/useTimelineScroll';
+import Post from '../scratches/Post';
 
 const UserPagePosts = () => {
   const pinnedScratchId = useAppSelector(selectTimelinePinnedScratchId);

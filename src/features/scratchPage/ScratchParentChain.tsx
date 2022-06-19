@@ -1,20 +1,26 @@
 import { useAppSelector } from '../../app/hooks';
+import Post from '../scratches/Post';
 import { selectScratchParentChainIds } from './scratchPageSlice';
-import ScratchParentPost from './ScratchParentPost';
-
 const ScratchParentChain = () => {
   const parentChainIds = useAppSelector(selectScratchParentChainIds);
 
   return (
     <div>
       {parentChainIds.map((scratchId, index) => {
-        return (
-          <ScratchParentPost
+        return index === 0 ? (
+          <Post
             key={scratchId}
             scratchId={scratchId}
-            ScratchIdToRedirectOnDelete={
-              index === 0 ? null : parentChainIds[index - 1]
-            }
+            timelineScratch
+            redirectOnDelete
+          />
+        ) : (
+          <Post
+            key={scratchId}
+            scratchId={scratchId}
+            timelineScratch
+            redirectOnDelete
+            ScratchIdToRedirectOnDelete={parentChainIds[index - 1]}
           />
         );
       })}

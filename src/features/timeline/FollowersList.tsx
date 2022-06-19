@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../app/hooks';
-import FollowersItem from './FollowersItem';
+import UserItem from '../users/UserItem';
 import { selectUserFollowerIds } from './timelineSlice';
 
 const FollowersList = () => {
@@ -8,7 +8,7 @@ const FollowersList = () => {
   return (
     <div>
       {ids.map((id) => {
-        return <FollowersItem key={id} userId={id} />;
+        return <UserItem key={id} userId={id} extended />;
       })}
     </div>
   );

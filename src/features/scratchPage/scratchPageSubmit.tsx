@@ -5,7 +5,7 @@ import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectAuthUser } from '../auth/authSlice';
 import avatar from '../../images/avatarplaceholder.png';
-import { addScratch, selectScratchById } from '../scratches/scratchesSlice';
+import { addReplyScratch, selectScratchById } from '../scratches/scratchesSlice';
 
 const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
   const dispatch = useAppDispatch();
@@ -32,9 +32,9 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       const res = await dispatch(
-        addScratch({ body, parentId: parentScratchId })
+        addReplyScratch({ body, parentId: parentScratchId })
       );
-      if (addScratch.fulfilled.match(res)) {
+      if (addReplyScratch.fulfilled.match(res)) {
         setBody('');
       }
       setIsSubmitting(false);

@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
+import Post from '../scratches/Post';
 import { selectTimelineIds } from './timelineSlice';
-import Post from './Post';
 
 const UserLikes = () => {
   const ids = useAppSelector(selectTimelineIds);

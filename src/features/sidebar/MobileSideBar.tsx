@@ -112,6 +112,7 @@ const MobileSideBar = () => {
                   }`
                 }
                 to={generateUserPath({ username: user.username })}
+                end
               >
                 <User strokeWidth={undefined} />
                 <span>Profile</span>

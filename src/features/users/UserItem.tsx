@@ -2,10 +2,16 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
+import { followUser, selectUserById, unfollowUser } from './usersSlice';
 import avatar from '../../images/avatarplaceholder.png';
-import { followUser, selectUserById, unfollowUser } from '../users/usersSlice';
 
-const FollowersItem = ({ userId }: { userId: number }) => {
+const UserItem = ({
+  userId,
+  extended,
+}: {
+  userId: number;
+  extended?: boolean;
+}) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUserById(state, userId));
   const navigate = useNavigate();
@@ -53,8 +59,12 @@ const FollowersItem = ({ userId }: { userId: number }) => {
         if (!target.closest('a')) navigate(userPath);
       }}
     >
-      <div className="grow flex gap-3 min-w-0">
-        <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
+      <div className={`grow flex ${!extended && 'items-center'} gap-3 min-w-0`}>
+        <div
+          className={`${
+            extended ? 'w-12 h-12' : 'w-10 h-10'
+          } rounded-full overflow-hidden mt-1 shrink-0`}
+        >
           <Link to={userPath}>
             <img src={user.profileImageUrl || avatar} alt="avatar" />
           </Link>
@@ -64,22 +74,24 @@ const FollowersItem = ({ userId }: { userId: number }) => {
             <div className="truncate">
               <Link to={userPath}>
                 <span className="font-bold text-primary hover:underline">
-                  {user?.name}
+                  {user.name}
                 </span>
               </Link>
               <p className="text-secondary text-sm truncate">
-                @{user?.username}
+                @{user.username}
               </p>
             </div>
             {followButton}
           </div>
-          <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">
-            {user.description}
-          </p>
+          {extended && (
+            <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">
+              {user.description}
+            </p>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default FollowersItem;
+export default UserItem;
