@@ -1,9 +1,10 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
-import { followUser, selectUserById, unfollowUser } from './usersSlice';
+import { selectUserById } from './usersSlice';
 import avatar from '../../images/avatarplaceholder.png';
+import { FollowButton } from './UserComponents';
+import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 
 const UserItem = ({
   userId,
@@ -12,42 +13,10 @@ const UserItem = ({
   userId: number;
   extended?: boolean;
 }) => {
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUserById(state, userId));
   const navigate = useNavigate();
-  const [followBtnHover, setFollowBtnHover] = useState(false);
-
-  const followButton = user.isFollowing ? (
-    <button
-      onMouseEnter={() => {
-        setFollowBtnHover(true);
-      }}
-      onMouseLeave={() => {
-        setFollowBtnHover(false);
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        dispatch(unfollowUser({ id: user.id }));
-      }}
-      className={`${
-        followBtnHover
-          ? 'bg-red hover:bg-red/80 active:bg-red/60'
-          : 'bg-blue hover:bg-blue/80 active:bg-blue/60'
-      } text-xs rounded-full py-1.5 px-4 font-bold transition-colors`}
-    >
-      {followBtnHover ? 'Unfollow' : 'Following'}
-    </button>
-  ) : (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        dispatch(followUser({ id: user.id }));
-      }}
-      className="bg-blue text-xs rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
-    >
-      Follow
-    </button>
-  );
+  const [userPreviewOnMouseEnter, userPreviewOnMouseLeave] =
+    useUserPreviewEvents(user.username);
 
   const userPath = generateUserPath({ username: user.username });
 
@@ -67,7 +36,11 @@ const UserItem = ({
             extended ? 'w-12 h-12' : 'w-10 h-10'
           } rounded-full overflow-hidden mt-1 shrink-0`}
         >
-          <Link to={userPath}>
+          <Link
+            to={userPath}
+            onMouseEnter={userPreviewOnMouseEnter}
+            onMouseLeave={userPreviewOnMouseLeave}
+          >
             <img src={user.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
@@ -75,15 +48,23 @@ const UserItem = ({
           <div className="flex gap-3 items-center justify-between">
             <div className="truncate">
               <Link to={userPath}>
-                <span className="font-bold text-primary hover:underline">
+                <span
+                  className="font-bold text-primary hover:underline"
+                  onMouseEnter={userPreviewOnMouseEnter}
+                  onMouseLeave={userPreviewOnMouseLeave}
+                >
                   {user.name}
                 </span>
               </Link>
-              <p className="text-secondary text-sm truncate">
+              <p
+                className="text-secondary text-sm truncate"
+                onMouseEnter={userPreviewOnMouseEnter}
+                onMouseLeave={userPreviewOnMouseLeave}
+              >
                 @{user.username}
               </p>
             </div>
-            {followButton}
+            <FollowButton userId={user.id} isFollowing={user.isFollowing} />
           </div>
           {extended && (
             <p className="break-words whitespace-pre-wrap text-sm pt-1 pb-1">

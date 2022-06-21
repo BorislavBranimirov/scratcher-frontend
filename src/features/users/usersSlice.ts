@@ -13,6 +13,7 @@ import {
   loadUserLikes,
   loadUserTimeline,
 } from '../timeline/timelineSlice';
+import { openUserPreview } from '../userPreview/userPreviewSlice';
 
 export const followUser = createAsyncThunk<
   number,
@@ -88,7 +89,8 @@ export const usersSlice = createSlice({
         loadUserTimeline.fulfilled,
         loadUserLikes.fulfilled,
         login.fulfilled,
-        loginFromToken.fulfilled
+        loginFromToken.fulfilled,
+        openUserPreview.fulfilled
       ),
       (state, action) => {
         const user = action.payload.user;

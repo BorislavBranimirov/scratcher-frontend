@@ -1,67 +1,21 @@
 import { format, parseISO } from 'date-fns';
-import { useState } from 'react';
 import { Calendar } from 'react-feather';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
 import { selectTimelineUser } from './timelineSlice';
 import avatar from '../../images/avatarplaceholder.png';
 import banner from '../../images/bannerplaceholder.png';
-import { Link } from 'react-router-dom';
-import { generateUserPathWithTab } from '../../common/routePaths';
-import { pushNotification } from '../notification/notificationSlice';
-import { followUser, unfollowUser } from '../users/usersSlice';
+import { FollowButton, UserFollowerCounters } from '../users/UserComponents';
 
 const UserProfile = () => {
-  const dispatch = useAppDispatch();
   const user = useAppSelector(selectTimelineUser);
   const loggedUser = useAppSelector(selectAuthUser);
-
-  const [followBtnHover, setFollowBtnHover] = useState(false);
 
   if (!user) {
     return <div>User not found</div>;
   }
 
   const joinedDate = parseISO(user.createdAt);
-
-  const userFollowersPath = generateUserPathWithTab({
-    username: user.username,
-    tab: 'followers',
-  });
-  const userFollowingPath = generateUserPathWithTab({
-    username: user.username,
-    tab: 'following',
-  });
-
-  const followButton = user.isFollowing ? (
-    <button
-      className={`${
-        followBtnHover
-          ? 'bg-red hover:bg-red/80 active:bg-red/60'
-          : 'bg-blue hover:bg-blue/80 active:bg-blue/60'
-      } text-sm rounded-full py-1.5 px-4 font-bold transition-colors`}
-      onMouseEnter={() => {
-        setFollowBtnHover(true);
-      }}
-      onMouseLeave={() => {
-        setFollowBtnHover(false);
-      }}
-      onClick={() => {
-        dispatch(unfollowUser({ id: user.id }));
-      }}
-    >
-      {followBtnHover ? 'Unfollow' : 'Following'}
-    </button>
-  ) : (
-    <button
-      className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
-      onClick={() => {
-        dispatch(followUser({ id: user.id }));
-      }}
-    >
-      Follow
-    </button>
-  );
 
   return (
     <div>
@@ -78,7 +32,11 @@ const UserProfile = () => {
               Edit profile
             </button>
           ) : (
-            followButton
+            <FollowButton
+              userId={user.id}
+              isFollowing={user.isFollowing}
+              textSize={'sm'}
+            />
           )}
         </div>
         <div className="mb-2">
@@ -92,34 +50,11 @@ const UserProfile = () => {
           <Calendar size={16} />
           <p>Joined {format(joinedDate, 'MMMM y')}</p>
         </div>
-        <div className="flex gap-3 text-sm">
-          <Link
-            className="hover:underline"
-            to={userFollowingPath}
-            onClick={(e) => {
-              if (!loggedUser) {
-                e.preventDefault();
-                dispatch(pushNotification('Log in to see user likes.'));
-              }
-            }}
-          >
-            <span className="font-bold">{user.followedCount}</span>{' '}
-            <span className="text-secondary">Following</span>
-          </Link>
-          <Link
-            className="hover:underline"
-            to={userFollowersPath}
-            onClick={(e) => {
-              if (!loggedUser) {
-                e.preventDefault();
-                dispatch(pushNotification('Log in to see user likes.'));
-              }
-            }}
-          >
-            <span className="font-bold">{user.followerCount}</span>{' '}
-            <span className="text-secondary">Followers</span>
-          </Link>
-        </div>
+        <UserFollowerCounters
+          username={user.username}
+          followedCount={user.followedCount}
+          followerCount={user.followerCount}
+        />
       </div>
     </div>
   );

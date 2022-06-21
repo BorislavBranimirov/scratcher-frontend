@@ -14,6 +14,7 @@ import {
   ScratchRescratchButton,
   ScratchShareButton,
 } from '../scratches/PostComponents';
+import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 
 const ScratchMainPost = ({
   scratchId,
@@ -26,6 +27,8 @@ const ScratchMainPost = ({
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
   );
+  const [userPreviewOnMouseEnter, userPreviewOnMouseLeave] =
+    useUserPreviewEvents(scratch.author.username);
 
   const mainScratchRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +48,11 @@ const ScratchMainPost = ({
     >
       <div className="flex gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
-          <Link to={userPath}>
+          <Link
+            to={userPath}
+            onMouseEnter={userPreviewOnMouseEnter}
+            onMouseLeave={userPreviewOnMouseLeave}
+          >
             <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
@@ -53,10 +60,20 @@ const ScratchMainPost = ({
           <div className="flex justify-between gap-3">
             <div className="text-secondary flex items-baseline min-w-0">
               <Link className="truncate flex flex-col" to={userPath}>
-                <span className="font-bold text-primary hover:underline">
+                <span
+                  className="font-bold text-primary hover:underline"
+                  onMouseEnter={userPreviewOnMouseEnter}
+                  onMouseLeave={userPreviewOnMouseLeave}
+                >
                   {scratch.author.name}
                 </span>
-                <span className="text-sm">@{scratch.author.username}</span>
+                <span
+                  className="text-sm"
+                  onMouseEnter={userPreviewOnMouseEnter}
+                  onMouseLeave={userPreviewOnMouseLeave}
+                >
+                  @{scratch.author.username}
+                </span>
               </Link>
             </div>
             {userId === scratch.authorId && (

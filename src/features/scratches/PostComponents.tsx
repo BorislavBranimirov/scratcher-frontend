@@ -11,12 +11,14 @@ import {
   Share,
   Trash2,
 } from 'react-feather';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { generateScratchPath } from '../../common/routePaths';
+import { generateScratchPath, generateUserPath } from '../../common/routePaths';
+import { Author } from '../../common/types';
 import { selectAuthUserPinnedId } from '../auth/authSlice';
 import { openReplyModal, openRescratchModal } from '../modal/modalSlice';
 import { pushNotification } from '../notification/notificationSlice';
+import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 import {
   addRescratch,
   bookmarkScratch,
@@ -28,6 +30,58 @@ import {
   unlikeScratch,
   unpinScratch,
 } from './scratchesSlice';
+
+export const ScratchRescratchedByStatus = ({
+  rescratchAuthor,
+}: {
+  rescratchAuthor: Author;
+}) => {
+  const [userPreviewOnMouseEnter, userPreviewOnMouseLeave] =
+    useUserPreviewEvents(rescratchAuthor.username);
+
+  return (
+    <div className="mb-1 flex gap-3 items-center text-sm text-secondary">
+      <div className="w-12">
+        <Repeat className="ml-auto" size={13} />
+      </div>
+      <Link
+        className="hover:underline"
+        to={generateUserPath({ username: rescratchAuthor.username })}
+        onMouseEnter={userPreviewOnMouseEnter}
+        onMouseLeave={userPreviewOnMouseLeave}
+      >
+        {rescratchAuthor.name} Rescratched
+      </Link>
+    </div>
+  );
+};
+
+export const ScratchReplyingToStatus = ({
+  parentUsername,
+}: {
+  parentUsername: string;
+}) => {
+  const [userPreviewOnMouseEnter, userPreviewOnMouseLeave] =
+    useUserPreviewEvents(parentUsername);
+
+  const parentUserPath = generateUserPath({
+    username: parentUsername,
+  });
+
+  return (
+    <div className="flex gap-1 text-sm text-secondary">
+      <span>Replying to</span>
+      <Link
+        className="text-blue hover:underline"
+        to={parentUserPath}
+        onMouseEnter={userPreviewOnMouseEnter}
+        onMouseLeave={userPreviewOnMouseLeave}
+      >
+        @{parentUsername}
+      </Link>
+    </div>
+  );
+};
 
 export const ScratchMoreButton = ({
   scratchId,

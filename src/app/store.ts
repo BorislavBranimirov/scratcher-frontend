@@ -9,12 +9,14 @@ import modalReducer from '../features/modal/modalSlice';
 import scratchesReducer from '../features/scratches/scratchesSlice';
 import usersReducer from '../features/users/usersSlice';
 import searchReducer from '../features/search/searchSlice';
+import userPreviewReducer from '../features/userPreview/userPreviewSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     notification: notificationReducer,
     modal: modalReducer,
+    userPreview: userPreviewReducer,
     users: usersReducer,
     scratches: scratchesReducer,
     timeline: timelineReducer,

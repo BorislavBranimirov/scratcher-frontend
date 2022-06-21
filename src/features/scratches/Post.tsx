@@ -6,7 +6,7 @@ import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import avatar from '../../images/avatarplaceholder.png';
 import TimeAgo from '../../common/TimeAgo';
-import { Paperclip, Repeat } from 'react-feather';
+import { Paperclip } from 'react-feather';
 import { selectScratchById } from '../scratches/scratchesSlice';
 import {
   ScratchMoreButton,
@@ -14,7 +14,10 @@ import {
   ScratchReplyButton,
   ScratchRescratchButton,
   ScratchShareButton,
+  ScratchRescratchedByStatus,
+  ScratchReplyingToStatus,
 } from './PostComponents';
+import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 
 const Post = ({
   scratchId,
@@ -38,12 +41,9 @@ const Post = ({
     selectScratchById(state, scratchId)
   );
   const navigate = useNavigate();
+  const [userPreviewOnMouseEnter, userPreviewOnMouseLeave] =
+    useUserPreviewEvents(scratch.author.username);
 
-  const parentUserPath = parentUsername
-    ? generateUserPath({
-        username: parentUsername,
-      })
-    : null;
   const userPath = generateUserPath({ username: scratch.author.username });
   const scratchPath = generateScratchPath({
     username: scratch.author.username,
@@ -66,25 +66,23 @@ const Post = ({
         </div>
       )}
       {pinned && (
-        <div className="mb-1 flex gap-1.5 items-center text-sm text-secondary">
-          <Paperclip size={12} />
+        <div className="mb-1 flex gap-3 items-center text-sm text-secondary">
+          <div className="w-12">
+            <Paperclip className="ml-auto" size={13} />
+          </div>
           <span>Pinned Scratch</span>
         </div>
       )}
       {rescratchAuthor && (
-        <div className="mb-1 flex gap-1.5 items-center text-sm text-secondary">
-          <Repeat size={12} />
-          <Link
-            className="hover:underline"
-            to={generateUserPath({ username: rescratchAuthor.username })}
-          >
-            {rescratchAuthor.name} Rescratched
-          </Link>
-        </div>
+        <ScratchRescratchedByStatus rescratchAuthor={rescratchAuthor} />
       )}
       <div className={`${timelineScratch ? 'relative ' : ''}flex gap-3`}>
         <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
-          <Link to={userPath}>
+          <Link
+            to={userPath}
+            onMouseEnter={userPreviewOnMouseEnter}
+            onMouseLeave={userPreviewOnMouseLeave}
+          >
             <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
           </Link>
         </div>
@@ -92,10 +90,20 @@ const Post = ({
           <div className="flex justify-between gap-3">
             <div className="text-secondary flex items-baseline min-w-0">
               <Link className="truncate" to={userPath}>
-                <span className="font-bold text-primary hover:underline">
+                <span
+                  className="font-bold text-primary hover:underline"
+                  onMouseEnter={userPreviewOnMouseEnter}
+                  onMouseLeave={userPreviewOnMouseLeave}
+                >
                   {scratch.author.name}
                 </span>
-                <span className="text-sm ml-1">@{scratch.author.username}</span>
+                <span
+                  className="text-sm ml-1"
+                  onMouseEnter={userPreviewOnMouseEnter}
+                  onMouseLeave={userPreviewOnMouseLeave}
+                >
+                  @{scratch.author.username}
+                </span>
               </Link>
               <span className="text-sm px-1">·</span>
               <div className="whitespace-nowrap">
@@ -112,13 +120,8 @@ const Post = ({
             )}
           </div>
           <div className="flex flex-col">
-            {parentUserPath && (
-              <div className="flex gap-1 text-sm text-secondary">
-                <span>Replying to</span>
-                <Link className="text-blue hover:underline" to={parentUserPath}>
-                  @{parentUsername}
-                </Link>
-              </div>
+            {parentUsername && (
+              <ScratchReplyingToStatus parentUsername={parentUsername} />
             )}
             <p className="break-words whitespace-pre-wrap">{scratch.body}</p>
             {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
