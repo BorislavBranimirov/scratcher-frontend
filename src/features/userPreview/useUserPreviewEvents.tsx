@@ -1,9 +1,14 @@
 import { useRef } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import { openUserPreview, setUserPreviewMouseLeft } from './userPreviewSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  openUserPreview,
+  selectUserPreviewUserId,
+  setUserPreviewMouseLeft,
+} from './userPreviewSlice';
 
 const useUserPreviewEvents = (username: string) => {
   const dispatch = useAppDispatch();
+  const userId = useAppSelector(selectUserPreviewUserId);
   const timeout = useRef<NodeJS.Timeout | null>(null);
 
   const onMouseEnter = (e: React.MouseEvent) => {
@@ -26,7 +31,9 @@ const useUserPreviewEvents = (username: string) => {
   };
 
   const onMouseLeave = () => {
-    dispatch(setUserPreviewMouseLeft(true));
+    if (userId) {
+      dispatch(setUserPreviewMouseLeft(true));
+    }
     if (timeout.current) {
       clearTimeout(timeout.current);
     }

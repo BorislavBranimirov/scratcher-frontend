@@ -28,14 +28,12 @@ export const openUserPreview = createAsyncThunk<
 });
 
 export interface UserPreviewState {
-  show: boolean;
   pos: ElementPosition;
   mouseLeft: boolean;
   userId: number | null;
 }
 
 const initialState: UserPreviewState = {
-  show: false,
   pos: { x: 0, y: 0, width: 0, height: 0 },
   mouseLeft: false,
   userId: null,
@@ -54,7 +52,6 @@ export const userPreviewSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(openUserPreview.fulfilled, (state, action) => {
-      state.show = true;
       state.pos = action.payload.pos;
       state.mouseLeft = false;
       state.userId = action.payload.user.id;
@@ -64,9 +61,6 @@ export const userPreviewSlice = createSlice({
 
 export const { setUserPreviewMouseLeft, closeUserPreview } =
   userPreviewSlice.actions;
-
-export const selectUserPreviewShow = (state: RootState) =>
-  state.userPreview.show;
 
 export const selectUserPreviewPos = (state: RootState) => state.userPreview.pos;
 

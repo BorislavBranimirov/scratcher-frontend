@@ -3,7 +3,6 @@ import {
   closeUserPreview,
   selectUserPreviewMouseLeft,
   selectUserPreviewPos,
-  selectUserPreviewShow,
   selectUserPreviewUser,
   setUserPreviewMouseLeft,
 } from './userPreviewSlice';
@@ -12,18 +11,18 @@ import { FollowButton, UserFollowerCounters } from '../users/UserComponents';
 import { Link, useLocation } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
 import { shallowEqual, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { selectAuthUser } from '../auth/authSlice';
 import { useRef } from 'react';
 import { useLayoutEffect } from 'react';
 
 const UserPreviewWindow = () => {
   const dispatch = useDispatch();
-  const show = useAppSelector(selectUserPreviewShow);
   const parentPos = useAppSelector(selectUserPreviewPos, shallowEqual);
   const mouseLeft = useAppSelector(selectUserPreviewMouseLeft);
   const user = useAppSelector(selectUserPreviewUser);
   const loggedUser = useAppSelector(selectAuthUser);
+  const [isUnmounting, setIsUnmounting] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
@@ -34,13 +33,32 @@ const UserPreviewWindow = () => {
   }, [location, dispatch]);
 
   useEffect(() => {
+    if (popupRef.current) {
+      popupRef.current.classList.replace('opacity-0', 'opacity-100');
+      setIsUnmounting(false);
+    }
+  }, [parentPos]);
+
+  useEffect(() => {
+    if (popupRef.current && isUnmounting) {
+      popupRef.current.classList.replace('opacity-100', 'opacity-0');
+    }
+  }, [isUnmounting]);
+
+  useEffect(() => {
     if (mouseLeft) {
-      const timeout = setTimeout(() => {
-        dispatch(closeUserPreview());
+      let closeTimeout: NodeJS.Timeout | undefined;
+      const transitionTimeout = setTimeout(() => {
+        // prepare to unmount to allow for opacity transition to play
+        setIsUnmounting(true);
+        closeTimeout = setTimeout(() => {
+          dispatch(closeUserPreview());
+        }, 300);
       }, 300);
 
       return () => {
-        clearTimeout(timeout);
+        clearTimeout(transitionTimeout);
+        clearTimeout(closeTimeout);
       };
     }
   }, [mouseLeft, dispatch]);
@@ -72,7 +90,7 @@ const UserPreviewWindow = () => {
     }
   }, [parentPos, user]);
 
-  if (!show || !user) {
+  if (!user) {
     return null;
   }
 
@@ -80,7 +98,7 @@ const UserPreviewWindow = () => {
 
   return (
     <div
-      className="absolute w-80 z-30 bg-neutral shadow rounded-2xl"
+      className="absolute w-80 z-30 bg-neutral shadow rounded-2xl transition-opacity duration-300 opacity-0"
       ref={popupRef}
       onMouseEnter={() => {
         dispatch(setUserPreviewMouseLeft(false));
@@ -96,7 +114,7 @@ const UserPreviewWindow = () => {
               <img src={user.profileImageUrl || avatar} alt="avatar" />
             </Link>
           </div>
-          {loggedUser?.id !== user.id && (
+          {loggedUser && loggedUser.id !== user.id && (
             <FollowButton
               userId={user.id}
               isFollowing={user.isFollowing}
