@@ -119,6 +119,7 @@ const UserPreviewWindow = () => {
               userId={user.id}
               isFollowing={user.isFollowing}
               textSize={'sm'}
+              disableConfirmPrompt
             />
           )}
         </div>

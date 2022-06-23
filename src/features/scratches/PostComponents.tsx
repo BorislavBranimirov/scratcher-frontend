@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import { Author } from '../../common/types';
 import { selectAuthUserPinnedId } from '../auth/authSlice';
+import ConfirmPrompt from '../../common/ConfirmPrompt';
 import { openReplyModal, openRescratchModal } from '../modal/modalSlice';
 import { pushNotification } from '../notification/notificationSlice';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
@@ -99,6 +100,7 @@ export const ScratchMoreButton = ({
   const navigate = useNavigate();
 
   const [moreOptionsToggle, setMoreOptionsToggle] = useState(false);
+  const [showConfirmPrompt, setShowConfirmPrompt] = useState(false);
 
   return (
     <div className="relative">
@@ -132,24 +134,39 @@ export const ScratchMoreButton = ({
           className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3 text-delete"
           onClick={async (e) => {
             e.stopPropagation();
-            const res = await dispatch(removeScratch({ id: scratchId }));
-            if (removeScratch.fulfilled.match(res)) {
-              if (redirectOnDelete) {
-                if (ScratchIdToRedirectOnDelete) {
-                  navigate(
-                    generateScratchPath({
-                      username: scratchAuthorUsername,
-                      id: ScratchIdToRedirectOnDelete,
-                    })
-                  );
-                } else {
-                  navigate('/');
-                }
-              }
-            }
+            setShowConfirmPrompt(true);
             setMoreOptionsToggle(false);
           }}
         >
+          {showConfirmPrompt && (
+            <ConfirmPrompt
+              title="Delete Scratch?"
+              body="This can't be undone and it will be removed from your profile, timeline of any accounts that follow you, and from Scratcher search results."
+              acceptText="Delete"
+              declineText="Cancel"
+              acceptCallback={async () => {
+                const res = await dispatch(removeScratch({ id: scratchId }));
+                if (removeScratch.fulfilled.match(res)) {
+                  if (redirectOnDelete) {
+                    if (ScratchIdToRedirectOnDelete) {
+                      navigate(
+                        generateScratchPath({
+                          username: scratchAuthorUsername,
+                          id: ScratchIdToRedirectOnDelete,
+                        })
+                      );
+                    } else {
+                      navigate('/');
+                    }
+                  }
+                }
+                setShowConfirmPrompt(false);
+              }}
+              declineCallback={() => {
+                setShowConfirmPrompt(false);
+              }}
+            />
+          )}
           <Trash2 size={16} />
           <span>Delete</span>
         </button>
