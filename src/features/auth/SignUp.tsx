@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { apiError } from '../../common/types';
+import { pushNotification } from '../notification/notificationSlice';
 import { login, selectAuthIsLogged } from './authSlice';
 
 const SignUp = () => {
@@ -16,14 +18,20 @@ const SignUp = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const res = await axios.post<{
-      success: boolean;
-      id: number;
-      username: string;
-    }>('/api/users', { username, password });
+    try {
+      const res = await axios.post<{
+        success: boolean;
+        id: number;
+        username: string;
+      }>('/api/users', { username, password });
 
-    if (res.data.success) {
-      dispatch(login({ username, password }));
+      if (res.data.success) {
+        dispatch(login({ username, password }));
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        dispatch(pushNotification((err.response.data as apiError).err));
+      }
     }
   };
 
