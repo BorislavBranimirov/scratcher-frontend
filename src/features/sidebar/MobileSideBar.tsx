@@ -52,7 +52,7 @@ const MobileSideBar = () => {
           setOpenSideBar(false);
         }}
       ></div>
-      <header className="sm:hidden fixed w-3/5 h-screen bg-neutral z-40">
+      <header className="sm:hidden fixed w-3/4 h-screen bg-neutral z-40">
         <div className="flex flex-col">
           {user ? (
             <>

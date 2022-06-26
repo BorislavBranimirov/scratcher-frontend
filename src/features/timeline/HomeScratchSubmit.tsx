@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
 import avatar from '../../images/avatarplaceholder.png';
@@ -6,12 +6,21 @@ import { Link } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { addScratch } from '../scratches/scratchesSlice';
+import { postUploadMedia } from '../../axiosApi';
+import {
+  ScratchSubmitFileUploadButton,
+  ScratchSubmitImagePreview,
+} from '../../common/ScratchSubmitComponents';
+import axios from 'axios';
+import { pushNotification } from '../notification/notificationSlice';
+import { apiError } from '../../common/types';
 
 const HomeScratchSubmit = () => {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(selectAuthUser);
 
   const [body, setBody] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const inputFieldRef = useSyncTextareaHeight(body);
@@ -22,13 +31,37 @@ const HomeScratchSubmit = () => {
 
   const userPath = generateUserPath({ username: loggedUser.username });
 
+  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFile(files[0]);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      const res = await dispatch(addScratch({ body }));
-      if (addScratch.fulfilled.match(res)) {
-        setBody('');
+
+      try {
+        let mediaUrl: string | undefined;
+        if (file) {
+          let formData = new FormData();
+          formData.append('file', file);
+          const res = await postUploadMedia(formData);
+          mediaUrl = res.data.name;
+        }
+
+        const res = await dispatch(addScratch({ body, mediaUrl }));
+        if (addScratch.fulfilled.match(res)) {
+          setBody('');
+          setFile(null);
+        }
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          dispatch(pushNotification((err.response.data as apiError).err));
+        }
       }
+
       setIsSubmitting(false);
     }
   };
@@ -53,12 +86,21 @@ const HomeScratchSubmit = () => {
           }}
           disabled={isSubmitting}
         />
+        <ScratchSubmitImagePreview
+          file={file}
+          handleRemoveFileInput={() => setFile(null)}
+        />
         {!isSubmitting && (
-          <div className="border-t border-primary pt-3 flex justify-end">
+          <div className="border-t border-primary pt-3 flex justify-between items-center">
+            <div className="my-auto">
+              <ScratchSubmitFileUploadButton
+                handleFileInputChange={handleFileInputChange}
+              />
+            </div>
             <button
               className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
               onClick={handleSubmit}
-              disabled={!body}
+              disabled={!body && !file}
             >
               Scratch
             </button>

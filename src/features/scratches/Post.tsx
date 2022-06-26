@@ -16,6 +16,7 @@ import {
   ScratchShareButton,
   ScratchRescratchedByStatus,
   ScratchReplyingToStatus,
+  ScratchImageAttachment,
 } from './PostComponents';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 
@@ -124,6 +125,9 @@ const Post = ({
               <ScratchReplyingToStatus parentUsername={parentUsername} />
             )}
             <p className="break-words whitespace-pre-wrap">{scratch.body}</p>
+            {scratch.mediaUrl && (
+              <ScratchImageAttachment url={scratch.mediaUrl} cropImage />
+            )}
             {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
               <EmbeddedRescratch rescratchedId={scratch.rescratchedId} />
             )}

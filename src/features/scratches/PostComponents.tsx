@@ -31,6 +31,7 @@ import {
   unlikeScratch,
   unpinScratch,
 } from './scratchesSlice';
+import { openImagePreview } from '../imagePreview/imagePreviewSlice';
 
 export const ScratchRescratchedByStatus = ({
   rescratchAuthor,
@@ -190,6 +191,32 @@ export const ScratchMoreButton = ({
           </span>
         </button>
       </div>
+    </div>
+  );
+};
+
+export const ScratchImageAttachment = ({
+  url,
+  cropImage = false,
+}: {
+  url: string;
+  cropImage?: boolean;
+}) => {
+  const dispatch = useAppDispatch();
+  const mediaUrl =
+    'https://res.cloudinary.com/quiz-media/image/upload/f_auto/' + url;
+
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        dispatch(openImagePreview(mediaUrl));
+      }}
+      className={`my-2 rounded-2xl flex items-center overflow-hidden${
+        cropImage ? ' max-h-[60vh]' : ''
+      }`}
+    >
+      <img src={mediaUrl} alt="attachment" className="w-full h-auto" />
     </div>
   );
 };

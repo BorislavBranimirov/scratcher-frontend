@@ -5,6 +5,7 @@ import TimeAgo from './TimeAgo';
 import avatar from '../images/avatarplaceholder.png';
 import { selectScratchById } from '../features/scratches/scratchesSlice';
 import useUserPreviewEvents from '../features/userPreview/useUserPreviewEvents';
+import { ScratchImageAttachment } from '../features/scratches/PostComponents';
 
 const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
   const rescratch = useAppSelector((state) =>
@@ -74,6 +75,9 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
         </div>
       </div>
       <p className="break-words whitespace-pre-wrap">{rescratch.body}</p>
+      {rescratch.mediaUrl && (
+        <ScratchImageAttachment url={rescratch.mediaUrl} cropImage />
+      )}
     </div>
   );
 };

@@ -32,6 +32,7 @@ import { Loader } from 'react-feather';
 import SignUp from '../features/auth/SignUp';
 import SearchPage from '../features/search/SearchPage';
 import UserPreviewWindow from '../features/userPreview/UserPreviewWindow';
+import ImagePreviewModal from '../features/imagePreview/ImagePreviewModal';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -59,6 +60,7 @@ const App = () => {
         <SideBarMenu />
         <Notification />
         <Modal />
+        <ImagePreviewModal />
         <UserPreviewWindow />
         <main className="col-span-1 sm:col-span-7 md:col-span-9 grid grid-cols-1 sm:grid-cols-7 md:grid-cols-9">
           <Routes>

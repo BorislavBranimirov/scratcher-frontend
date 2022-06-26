@@ -320,4 +320,12 @@ export const getSearchUsers = (
   });
 };
 
+export const postUploadMedia = (formData: FormData) => {
+  return axiosApi.post<{ success: boolean; name: string }>(
+    `/api/media`,
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  );
+};
+
 export default axiosApi;

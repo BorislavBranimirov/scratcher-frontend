@@ -13,6 +13,7 @@ import {
   ScratchReplyButton,
   ScratchRescratchButton,
   ScratchShareButton,
+  ScratchImageAttachment,
 } from '../scratches/PostComponents';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 
@@ -89,6 +90,7 @@ const ScratchMainPost = ({
       </div>
       <div className="flex flex-col mt-3 text-lg">
         <p className="break-words whitespace-pre-wrap">{scratch.body}</p>
+        {scratch.mediaUrl && <ScratchImageAttachment url={scratch.mediaUrl} />}
         {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
           <EmbeddedRescratch rescratchedId={scratch.rescratchedId} />
         )}

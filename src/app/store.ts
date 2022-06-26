@@ -10,12 +10,14 @@ import scratchesReducer from '../features/scratches/scratchesSlice';
 import usersReducer from '../features/users/usersSlice';
 import searchReducer from '../features/search/searchSlice';
 import userPreviewReducer from '../features/userPreview/userPreviewSlice';
+import imagePreviewReducer from '../features/imagePreview/imagePreviewSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     notification: notificationReducer,
     modal: modalReducer,
+    imagePreview: imagePreviewReducer,
     userPreview: userPreviewReducer,
     users: usersReducer,
     scratches: scratchesReducer,
