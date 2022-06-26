@@ -166,6 +166,24 @@ export const getUserTimeline = (id: number, limit?: number, after?: number) => {
   );
 };
 
+export const getUserMediaScratches = (
+  id: number,
+  limit?: number,
+  after?: number
+) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<TimelineScratchesResponseJson>(`/api/users/${id}/media`, {
+    params: queryParams,
+  });
+};
+
 interface ScratchConversationResponseJson {
   parentChain: Scratch[];
   scratch: Scratch;

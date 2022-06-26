@@ -16,6 +16,7 @@ const UserPageTabs = () => {
     tab?: userPageTabValue;
   };
   const userPath = generateUserPath({ username });
+  const userMediaPath = generateUserPathWithTab({ username, tab: 'media' });
   const userLikesPath = generateUserPathWithTab({ username, tab: 'likes' });
   const userFollowersPath = generateUserPathWithTab({
     username,
@@ -96,6 +97,34 @@ const UserPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Scratches</span>
             {!tab && (
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+            )}
+          </div>
+        </NavLink>
+      </div>
+      <div
+        className={`grow flex justify-center transition-colors ${
+          tab === 'media' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+        }`}
+      >
+        <NavLink
+          className={({ isActive }) =>
+            `px-4 text-center w-full ${
+              isActive ? 'font-bold' : 'text-secondary'
+            }`
+          }
+          to={userMediaPath}
+          end
+          onClick={(e) => {
+            if (!isLogged) {
+              e.preventDefault();
+              dispatch(pushNotification('Log in to see user media.'));
+            }
+          }}
+        >
+          <div className="relative py-3 w-fit mx-auto">
+            <span>Media</span>
+            {tab === 'media' && (
               <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
             )}
           </div>

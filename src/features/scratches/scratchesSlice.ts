@@ -32,6 +32,7 @@ import {
   loadHomeTimeline,
   loadMoreOfTimeline,
   loadUserLikes,
+  loadUserMediaScratches,
   loadUserTimeline,
 } from '../timeline/timelineSlice';
 
@@ -359,6 +360,7 @@ export const scratchesSlice = createSlice({
       isAnyOf(
         loadHomeTimeline.fulfilled,
         loadUserTimeline.fulfilled,
+        loadUserMediaScratches.fulfilled,
         loadUserLikes.fulfilled,
         loadMoreOfTimeline.fulfilled,
         loadBookmarks.fulfilled,

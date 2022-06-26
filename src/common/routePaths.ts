@@ -6,7 +6,7 @@ export const userPagePath = `/user/:username`;
 
 export const userPagePathWithTab = `/user/:username/:tab`;
 
-export type userPageTabValue = 'likes' | 'followers' | 'following';
+export type userPageTabValue = 'media' | 'likes' | 'followers' | 'following';
 
 export const searchPagePath = `/search/:tab`;
 

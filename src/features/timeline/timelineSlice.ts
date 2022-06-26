@@ -10,6 +10,7 @@ import {
   getUserLikes,
   getUserFollowers,
   getUserFollowed,
+  getUserMediaScratches,
 } from '../../axiosApi';
 import { scratchEntity, userEntity } from '../../common/entities';
 import { apiError, Scratch, User } from '../../common/types';
@@ -114,6 +115,43 @@ export const loadUserTimeline = createAsyncThunk<
   }
 });
 
+interface LoadUserMediaScratchesReturnObj {
+  user: User;
+  entities: { scratches: { [key: string]: Scratch } };
+  result: number[];
+  isFinished: boolean;
+}
+
+export const loadUserMediaScratches = createAsyncThunk<
+  LoadUserMediaScratchesReturnObj,
+  { username: string },
+  { rejectValue: string }
+>('timeline/loadUserMediaScratches', async (args, thunkApi) => {
+  try {
+    const user = (await getUserByUsername(args.username)).data;
+
+    const res = await getUserMediaScratches(user.id);
+
+    const normalized = normalize<
+      Scratch,
+      LoadUserMediaScratchesReturnObj['entities'],
+      LoadUserMediaScratchesReturnObj['result']
+    >(res.data.scratches, [scratchEntity]);
+
+    normalized.entities.scratches = {
+      ...normalized.entities.scratches,
+      ...res.data.extraScratches,
+    };
+
+    return { user, ...normalized, isFinished: res.data.isFinished };
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
+    }
+    return Promise.reject(err);
+  }
+});
+
 interface LoadUserLikesReturnObj {
   user: User;
   entities: { scratches: { [key: string]: Scratch } };
@@ -162,19 +200,30 @@ export const loadMoreOfTimeline = createAsyncThunk<
   { rejectValue: string; state: RootState }
 >('timeline/loadMoreOfTimeline', async (args, thunkApi) => {
   try {
+    const type = thunkApi.getState().timeline.type;
     const userId = thunkApi.getState().timeline.userId;
 
     let res;
     if (userId) {
-      res = await getUserTimeline(userId, args.limit, args.after);
+      if (type === 'userTimeline') {
+        res = await getUserTimeline(userId, args.limit, args.after);
+      } else if (type === 'userMediaScratches') {
+        res = await getUserMediaScratches(userId, args.limit, args.after);
+      }
     } else {
-      res = await getHomeTimeline(args.limit, args.after);
+      if (type === 'home') {
+        res = await getHomeTimeline(args.limit, args.after);
+      }
+    }
+
+    if (!res) {
+      throw new Error('Incorrect timeline type provided.');
     }
 
     const normalized = normalize<
       Scratch,
-      LoadUserLikesReturnObj['entities'],
-      LoadUserLikesReturnObj['result']
+      LoadMoreOfTimelineReturnObj['entities'],
+      LoadMoreOfTimelineReturnObj['result']
     >(res.data.scratches, [scratchEntity]);
 
     normalized.entities.scratches = {
@@ -259,6 +308,7 @@ export interface TimelineState {
   type:
     | 'home'
     | 'userTimeline'
+    | 'userMediaScratches'
     | 'userLikes'
     | 'followers'
     | 'following'
@@ -309,6 +359,18 @@ export const timelineSlice = createSlice({
       state.isFinished = action.payload.isFinished;
 
       state.type = 'userTimeline';
+      state.isLoading = false;
+    });
+
+    builder.addCase(loadUserMediaScratches.fulfilled, (state, action) => {
+      if (state.pinnedScratchId) {
+        state.pinnedScratchId = null;
+      }
+      state.userId = action.payload.user.id;
+      state.ids = action.payload.result;
+      state.isFinished = action.payload.isFinished;
+
+      state.type = 'userMediaScratches';
       state.isLoading = false;
     });
 
@@ -392,6 +454,7 @@ export const timelineSlice = createSlice({
       isAnyOf(
         loadHomeTimeline.pending,
         loadUserTimeline.pending,
+        loadUserMediaScratches.pending,
         loadUserLikes.pending,
         loadUserFollowers.pending,
         loadUserFollowing.pending
@@ -404,6 +467,7 @@ export const timelineSlice = createSlice({
       isAnyOf(
         loadHomeTimeline.rejected,
         loadUserTimeline.rejected,
+        loadUserMediaScratches.rejected,
         loadUserLikes.rejected,
         loadUserFollowers.rejected,
         loadUserFollowing.rejected

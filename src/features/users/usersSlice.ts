@@ -11,6 +11,7 @@ import {
   loadUserFollowers,
   loadUserFollowing,
   loadUserLikes,
+  loadUserMediaScratches,
   loadUserTimeline,
 } from '../timeline/timelineSlice';
 import { openUserPreview } from '../userPreview/userPreviewSlice';
@@ -87,6 +88,7 @@ export const usersSlice = createSlice({
     builder.addMatcher(
       isAnyOf(
         loadUserTimeline.fulfilled,
+        loadUserMediaScratches.fulfilled,
         loadUserLikes.fulfilled,
         login.fulfilled,
         loginFromToken.fulfilled,

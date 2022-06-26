@@ -6,6 +6,7 @@ import {
   loadUserFollowers,
   loadUserFollowing,
   loadUserLikes,
+  loadUserMediaScratches,
   loadUserTimeline,
   selectTimelineIsLoading,
   selectTimelineUser,
@@ -36,6 +37,8 @@ const UserPage = () => {
       dispatch(loadUserTimeline({ username }));
     } else if (!isLogged) {
       navigate(userPath, { replace: true });
+    } else if (tab === 'media') {
+      dispatch(loadUserMediaScratches({ username }));
     } else if (tab === 'likes') {
       dispatch(loadUserLikes({ username }));
     } else if (tab === 'followers') {
