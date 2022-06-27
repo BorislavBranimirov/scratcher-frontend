@@ -131,6 +131,27 @@ export const getUserByUsername = (username: string) => {
   return axiosApi.get<User>(`/api/users/username/${username}`);
 };
 
+interface PatchUserResponseJson {
+  success: boolean;
+  id: number;
+  username: string;
+}
+
+export const patchUser = ({
+  id,
+  name,
+  description,
+}: {
+  id: number;
+  name: string;
+  description: string;
+}) => {
+  return axiosApi.patch<PatchUserResponseJson>(`/api/users/${id}`, {
+    name,
+    description,
+  });
+};
+
 interface TimelineScratchesResponseJson {
   scratches: Scratch[];
   isFinished: boolean;

@@ -5,9 +5,12 @@ function useSyncTextareaHeight(body: string) {
 
   useLayoutEffect(() => {
     if (inputFieldRef.current) {
+      const totalBorderHeight =
+        inputFieldRef.current.offsetHeight - inputFieldRef.current.clientHeight;
       inputFieldRef.current.style.height = '0';
+
       inputFieldRef.current.style.height =
-        inputFieldRef.current.scrollHeight + 'px';
+        inputFieldRef.current.scrollHeight + totalBorderHeight + 'px';
     }
   }, [body, inputFieldRef]);
 

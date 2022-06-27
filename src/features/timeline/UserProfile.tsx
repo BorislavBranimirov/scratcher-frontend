@@ -9,11 +9,13 @@ import {
   getProfileImageUrl,
 } from '../../common/profileImageUrls';
 import { openImagePreview } from '../imagePreview/imagePreviewSlice';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectTimelineUser);
   const loggedUser = useAppSelector(selectAuthUser);
+  const navigate = useNavigate();
 
   if (!user) {
     return <div>User not found</div>;
@@ -46,7 +48,12 @@ const UserProfile = () => {
             }}
           />
           {loggedUser?.id === user.id ? (
-            <button className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60">
+            <button
+              className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+              onClick={() => {
+                navigate('/settings/edit-profile');
+              }}
+            >
               Edit profile
             </button>
           ) : (

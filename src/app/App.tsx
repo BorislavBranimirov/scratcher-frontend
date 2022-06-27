@@ -33,6 +33,7 @@ import SignUp from '../features/auth/SignUp';
 import SearchPage from '../features/search/SearchPage';
 import UserPreviewWindow from '../features/userPreview/UserPreviewWindow';
 import ImagePreviewModal from '../features/imagePreview/ImagePreviewModal';
+import SettingsPage from '../features/settings/SettingsPage';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -85,6 +86,22 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <SuggestedUsersPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="settings"
+              element={
+                <PrivateRoute>
+                  <SettingsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="settings/:tab"
+              element={
+                <PrivateRoute>
+                  <SettingsPage />
                 </PrivateRoute>
               }
             />
