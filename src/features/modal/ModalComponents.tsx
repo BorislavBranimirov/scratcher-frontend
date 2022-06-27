@@ -4,10 +4,10 @@ import { useAppSelector } from '../../app/hooks';
 import { ScratchSubmitFileUploadButton } from '../../common/ScratchSubmitComponents';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectModalScratch } from './modalSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import TimeAgo from '../../common/TimeAgo';
 import { ScratchImageAttachment } from '../scratches/PostComponents';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 export const ScratchModalLayout = ({
   handleCloseModal,
@@ -36,12 +36,14 @@ export const ScratchModalParentScratch = () => {
     return null;
   }
 
+  const profileImageUrl = getProfileImageUrl(parentScratch.author.profileImageUrl);
+
   return (
     <div className="flex gap-3">
       <div className="flex flex-col items-center">
         <div className="w-11 h-11 rounded-full overflow-hidden mt-1 shrink-0">
           <img
-            src={parentScratch.author.profileImageUrl || avatar}
+            src={profileImageUrl}
             alt="avatar"
           />
         </div>

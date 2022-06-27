@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import { Link } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
@@ -14,6 +13,7 @@ import {
 import axios from 'axios';
 import { pushNotification } from '../notification/notificationSlice';
 import { apiError } from '../../common/types';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const HomeScratchSubmit = () => {
   const dispatch = useAppDispatch();
@@ -66,11 +66,13 @@ const HomeScratchSubmit = () => {
     }
   };
 
+  const profileImageUrl = getProfileImageUrl(loggedUser.profileImageUrl);
+
   return (
     <div className="flex gap-3 px-4 py-3 border-b border-primary">
       <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
         <Link to={userPath}>
-          <img src={loggedUser.profileImageUrl || avatar} alt="avatar" />
+          <img src={profileImageUrl} alt="avatar" />
         </Link>
       </div>
       <div className="min-w-0 grow">

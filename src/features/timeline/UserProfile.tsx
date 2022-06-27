@@ -1,13 +1,17 @@
 import { format, parseISO } from 'date-fns';
 import { Calendar } from 'react-feather';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
 import { selectTimelineUser } from './timelineSlice';
-import avatar from '../../images/avatarplaceholder.png';
-import banner from '../../images/bannerplaceholder.png';
 import { FollowButton, UserFollowerCounters } from '../users/UserComponents';
+import {
+  getProfileBannerUrl,
+  getProfileImageUrl,
+} from '../../common/profileImageUrls';
+import { openImagePreview } from '../imagePreview/imagePreviewSlice';
 
 const UserProfile = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectTimelineUser);
   const loggedUser = useAppSelector(selectAuthUser);
 
@@ -16,16 +20,30 @@ const UserProfile = () => {
   }
 
   const joinedDate = parseISO(user.createdAt);
+  const profileImageUrl = getProfileImageUrl(user.profileImageUrl);
+  const profileBannerUrl = getProfileBannerUrl(user.profileBannerUrl);
 
   return (
     <div>
-      <img src={user.profileBannerUrl || banner} alt="banner" />
+      <img
+        className="cursor-pointer"
+        src={profileBannerUrl}
+        alt="banner"
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(openImagePreview(profileBannerUrl));
+        }}
+      />
       <div className="pt-3 pb-2 px-4">
         <div className="flex justify-between items-start mb-2">
           <img
-            className="w-1/5 rounded-full -mt-[12%] border-4 border-neutral"
-            src={user.profileImageUrl || avatar}
+            className="w-1/5 rounded-full -mt-[12%] border-4 border-neutral cursor-pointer"
+            src={profileImageUrl}
             alt="avatar"
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(openImagePreview(profileImageUrl));
+            }}
           />
           {loggedUser?.id === user.id ? (
             <button className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60">

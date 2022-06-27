@@ -4,7 +4,6 @@ import { selectAuthUserId } from '../auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { generateScratchPath, generateUserPath } from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
-import avatar from '../../images/avatarplaceholder.png';
 import TimeAgo from '../../common/TimeAgo';
 import { Paperclip } from 'react-feather';
 import { selectScratchById } from '../scratches/scratchesSlice';
@@ -19,6 +18,7 @@ import {
   ScratchImageAttachment,
 } from './PostComponents';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const Post = ({
   scratchId,
@@ -50,6 +50,7 @@ const Post = ({
     username: scratch.author.username,
     id: scratch.id,
   });
+  const profileImageUrl = getProfileImageUrl(scratch.author.profileImageUrl);
 
   return (
     <div
@@ -84,7 +85,7 @@ const Post = ({
             onMouseEnter={userPreviewOnMouseEnter}
             onMouseLeave={userPreviewOnMouseLeave}
           >
-            <img src={scratch.author.profileImageUrl || avatar} alt="avatar" />
+            <img src={profileImageUrl} alt="avatar" />
           </Link>
         </div>
         <div className="min-w-0 grow">

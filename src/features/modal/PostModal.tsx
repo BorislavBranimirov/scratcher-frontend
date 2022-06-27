@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { closeModal } from './modalSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import { selectAuthUser } from '../auth/authSlice';
 import { addScratch } from '../scratches/scratchesSlice';
 import { postUploadMedia } from '../../axiosApi';
@@ -15,6 +14,7 @@ import {
   ScratchModalControlButtons,
   ScratchModalTextArea,
 } from './ModalComponents';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const PostModal = () => {
   const dispatch = useAppDispatch();
@@ -62,10 +62,12 @@ const PostModal = () => {
     dispatch(closeModal());
   };
 
+  const profileImageUrl = getProfileImageUrl(user?.profileImageUrl);
+
   return (
     <ScratchModalLayout handleCloseModal={handleCloseModal}>
       <div className="flex gap-3">
-        <ScratchModalProfileImage url={user?.profileImageUrl || avatar} />
+        <ScratchModalProfileImage url={profileImageUrl} />
         <div className="min-w-0 grow">
           <ScratchModalTextArea
             body={body}

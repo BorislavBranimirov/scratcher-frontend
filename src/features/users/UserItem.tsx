@@ -2,9 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
 import { selectUserById } from './usersSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import { FollowButton } from './UserComponents';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const UserItem = ({
   userId,
@@ -19,6 +19,7 @@ const UserItem = ({
     useUserPreviewEvents(user.username);
 
   const userPath = generateUserPath({ username: user.username });
+  const profileImageUrl = getProfileImageUrl(user.profileImageUrl);
 
   return (
     <div
@@ -41,7 +42,7 @@ const UserItem = ({
             onMouseEnter={userPreviewOnMouseEnter}
             onMouseLeave={userPreviewOnMouseLeave}
           >
-            <img src={user.profileImageUrl || avatar} alt="avatar" />
+            <img src={profileImageUrl} alt="avatar" />
           </Link>
         </div>
         <div className="grow overflow-hidden leading-5">

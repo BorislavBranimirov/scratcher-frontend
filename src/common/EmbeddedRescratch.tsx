@@ -2,10 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { generateScratchPath, generateUserPath } from './routePaths';
 import TimeAgo from './TimeAgo';
-import avatar from '../images/avatarplaceholder.png';
 import { selectScratchById } from '../features/scratches/scratchesSlice';
 import useUserPreviewEvents from '../features/userPreview/useUserPreviewEvents';
 import { ScratchImageAttachment } from '../features/scratches/PostComponents';
+import { getProfileImageUrl } from './profileImageUrls';
 
 const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
   const rescratch = useAppSelector((state) =>
@@ -31,6 +31,8 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
     id: rescratch.id,
   });
 
+  const profileImageUrl = getProfileImageUrl(rescratch.author.profileImageUrl);
+
   return (
     <div
       className="mt-2 mb-0.5 border border-primary rounded-xl pt-1 pb-2 px-2.5 cursor-pointer transition-colors duration-200 hover:bg-primary/5"
@@ -48,7 +50,7 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
             onMouseLeave={userPreviewOnMouseLeave}
           >
             <img
-              src={rescratch.author.profileImageUrl || avatar}
+              src={profileImageUrl}
               alt="avatar"
             />
           </Link>

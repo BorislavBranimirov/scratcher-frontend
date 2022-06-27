@@ -15,9 +15,9 @@ import {
   User,
   UserPlus,
 } from 'react-feather';
-import avatar from '../../images/avatarplaceholder.png';
 import { useState } from 'react';
 import { openPostModal } from '../modal/modalSlice';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const DefaultSideBar = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +26,7 @@ const DefaultSideBar = () => {
 
   const [userOptionsToggle, setUserOptionsToggle] = useState(false);
   const searchScratchesPath = generateSearchPath({ tab: 'scratches' });
+  const profileImageUrl = getProfileImageUrl(user?.profileImageUrl);
 
   return (
     <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
@@ -188,7 +189,7 @@ const DefaultSideBar = () => {
             >
               <div className="flex items-center gap-3 min-w-0">
                 <img
-                  src={user.profileImageUrl || avatar}
+                  src={profileImageUrl}
                   alt="avatar"
                   className="w-9 h-9 rounded-full overflow-hidden shrink-0"
                 />

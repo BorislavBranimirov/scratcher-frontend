@@ -6,7 +6,6 @@ import {
   selectUserPreviewUser,
   setUserPreviewMouseLeft,
 } from './userPreviewSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import { FollowButton, UserFollowerCounters } from '../users/UserComponents';
 import { Link, useLocation } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
@@ -15,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { selectAuthUser } from '../auth/authSlice';
 import { useRef } from 'react';
 import { useLayoutEffect } from 'react';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const UserPreviewWindow = () => {
   const dispatch = useDispatch();
@@ -95,6 +95,7 @@ const UserPreviewWindow = () => {
   }
 
   const userPath = generateUserPath({ username: user.username });
+  const profileImageUrl = getProfileImageUrl(user.profileImageUrl);
 
   return (
     <div
@@ -111,7 +112,7 @@ const UserPreviewWindow = () => {
         <div className="flex justify-between items-start">
           <div className="w-14 h-14 rounded-full overflow-hidden">
             <Link to={userPath}>
-              <img src={user.profileImageUrl || avatar} alt="avatar" />
+              <img src={profileImageUrl} alt="avatar" />
             </Link>
           </div>
           {loggedUser && loggedUser.id !== user.id && (

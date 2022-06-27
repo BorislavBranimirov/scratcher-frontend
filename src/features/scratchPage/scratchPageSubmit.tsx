@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { generateUserPath } from '../../common/routePaths';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectAuthUser } from '../auth/authSlice';
-import avatar from '../../images/avatarplaceholder.png';
 import {
   addReplyScratch,
   selectScratchById,
@@ -17,6 +16,7 @@ import {
 import { pushNotification } from '../notification/notificationSlice';
 import axios from 'axios';
 import { apiError } from '../../common/types';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
   const dispatch = useAppDispatch();
@@ -77,6 +77,8 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
     }
   };
 
+  const profileImageUrl = getProfileImageUrl(loggedUser.profileImageUrl);
+
   return (
     <div className="px-4 py-3 border-b border-primary">
       <div className="ml-12 pl-3 flex gap-1 text-sm text-secondary">
@@ -88,7 +90,7 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
       <div className="flex gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">
           <Link to={userPath}>
-            <img src={loggedUser.profileImageUrl || avatar} alt="avatar" />
+            <img src={profileImageUrl} alt="avatar" />
           </Link>
         </div>
         <div className="min-w-0 grow">

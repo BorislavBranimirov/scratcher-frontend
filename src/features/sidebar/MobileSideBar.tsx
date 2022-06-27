@@ -12,13 +12,13 @@ import {
   UserPlus,
   X,
 } from 'react-feather';
-import avatar from '../../images/avatarplaceholder.png';
 import { useLocation } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { logout, selectAuthUser } from '../auth/authSlice';
 import { generateSearchPath, generateUserPath } from '../../common/routePaths';
 import { openPostModal } from '../modal/modalSlice';
+import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const MobileSideBar = () => {
   const dispatch = useAppDispatch();
@@ -43,6 +43,8 @@ const MobileSideBar = () => {
       </button>
     );
   }
+
+  const profileImageUrl = getProfileImageUrl(user?.profileImageUrl);
 
   return (
     <>
@@ -74,7 +76,7 @@ const MobileSideBar = () => {
                 to={generateUserPath({ username: user.username })}
               >
                 <img
-                  src={user.profileImageUrl || avatar}
+                  src={profileImageUrl}
                   alt="avatar"
                   className="w-9 h-9 rounded-full overflow-hidden shrink-0"
                 />
