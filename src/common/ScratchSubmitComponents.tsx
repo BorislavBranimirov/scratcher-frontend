@@ -1,5 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { Image, X } from 'react-feather';
+import usePreviewImage from './usePreviewImage';
 
 export const ScratchSubmitImagePreview = ({
   file,
@@ -8,15 +9,7 @@ export const ScratchSubmitImagePreview = ({
   file: File | null;
   handleRemoveFileInput: () => void;
 }) => {
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (file) {
-      setPreviewImage(URL.createObjectURL(file));
-    } else {
-      setPreviewImage(null);
-    }
-  }, [file]);
+  const [previewImage] = usePreviewImage(file);
 
   if (!previewImage) {
     return null;
@@ -38,20 +31,31 @@ export const ScratchSubmitImagePreview = ({
 
 export const ScratchSubmitFileUploadButton = ({
   handleFileInputChange,
+  id,
 }: {
   handleFileInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  id: string;
 }) => {
   return (
     <>
       <input
-        id="file"
+        id={id}
         type="file"
         name="file"
         className="hidden"
-        accept=".png, .jpeg, .webp, .gif"
+        accept="image/png, image/jpeg, image/webp, image/gif"
+        onClick={(e) => {
+          // clear out last value on click
+          // otherwise chromium browsers don't trigger onChange event if same file is selected
+          // this causes issues in parent components where file is cleared only in state (in image preview)
+          // user flow of selecting file -> removing it -> selecting the same file again doesn't work
+          // as chromium ignores the last action since the dom file input keeps the old file
+          // another solution is passing ref from parent and clearing there when cleaning state, but is messier
+          e.currentTarget.value = '';
+        }}
         onChange={handleFileInputChange}
       />
-      <label htmlFor="file">
+      <label htmlFor={id} title="Media">
         <div className="relative text-post-btn-default cursor-pointer">
           <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-blue/20"></div>
           <Image size={20} />

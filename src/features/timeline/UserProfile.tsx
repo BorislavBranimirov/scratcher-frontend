@@ -27,26 +27,32 @@ const UserProfile = () => {
 
   return (
     <div>
-      <img
-        className="cursor-pointer"
-        src={profileBannerUrl}
-        alt="banner"
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(openImagePreview(profileBannerUrl));
-        }}
-      />
+      <div className="relative w-full overflow-hidden">
+        <div className="pb-[33.3333%]"></div>
+        <img
+          className="absolute top-0 left-0 right-0 mx-auto cursor-pointer"
+          src={profileBannerUrl}
+          alt="banner"
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(openImagePreview(profileBannerUrl));
+          }}
+        />
+      </div>
       <div className="pt-3 pb-2 px-4">
         <div className="flex justify-between items-start mb-2">
-          <img
-            className="w-1/5 rounded-full -mt-[12%] border-4 border-neutral cursor-pointer"
-            src={profileImageUrl}
-            alt="avatar"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(openImagePreview(profileImageUrl));
-            }}
-          />
+          <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-neutral">
+            <div className="pb-[100%]"></div>
+            <img
+              className="absolute top-0 left-0 w-full h-full cursor-pointer"
+              src={profileImageUrl}
+              alt="avatar"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(openImagePreview(profileImageUrl));
+              }}
+            />
+          </div>
           {loggedUser?.id === user.id ? (
             <button
               className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"

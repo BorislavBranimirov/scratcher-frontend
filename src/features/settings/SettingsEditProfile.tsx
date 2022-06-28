@@ -1,22 +1,35 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { X } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { patchUser } from '../../axiosApi';
+import {
+  deleteProfileBanner,
+  patchUser,
+  postProfileBanner,
+  postProfileImage,
+} from '../../axiosApi';
 import {
   getProfileBannerUrl,
   getProfileImageUrl,
 } from '../../common/profileImageUrls';
 import { generateUserPath } from '../../common/routePaths';
 import { apiError } from '../../common/types';
+import usePreviewImage from '../../common/usePreviewImage';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectAuthUser } from '../auth/authSlice';
 import { openImagePreview } from '../imagePreview/imagePreviewSlice';
 import { pushNotification } from '../notification/notificationSlice';
+import { EditProfileFileUploadButton } from './SettingsEditProfileComponents';
 
 const SettingsEditProfile = () => {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(selectAuthUser);
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const [profileBannerFile, setProfileBannerFile] = useState<File | null>(null);
+  const [bannerDeleted, setBannerDeleted] = useState(false);
+  const [previewProfileImage] = usePreviewImage(profileImageFile);
+  const [previewProfileBanner] = usePreviewImage(profileBannerFile);
   const [name, setName] = useState(loggedUser?.name || '');
   const [nameError, setNameError] = useState(false);
   const [description, setDescription] = useState(loggedUser?.description || '');
@@ -25,8 +38,11 @@ const SettingsEditProfile = () => {
 
   const inputFieldRef = useSyncTextareaHeight(description);
 
-  const profileImageUrl = getProfileImageUrl(loggedUser?.profileImageUrl);
-  const profileBannerUrl = getProfileBannerUrl(loggedUser?.profileBannerUrl);
+  const profileImageUrl =
+    previewProfileImage || getProfileImageUrl(loggedUser?.profileImageUrl);
+  const profileBannerUrl =
+    previewProfileBanner ||
+    getProfileBannerUrl(bannerDeleted ? null : loggedUser?.profileBannerUrl);
 
   const nameLimit = 50;
   const descriptionLimit = 160;
@@ -35,29 +51,56 @@ const SettingsEditProfile = () => {
     setNameError(false);
     setDescriptionError(false);
     if (loggedUser) {
-      if (name !== loggedUser.name || description !== loggedUser.description) {
-        if (name.length === 0 || name.length > nameLimit) {
-          setNameError(true);
-          return;
-        }
-
-        if (description.length > descriptionLimit) {
-          setDescriptionError(true);
-          return;
-        }
-
-        try {
-          const res = await patchUser({ id: loggedUser.id, name, description });
-          if (res.data.success) {
-            navigate(generateUserPath({ username: res.data.username }));
-          }
-        } catch (err) {
-          if (axios.isAxiosError(err) && err.response) {
-            dispatch(pushNotification((err.response.data as apiError).err));
-          }
-        }
-      } else {
+      if (
+        name === loggedUser.name &&
+        description === loggedUser.description &&
+        !profileImageFile &&
+        !profileBannerFile &&
+        !bannerDeleted
+      ) {
         dispatch(pushNotification('Profile information is already up to date'));
+        return;
+      }
+
+      if (name.length === 0 || name.length > nameLimit) {
+        setNameError(true);
+        return;
+      }
+
+      if (description.length > descriptionLimit) {
+        setDescriptionError(true);
+        return;
+      }
+
+      try {
+        if (profileImageFile) {
+          let formData = new FormData();
+          formData.append('file', profileImageFile);
+          await postProfileImage(formData);
+        }
+
+        if (profileBannerFile) {
+          let formData = new FormData();
+          formData.append('file', profileBannerFile);
+          await postProfileBanner(formData);
+        }
+
+        if (bannerDeleted) {
+          await deleteProfileBanner();
+        }
+
+        if (
+          name !== loggedUser.name ||
+          description !== loggedUser.description
+        ) {
+          await patchUser({ id: loggedUser.id, name, description });
+        }
+
+        navigate(generateUserPath({ username: loggedUser.username }));
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          dispatch(pushNotification((err.response.data as apiError).err));
+        }
       }
     }
   };
@@ -75,25 +118,71 @@ const SettingsEditProfile = () => {
 
   return (
     <div className="flex flex-col">
-      <img
-        className="cursor-pointer"
-        src={profileBannerUrl}
-        alt="banner"
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(openImagePreview(profileBannerUrl));
-        }}
-      />
-      <div className="pt-3 px-4">
+      <div className="relative w-full overflow-hidden">
+        <div className="pb-[33.3333%]"></div>
         <img
-          className="w-1/5 rounded-full -mt-[12%] border-4 border-neutral cursor-pointer"
-          src={profileImageUrl}
-          alt="avatar"
+          className="absolute top-0 left-0 right-0 mx-auto cursor-pointer"
+          src={profileBannerUrl}
+          alt="banner"
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(openImagePreview(profileImageUrl));
+            dispatch(openImagePreview(profileBannerUrl));
           }}
         />
+        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-neutral/50">
+          <div className="w-full h-full flex justify-center items-center gap-5 opacity-75">
+            <EditProfileFileUploadButton
+              handleFileInputChange={(e) => {
+                const files = e.target.files;
+                if (files && files.length > 0) {
+                  setBannerDeleted(false);
+                  setProfileBannerFile(files[0]);
+                }
+              }}
+              id="settings-banner-file-input"
+            />
+            {!bannerDeleted &&
+              (loggedUser.profileBannerUrl || profileBannerFile) && (
+                <button
+                  className="w-10 h-10 flex items-center justify-center rounded-full transition-colors bg-neutral/80 hover:bg-neutral/60 active:bg-neutral/40"
+                  onClick={() => {
+                    setBannerDeleted(true);
+                    setProfileBannerFile(null);
+                  }}
+                  title="Remove photo"
+                >
+                  <X />
+                </button>
+              )}
+          </div>
+        </div>
+      </div>
+      <div className="pt-3 px-4">
+        <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-neutral">
+          <div className="pb-[100%]"></div>
+          <img
+            className="absolute top-0 left-0 w-full h-full cursor-pointer"
+            src={profileImageUrl}
+            alt="avatar"
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(openImagePreview(profileImageUrl));
+            }}
+          />
+          <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-neutral/50">
+            <div className="w-full h-full flex justify-center items-center opacity-75">
+              <EditProfileFileUploadButton
+                handleFileInputChange={(e) => {
+                  const files = e.target.files;
+                  if (files && files.length > 0) {
+                    setProfileImageFile(files[0]);
+                  }
+                }}
+                id="settings-image-file-input"
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mt-4 w-[90%] mx-auto flex flex-col gap-6">
         <div className="relative">

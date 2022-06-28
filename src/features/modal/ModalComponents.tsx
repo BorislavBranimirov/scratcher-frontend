@@ -24,7 +24,7 @@ export const ScratchModalLayout = ({
           <X />
         </button>
       </div>
-      <div className="flex flex-col p-3 overflow-y-scroll">{children}</div>
+      <div className="flex flex-col p-3 overflow-y-auto">{children}</div>
     </div>
   );
 };
@@ -136,6 +136,7 @@ export const ScratchModalControlButtons = ({
       <div className="my-auto">
         <ScratchSubmitFileUploadButton
           handleFileInputChange={handleFileInputChange}
+          id="modal-file-input"
         />
       </div>
       <button

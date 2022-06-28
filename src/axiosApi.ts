@@ -131,6 +131,32 @@ export const getUserByUsername = (username: string) => {
   return axiosApi.get<User>(`/api/users/username/${username}`);
 };
 
+export const postProfileImage = (formData: FormData) => {
+  return axiosApi.post<{
+    success: boolean;
+    id: number;
+    profileImageUrl: string;
+  }>(`/api/media/profile-image`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+export const postProfileBanner = (formData: FormData) => {
+  return axiosApi.post<{
+    success: boolean;
+    id: number;
+    profileBannerUrl: string;
+  }>(`/api/media/profile-banner`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+export const deleteProfileBanner = () => {
+  return axiosApi.delete<{ success: boolean; id: number }>(
+    `/api/media/profile-banner`
+  );
+};
+
 interface PatchUserResponseJson {
   success: boolean;
   id: number;
