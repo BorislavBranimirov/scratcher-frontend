@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -16,11 +16,15 @@ import {
 import { generateUserPath } from '../../common/routePaths';
 import { apiError } from '../../common/types';
 import usePreviewImage from '../../common/usePreviewImage';
-import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
 import { selectAuthUser } from '../auth/authSlice';
 import { openImagePreview } from '../imagePreview/imagePreviewSlice';
 import { pushNotification } from '../notification/notificationSlice';
-import { EditProfileFileUploadButton } from './SettingsEditProfileComponents';
+import {
+  EditProfileDescriptionField,
+  EditProfileFileUploadButton,
+  EditProfileNameField,
+  ImageCropper,
+} from './SettingsEditProfileComponents';
 
 const SettingsEditProfile = () => {
   const dispatch = useAppDispatch();
@@ -30,19 +34,32 @@ const SettingsEditProfile = () => {
   const [bannerDeleted, setBannerDeleted] = useState(false);
   const [previewProfileImage] = usePreviewImage(profileImageFile);
   const [previewProfileBanner] = usePreviewImage(profileBannerFile);
+  const [showProfileImageCropper, setShowProfileImageCropper] = useState(false);
+  const [showProfileBannerCropper, setShowProfileBannerCropper] =
+    useState(false);
   const [name, setName] = useState(loggedUser?.name || '');
   const [nameError, setNameError] = useState(false);
   const [description, setDescription] = useState(loggedUser?.description || '');
   const [descriptionError, setDescriptionError] = useState(false);
   const navigate = useNavigate();
 
-  const inputFieldRef = useSyncTextareaHeight(description);
-
   const profileImageUrl =
     previewProfileImage || getProfileImageUrl(loggedUser?.profileImageUrl);
   const profileBannerUrl =
     previewProfileBanner ||
     getProfileBannerUrl(bannerDeleted ? null : loggedUser?.profileBannerUrl);
+
+  useEffect(() => {
+    if (previewProfileImage) {
+      setShowProfileImageCropper((showing) => !showing);
+    }
+  }, [previewProfileImage]);
+
+  useEffect(() => {
+    if (previewProfileBanner) {
+      setShowProfileBannerCropper((showing) => !showing);
+    }
+  }, [previewProfileBanner]);
 
   const nameLimit = 50;
   const descriptionLimit = 160;
@@ -116,6 +133,39 @@ const SettingsEditProfile = () => {
     );
   }
 
+  if (showProfileImageCropper) {
+    return (
+      <ImageCropper
+        imageUrl={profileImageUrl}
+        aspect={1}
+        finalWidth={400}
+        finalHeight={400}
+        onApply={(image) => {
+          if (image) {
+            setProfileImageFile(image);
+          }
+        }}
+      />
+    );
+  }
+
+  if (showProfileBannerCropper) {
+    return (
+      <ImageCropper
+        imageUrl={profileBannerUrl}
+        aspect={3}
+        finalWidth={1500}
+        finalHeight={500}
+        onApply={(image) => {
+          if (image) {
+            setProfileBannerFile(image);
+          }
+        }}
+        objectFit="horizontal-cover"
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col">
       <div className="relative w-full overflow-hidden">
@@ -185,73 +235,26 @@ const SettingsEditProfile = () => {
         </div>
       </div>
       <div className="mt-4 w-[90%] mx-auto flex flex-col gap-6">
-        <div className="relative">
-          <input
-            className={`peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none ${
-              nameError ? 'outline-red' : 'focus:outline-blue'
-            }`}
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => {
-              if (e.target.value.length <= nameLimit) {
-                setName(e.target.value);
-              }
-            }}
-          />
-          <label
-            className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
-              nameError ? 'text-red' : 'peer-focus:text-blue'
-            }`}
-            htmlFor="name"
-          >
-            Name
-          </label>
-          <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-secondary">
-            {name.length}/{nameLimit}
-          </span>
-          {nameError && (
-            <span className="text-red text-sm">
-              Name can't be blank and must be a maximum of {nameLimit}{' '}
-              characters
-            </span>
-          )}
-        </div>
-        <div className="relative">
-          <textarea
-            className={`resize-none peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none ${
-              descriptionError ? 'outline-red' : 'focus:outline-blue'
-            }`}
-            name="description"
-            id="description"
-            ref={inputFieldRef}
-            placeholder="Description"
-            value={description}
-            onChange={(e) => {
-              if (e.target.value.length <= descriptionLimit) {
-                setDescription(e.target.value);
-              }
-            }}
-          />
-          <label
-            className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
-              descriptionError ? 'text-red' : 'peer-focus:text-blue'
-            }`}
-            htmlFor="description"
-          >
-            Description
-          </label>
-          <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-secondary">
-            {description.length}/{descriptionLimit}
-          </span>
-          {descriptionError && (
-            <span className="text-red text-sm">
-              Description must be a maximum of {descriptionLimit} characters
-            </span>
-          )}
-        </div>
+        <EditProfileNameField
+          name={name}
+          nameError={nameError}
+          nameLimit={nameLimit}
+          handleOnChange={(e) => {
+            if (e.target.value.length <= nameLimit) {
+              setName(e.target.value);
+            }
+          }}
+        />
+        <EditProfileDescriptionField
+          description={description}
+          descriptionError={descriptionError}
+          descriptionLimit={descriptionLimit}
+          handleOnChange={(e) => {
+            if (e.target.value.length <= descriptionLimit) {
+              setDescription(e.target.value);
+            }
+          }}
+        />
         <div className="flex justify-end">
           <button
             onClick={(e) => {
