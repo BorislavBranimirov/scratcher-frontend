@@ -178,6 +178,33 @@ export const patchUser = ({
   });
 };
 
+interface PostChangePasswordResponseJson {
+  success: boolean;
+  id: number;
+  username: string;
+}
+
+export const postChangePassword = ({
+  id,
+  currentPassword,
+  password,
+  confirmPassword,
+}: {
+  id: number;
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
+}) => {
+  return axiosApi.post<PostChangePasswordResponseJson>(
+    `/api/users/${id}/change-password`,
+    {
+      currentPassword,
+      password,
+      confirmPassword,
+    }
+  );
+};
+
 interface TimelineScratchesResponseJson {
   scratches: Scratch[];
   isFinished: boolean;

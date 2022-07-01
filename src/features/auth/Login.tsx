@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { passwordPattern, passwordPatternTitle, usernamePattern, usernamePatternTitle } from '../../common/regexUtils';
 import { login, selectAuthIsLogged } from './authSlice';
 
 const Login = () => {
@@ -41,8 +42,8 @@ const Login = () => {
                 type="text"
                 name="username"
                 id="username"
-                pattern="[a-zA-Z0-9]{6,25}"
-                title="Minimum of 6 characters, no spaces or special symbols"
+                pattern={usernamePattern}
+                title={usernamePatternTitle}
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -61,8 +62,8 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="password"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
-                title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
+                pattern={passwordPattern}
+                title={passwordPatternTitle}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

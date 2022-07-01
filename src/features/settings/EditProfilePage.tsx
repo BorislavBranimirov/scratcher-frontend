@@ -24,9 +24,9 @@ import {
   EditProfileFileUploadButton,
   EditProfileNameField,
   ImageCropper,
-} from './SettingsEditProfileComponents';
+} from './EditProfileComponents';
 
-const SettingsEditProfile = () => {
+const EditProfilePage = () => {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(selectAuthUser);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
@@ -239,7 +239,7 @@ const SettingsEditProfile = () => {
           name={name}
           nameError={nameError}
           nameLimit={nameLimit}
-          handleOnChange={(e) => {
+          handleChange={(e) => {
             if (e.target.value.length <= nameLimit) {
               setName(e.target.value);
             }
@@ -249,7 +249,7 @@ const SettingsEditProfile = () => {
           description={description}
           descriptionError={descriptionError}
           descriptionLimit={descriptionLimit}
-          handleOnChange={(e) => {
+          handleChange={(e) => {
             if (e.target.value.length <= descriptionLimit) {
               setDescription(e.target.value);
             }
@@ -271,4 +271,4 @@ const SettingsEditProfile = () => {
   );
 };
 
-export default SettingsEditProfile;
+export default EditProfilePage;

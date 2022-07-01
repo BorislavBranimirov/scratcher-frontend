@@ -170,12 +170,12 @@ export const EditProfileNameField = ({
   name,
   nameError,
   nameLimit,
-  handleOnChange,
+  handleChange,
 }: {
   name: string;
   nameError: boolean;
   nameLimit: number;
-  handleOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
     <div className="relative">
@@ -188,7 +188,7 @@ export const EditProfileNameField = ({
         id="name"
         placeholder="Name"
         value={name}
-        onChange={handleOnChange}
+        onChange={handleChange}
       />
       <label
         className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
@@ -214,12 +214,12 @@ export const EditProfileDescriptionField = ({
   description,
   descriptionError,
   descriptionLimit,
-  handleOnChange,
+  handleChange,
 }: {
   description: string;
   descriptionError: boolean;
   descriptionLimit: number;
-  handleOnChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) => {
   const inputFieldRef = useSyncTextareaHeight(description);
 
@@ -234,7 +234,7 @@ export const EditProfileDescriptionField = ({
         ref={inputFieldRef}
         placeholder="Description"
         value={description}
-        onChange={handleOnChange}
+        onChange={handleChange}
       />
       <label
         className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${

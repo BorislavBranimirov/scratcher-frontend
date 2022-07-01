@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import PageLayout from '../../common/PageLayout';
 import { settingsPageTabValue } from '../../common/routePaths';
-import SettingsBase from './SettingsBase';
-import SettingsEditProfile from './SettingsEditProfile';
+import ChangePasswordPage from './ChangePasswordPage';
+import SettingsBasePage from './SettingsBasePage';
+import EditProfilePage from './EditProfilePage';
 
 const SettingsPage = () => {
   const { tab } = useParams() as {
@@ -37,8 +38,9 @@ const SettingsPage = () => {
         )}
         <h2 className="text-lg font-bold leading-6">{headerText}</h2>
       </div>
-      {!tab && <SettingsBase />}
-      {tab === 'edit-profile' && <SettingsEditProfile />}
+      {!tab && <SettingsBasePage />}
+      {tab === 'edit-profile' && <EditProfilePage />}
+      {tab === 'change-password' && <ChangePasswordPage />}
     </PageLayout>
   );
 };

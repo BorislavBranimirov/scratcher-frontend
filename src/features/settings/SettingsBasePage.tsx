@@ -1,7 +1,7 @@
 import { ArrowRight } from 'react-feather';
 import { Link } from 'react-router-dom';
 
-const SettingsBase = () => {
+const SettingsBasePage = () => {
   return (
     <div className="flex flex-col">
       <div className="transition-colors hover:bg-primary/5">
@@ -26,4 +26,4 @@ const SettingsBase = () => {
   );
 };
 
-export default SettingsBase;
+export default SettingsBasePage;
