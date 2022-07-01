@@ -132,7 +132,7 @@ export const ScratchModalControlButtons = ({
   disabledSubmitBtnCondition?: boolean;
 }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center pt-2">
       <div className="my-auto">
         <ScratchSubmitFileUploadButton
           handleFileInputChange={handleFileInputChange}
@@ -141,7 +141,7 @@ export const ScratchModalControlButtons = ({
       </div>
       <button
         onClick={handleSubmit}
-        className="bg-blue text-sm rounded-full py-1.5 px-4 mt-2 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+        className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
         disabled={disabledSubmitBtnCondition}
       >
         {submitBtnText}
