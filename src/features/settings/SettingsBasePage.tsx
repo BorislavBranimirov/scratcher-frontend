@@ -22,6 +22,15 @@ const SettingsBasePage = () => {
           <ArrowRight size={20} />
         </Link>
       </div>
+      <div className="transition-colors hover:bg-primary/5">
+        <Link
+          className="flex justify-between items-center px-4 py-3 w-full"
+          to="delete-account"
+        >
+          <span>Delete Account</span>
+          <ArrowRight size={20} />
+        </Link>
+      </div>
     </div>
   );
 };

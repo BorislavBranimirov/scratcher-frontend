@@ -12,7 +12,10 @@ export const searchPagePath = `/search/:tab`;
 
 export type searchPagePathValue = 'scratches' | 'users';
 
-export type settingsPageTabValue = 'edit-profile' | 'change-password';
+export type settingsPageTabValue =
+  | 'edit-profile'
+  | 'change-password'
+  | 'delete-account';
 
 export const generateScratchPath = ({
   username,

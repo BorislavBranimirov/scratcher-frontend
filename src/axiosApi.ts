@@ -178,6 +178,16 @@ export const patchUser = ({
   });
 };
 
+interface DeleteUserResponseJson {
+  success: boolean;
+  id: number;
+  username: string;
+}
+
+export const deleteUser = (id: number) => {
+  return axiosApi.delete<DeleteUserResponseJson>(`/api/users/${id}`);
+};
+
 interface PostChangePasswordResponseJson {
   success: boolean;
   id: number;

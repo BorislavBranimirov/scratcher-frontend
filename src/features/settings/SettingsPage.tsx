@@ -6,6 +6,7 @@ import { settingsPageTabValue } from '../../common/routePaths';
 import ChangePasswordPage from './ChangePasswordPage';
 import SettingsBasePage from './SettingsBasePage';
 import EditProfilePage from './EditProfilePage';
+import DeleteAccountPage from './DeleteAccountPage';
 
 const SettingsPage = () => {
   const { tab } = useParams() as {
@@ -18,6 +19,8 @@ const SettingsPage = () => {
     headerText = 'Edit Profile';
   } else if (tab === 'change-password') {
     headerText = 'Change Password';
+  } else if (tab === 'delete-account') {
+    headerText = 'Delete Account';
   }
 
   return (
@@ -41,6 +44,7 @@ const SettingsPage = () => {
       {!tab && <SettingsBasePage />}
       {tab === 'edit-profile' && <EditProfilePage />}
       {tab === 'change-password' && <ChangePasswordPage />}
+      {tab === 'delete-account' && <DeleteAccountPage />}
     </PageLayout>
   );
 };
