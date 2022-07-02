@@ -128,7 +128,7 @@ const EditProfilePage = () => {
         <h2 className="text-lg font-bold">
           Profile information failed to load
         </h2>
-        <p className="text-sm text-secondary">Please try again later.</p>
+        <p className="text-sm text-muted">Please try again later.</p>
       </div>
     );
   }
@@ -179,7 +179,7 @@ const EditProfilePage = () => {
             dispatch(openImagePreview(profileBannerUrl));
           }}
         />
-        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-neutral/50">
+        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-backdrop/50">
           <div className="w-full h-full flex justify-center items-center gap-5 opacity-75">
             <EditProfileFileUploadButton
               handleFileInputChange={(e) => {
@@ -194,7 +194,7 @@ const EditProfilePage = () => {
             {!bannerDeleted &&
               (loggedUser.profileBannerUrl || profileBannerFile) && (
                 <button
-                  className="w-10 h-10 flex items-center justify-center rounded-full transition-colors bg-neutral/80 hover:bg-neutral/60 active:bg-neutral/40"
+                  className="w-10 h-10 flex items-center justify-center rounded-full transition-colors bg-backdrop/80 hover:bg-backdrop/60 active:bg-backdrop/40"
                   onClick={() => {
                     setBannerDeleted(true);
                     setProfileBannerFile(null);
@@ -208,7 +208,7 @@ const EditProfilePage = () => {
         </div>
       </div>
       <div className="pt-3 px-4">
-        <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-neutral">
+        <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-match-background">
           <div className="pb-[100%]"></div>
           <img
             className="absolute top-0 left-0 w-full h-full cursor-pointer"
@@ -219,7 +219,7 @@ const EditProfilePage = () => {
               dispatch(openImagePreview(profileImageUrl));
             }}
           />
-          <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-neutral/50">
+          <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-backdrop/50">
             <div className="w-full h-full flex justify-center items-center opacity-75">
               <EditProfileFileUploadButton
                 handleFileInputChange={(e) => {
@@ -261,7 +261,7 @@ const EditProfilePage = () => {
               e.stopPropagation();
               handleSubmit();
             }}
-            className={`bg-blue rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60`}
+            className={`bg-accent rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
           >
             Save
           </button>

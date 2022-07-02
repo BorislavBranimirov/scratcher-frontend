@@ -28,7 +28,7 @@ const SuggestedUsersWindow = () => {
           <SuggestedUsersList />
           <Link
             to="/suggested-users"
-            className="text-post-btn-default text-sm pt-2 pb-3 px-3 transition-colors duration-200 hover:bg-primary/5"
+            className="text-sm text-accent pt-2 pb-3 px-3 transition-colors duration-200 hover:bg-hover-1"
           >
             Show more
           </Link>

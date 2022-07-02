@@ -18,7 +18,7 @@ const ChangePasswordInputField = ({
     <div className="relative">
       <input
         className={`peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none ${
-          passwordError ? 'outline-red' : 'focus:outline-blue'
+          passwordError ? 'outline-error' : 'focus:outline-accent'
         }`}
         type="password"
         name={name}
@@ -31,15 +31,15 @@ const ChangePasswordInputField = ({
         required
       />
       <label
-        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
-          passwordError ? 'text-red' : 'peer-focus:text-blue'
+        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
+          passwordError ? 'text-error' : 'peer-focus:text-accent'
         }`}
         htmlFor={name}
       >
         {placeholder}
       </label>
       {!!passwordError && (
-        <span className="text-red text-sm">{passwordError}</span>
+        <span className="text-sm text-error">{passwordError}</span>
       )}
     </div>
   );

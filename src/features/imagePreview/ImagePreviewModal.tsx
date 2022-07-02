@@ -29,7 +29,7 @@ const ImagePreviewModal = () => {
 
   return (
     <div
-      className="fixed h-screen w-full z-30 bg-neutral/90 p-8"
+      className="fixed h-screen w-full z-30 bg-backdrop/90 p-8"
       onClick={(e) => {
         e.stopPropagation();
         const target = e.target as Element;
@@ -37,7 +37,7 @@ const ImagePreviewModal = () => {
       }}
     >
       <button className="absolute top-4 left-4 z-50 group" title="Close">
-        <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors bg-secondary group-hover:bg-primary/10 group-active:bg-primary/20"></div>
+        <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors bg-hover-1 group-hover:bg-hover-2 group-active:bg-hover-3"></div>
         <X className="relative" />
       </button>
       <div className="w-full h-full flex items-center justify-center">

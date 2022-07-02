@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const SettingsBasePage = () => {
   return (
     <div className="flex flex-col">
-      <div className="transition-colors hover:bg-primary/5">
+      <div className="transition-colors hover:bg-hover-1">
         <Link
           className="flex justify-between items-center px-4 py-3 w-full"
           to="edit-profile"
@@ -13,7 +13,7 @@ const SettingsBasePage = () => {
           <ArrowRight size={20} />
         </Link>
       </div>
-      <div className="transition-colors hover:bg-primary/5">
+      <div className="transition-colors hover:bg-hover-1">
         <Link
           className="flex justify-between items-center px-4 py-3 w-full"
           to="change-password"
@@ -22,7 +22,7 @@ const SettingsBasePage = () => {
           <ArrowRight size={20} />
         </Link>
       </div>
-      <div className="transition-colors hover:bg-primary/5">
+      <div className="transition-colors hover:bg-hover-1">
         <Link
           className="flex justify-between items-center px-4 py-3 w-full"
           to="delete-account"

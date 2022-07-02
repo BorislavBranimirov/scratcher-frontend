@@ -122,7 +122,7 @@ export const ImageCropper = ({
               }
             }
           }}
-          className={`bg-blue rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60`}
+          className={`bg-accent rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
         >
           Apply
         </button>
@@ -158,7 +158,7 @@ export const EditProfileFileUploadButton = ({
         onChange={handleFileInputChange}
       />
       <label htmlFor={id} title="Add photo">
-        <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition-colors bg-neutral/80 hover:bg-neutral/60 active:bg-neutral/40">
+        <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition-colors bg-backdrop/80 hover:bg-backdrop/60 active:bg-backdrop/40">
           <Camera size={20} />
         </div>
       </label>
@@ -181,7 +181,7 @@ export const EditProfileNameField = ({
     <div className="relative">
       <input
         className={`peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none ${
-          nameError ? 'outline-red' : 'focus:outline-blue'
+          nameError ? 'outline-error' : 'focus:outline-accent'
         }`}
         type="text"
         name="name"
@@ -191,18 +191,18 @@ export const EditProfileNameField = ({
         onChange={handleChange}
       />
       <label
-        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
-          nameError ? 'text-red' : 'peer-focus:text-blue'
+        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
+          nameError ? 'text-error' : 'peer-focus:text-accent'
         }`}
         htmlFor="name"
       >
         Name
       </label>
-      <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-secondary">
+      <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-muted">
         {name.length}/{nameLimit}
       </span>
       {nameError && (
-        <span className="text-red text-sm">
+        <span className="text-sm text-error">
           Name can't be blank and must be a maximum of {nameLimit} characters
         </span>
       )}
@@ -227,7 +227,7 @@ export const EditProfileDescriptionField = ({
     <div className="relative">
       <textarea
         className={`resize-none peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none ${
-          descriptionError ? 'outline-red' : 'focus:outline-blue'
+          descriptionError ? 'outline-error' : 'focus:outline-accent'
         }`}
         name="description"
         id="description"
@@ -237,18 +237,18 @@ export const EditProfileDescriptionField = ({
         onChange={handleChange}
       />
       <label
-        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
-          descriptionError ? 'text-red' : 'peer-focus:text-blue'
+        className={`absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
+          descriptionError ? 'text-error' : 'peer-focus:text-accent'
         }`}
         htmlFor="description"
       >
         Description
       </label>
-      <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-secondary">
+      <span className="absolute right-0 top-0 px-2 pt-1 text-sm text-muted">
         {description.length}/{descriptionLimit}
       </span>
       {descriptionError && (
-        <span className="text-red text-sm">
+        <span className="text-sm text-error">
           Description must be a maximum of {descriptionLimit} characters
         </span>
       )}

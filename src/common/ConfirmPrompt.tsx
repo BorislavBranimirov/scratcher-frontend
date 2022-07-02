@@ -30,17 +30,17 @@ const ConfirmPrompt = ({
   }
 
   return createPortal(
-    <div className="fixed h-full w-full z-30 mx-auto text-primary flex justify-center items-center">
+    <div className="fixed h-full w-full z-30 mx-auto text-main flex justify-center items-center">
       <div
-        className="fixed top-0 right-0 bottom-0 left-0 cursor-auto bg-primary/10"
+        className="fixed top-0 right-0 bottom-0 left-0 cursor-auto bg-hover-2"
         onClick={(e) => {
           e.stopPropagation();
           declineCallback();
         }}
       ></div>
-      <div className="w-80 z-30 bg-neutral flex flex-col rounded-2xl p-6">
+      <div className="w-80 z-30 bg-primary flex flex-col rounded-2xl p-6">
         <h2 className="text-xl font-bold">{title}</h2>
-        <p className="break-words whitespace-pre-wrap text-sm text-secondary my-2">
+        <p className="break-words whitespace-pre-wrap text-sm text-muted my-2">
           {body}
         </p>
         <button
@@ -48,7 +48,7 @@ const ConfirmPrompt = ({
             e.stopPropagation();
             acceptCallback();
           }}
-          className="bg-red rounded-full py-2 mt-4 font-bold transition-colors hover:bg-red/80 active:bg-red/60"
+          className="bg-danger rounded-full py-2 mt-4 font-bold transition-colors hover:bg-danger/80 active:bg-danger/60"
         >
           {acceptText}
         </button>
@@ -57,7 +57,7 @@ const ConfirmPrompt = ({
             e.stopPropagation();
             declineCallback();
           }}
-          className="bg-neutral border border-primary rounded-full py-2 mt-3 font-bold transition-colors hover:bg-primary/5 active:bg-primary/10"
+          className="border border-primary rounded-full py-2 mt-3 font-bold transition-colors hover:bg-hover-1 active:bg-hover-2"
         >
           {declineText}
         </button>

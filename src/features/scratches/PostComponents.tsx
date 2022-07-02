@@ -42,7 +42,7 @@ export const ScratchRescratchedByStatus = ({
     useUserPreviewEvents(rescratchAuthor.username);
 
   return (
-    <div className="mb-1 flex gap-3 items-center text-sm text-secondary">
+    <div className="mb-1 flex gap-3 items-center text-sm text-muted">
       <div className="w-12">
         <Repeat className="ml-auto" size={13} />
       </div>
@@ -71,10 +71,10 @@ export const ScratchReplyingToStatus = ({
   });
 
   return (
-    <div className="flex gap-1 text-sm text-secondary">
+    <div className="flex gap-1 text-sm text-muted">
       <span>Replying to</span>
       <Link
-        className="text-blue hover:underline"
+        className="text-accent hover:underline"
         to={parentUserPath}
         onMouseEnter={userPreviewOnMouseEnter}
         onMouseLeave={userPreviewOnMouseLeave}
@@ -106,14 +106,14 @@ export const ScratchMoreButton = ({
   return (
     <div className="relative">
       <button
-        className="text-secondary transition-colors hover:text-post-btn-default h-full"
+        className="text-muted transition-colors hover:text-accent h-full"
         onClick={(e) => {
           e.stopPropagation();
           setMoreOptionsToggle(true);
         }}
       >
         <div className="relative" title="More">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-blue/20"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
           <MoreHorizontal size={16} className="stroke-current" />
         </div>
       </button>
@@ -127,12 +127,12 @@ export const ScratchMoreButton = ({
         }}
       ></div>
       <div
-        className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
+        className={`absolute top-0 right-0 bg-primary flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
           !moreOptionsToggle ? 'hidden' : ''
         }`}
       >
         <button
-          className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3 text-delete"
+          className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3 text-danger"
           onClick={async (e) => {
             e.stopPropagation();
             setShowConfirmPrompt(true);
@@ -172,7 +172,7 @@ export const ScratchMoreButton = ({
           <span>Delete</span>
         </button>
         <button
-          className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
+          className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
           onClick={(e) => {
             e.stopPropagation();
             if (userPinnedId === scratchId) {
@@ -233,9 +233,9 @@ export const ScratchReplyButton = ({
   const dispatch = useAppDispatch();
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <button
-        className={`text-secondary transition-colors hover:text-post-btn-default group ${
+        className={`text-muted transition-colors hover:text-accent group ${
           !!text ? 'text-sm flex items-center' : ''
         }`}
         onClick={(e) => {
@@ -244,7 +244,7 @@ export const ScratchReplyButton = ({
         }}
       >
         <div className="relative mr-3" title="Reply">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-accent/10 group-active:bg-accent/20"></div>
           <MessageCircle size={iconSize} className="stroke-current" />
         </div>
         {text}
@@ -268,12 +268,12 @@ export const ScratchRescratchButton = ({
   const [rescratchToggle, setRescratchToggle] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center items-center">
       <button
         className={`${
           scratchIsRescratched
-            ? 'text-post-btn-green'
-            : 'text-secondary transition-colors hover:text-post-btn-green'
+            ? 'text-btn-share'
+            : 'text-muted transition-colors hover:text-btn-share'
         } group ${!!text ? 'text-sm flex items-center' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
@@ -281,7 +281,7 @@ export const ScratchRescratchButton = ({
         }}
       >
         <div className="relative mr-3" title="Rescratch">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-btn-share/10 group-active:bg-btn-share/20"></div>
           <Repeat size={iconSize} className="stroke-current" />
         </div>
         <span>{text}</span>
@@ -296,12 +296,12 @@ export const ScratchRescratchButton = ({
         }}
       ></div>
       <div
-        className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
+        className={`absolute top-0 right-0 bg-primary flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
           !rescratchToggle ? 'hidden' : ''
         }`}
       >
         <button
-          className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
+          className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
           onClick={(e) => {
             e.stopPropagation();
             if (scratchIsRescratched) {
@@ -316,7 +316,7 @@ export const ScratchRescratchButton = ({
           <span>{scratchIsRescratched ? 'Undo Rescratch' : 'Rescratch'}</span>
         </button>
         <button
-          className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
+          className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
           onClick={(e) => {
             e.stopPropagation();
             dispatch(openRescratchModal({ rescratchedId: scratchId }));
@@ -345,12 +345,12 @@ export const ScratchLikeButton = ({
   const dispatch = useAppDispatch();
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <button
         className={`${
           scratchIsLiked
-            ? 'text-post-btn-red'
-            : 'text-secondary transition-colors hover:text-post-btn-red'
+            ? 'text-btn-like'
+            : 'text-muted transition-colors hover:text-btn-like'
         } group ${!!text ? 'text-sm flex items-center' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
@@ -362,7 +362,7 @@ export const ScratchLikeButton = ({
         }}
       >
         <div className="relative mr-3" title="Like">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-blue/10"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-btn-like/10 group-active:bg-btn-like/20"></div>
           <Heart
             size={iconSize}
             className={`stroke-current ${scratchIsLiked ? 'fill-current' : ''}`}
@@ -396,16 +396,16 @@ export const ScratchShareButton = ({
   });
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center items-center">
       <button
-        className="text-secondary transition-colors hover:text-post-btn-default"
+        className="text-muted transition-colors hover:text-accent"
         onClick={(e) => {
           e.stopPropagation();
           setShareToggle(true);
         }}
       >
         <div className="relative" title="Share">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10"></div>
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
           <Share size={iconSize} className="stroke-current" />
         </div>
       </button>
@@ -419,13 +419,13 @@ export const ScratchShareButton = ({
         }}
       ></div>
       <div
-        className={`absolute top-0 right-0 bg-neutral flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
+        className={`absolute top-0 right-0 bg-primary flex flex-col shadow rounded-md z-30 overflow-hidden text-sm ${
           !shareToggle ? 'hidden' : ''
         }`}
       >
         {isLogged && (
           <button
-            className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
+            className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
             onClick={(e) => {
               e.stopPropagation();
               if (scratchIsBookmarked) {
@@ -445,7 +445,7 @@ export const ScratchShareButton = ({
           </button>
         )}
         <button
-          className="whitespace-nowrap p-4 bg-neutral transition-colors hover:bg-primary/5 active:bg-primary/10 flex items-center gap-3"
+          className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
           onClick={(e) => {
             e.stopPropagation();
             const scratchUrl = window.location.origin + scratchPath;

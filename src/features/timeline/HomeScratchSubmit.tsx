@@ -101,7 +101,7 @@ const HomeScratchSubmit = () => {
               />
             </div>
             <button
-              className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+              className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
               onClick={handleSubmit}
               disabled={!body && !file}
             >

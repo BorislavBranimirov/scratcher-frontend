@@ -41,7 +41,7 @@ const UserProfile = () => {
       </div>
       <div className="pt-3 pb-2 px-4">
         <div className="flex justify-between items-start mb-2">
-          <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-neutral">
+          <div className="relative w-1/4 -mt-[14%] rounded-full overflow-hidden border-4 border-match-background">
             <div className="pb-[100%]"></div>
             <img
               className="absolute top-0 left-0 w-full h-full cursor-pointer"
@@ -55,7 +55,7 @@ const UserProfile = () => {
           </div>
           {loggedUser?.id === user.id ? (
             <button
-              className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60"
+              className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60"
               onClick={() => {
                 navigate('/settings/edit-profile');
               }}
@@ -72,12 +72,12 @@ const UserProfile = () => {
         </div>
         <div className="mb-2">
           <h2 className="text-lg font-bold">{user.name}</h2>
-          <p className="text-sm text-secondary">@{user.username}</p>
+          <p className="text-sm text-muted">@{user.username}</p>
         </div>
         <p className="break-words whitespace-pre-wrap text-sm mb-2">
           {user.description}
         </p>
-        <div className="flex gap-1.5 items-center text-sm text-secondary mb-2">
+        <div className="flex gap-1.5 items-center text-sm text-muted mb-2">
           <Calendar size={16} />
           <p>Joined {format(joinedDate, 'MMMM y')}</p>
         </div>

@@ -83,7 +83,7 @@ const ChangePasswordPage = () => {
         />
         <div className="flex justify-end">
           <button
-            className={`bg-blue rounded-full py-1.5 px-8 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75`}
+            className={`bg-accent rounded-full py-1.5 px-8 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75`}
             type="submit"
             disabled={!currentPassword || !password || !confirmPassword}
           >

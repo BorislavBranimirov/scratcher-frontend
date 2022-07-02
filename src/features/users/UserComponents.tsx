@@ -56,8 +56,8 @@ export const FollowButton = ({
         }}
         className={`${
           followBtnHover
-            ? 'bg-red hover:bg-red/80 active:bg-red/60'
-            : 'bg-blue hover:bg-blue/80 active:bg-blue/60'
+            ? 'bg-danger hover:bg-danger/80 active:bg-danger/60'
+            : 'bg-accent hover:bg-accent/80 active:bg-accent/60'
         } text-${textSize} rounded-full py-1.5 px-4 font-bold transition-colors`}
       >
         {followBtnHover ? 'Unfollow' : 'Following'}
@@ -69,7 +69,7 @@ export const FollowButton = ({
         e.stopPropagation();
         dispatch(followUser({ id: userId }));
       }}
-      className={`bg-blue text-${textSize} rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-blue/80 active:bg-blue/60`}
+      className={`bg-accent text-${textSize} rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
     >
       Follow
     </button>
@@ -110,7 +110,7 @@ export const UserFollowerCounters = ({
         }}
       >
         <span className="font-bold">{followedCount}</span>{' '}
-        <span className="text-secondary">Following</span>
+        <span className="text-muted">Following</span>
       </Link>
       <Link
         className="hover:underline"
@@ -123,7 +123,7 @@ export const UserFollowerCounters = ({
         }}
       >
         <span className="font-bold">{followerCount}</span>{' '}
-        <span className="text-secondary">Followers</span>
+        <span className="text-muted">Followers</span>
       </Link>
     </div>
   );

@@ -23,7 +23,7 @@ const UserItem = ({
 
   return (
     <div
-      className="py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-primary/5"
+      className="py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-hover-1"
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(userPath);
@@ -47,10 +47,10 @@ const UserItem = ({
         </div>
         <div className="grow overflow-hidden leading-5">
           <div className="flex gap-3 items-center justify-between">
-            <div className="truncate">
+            <div className="truncate text-muted">
               <Link to={userPath}>
                 <span
-                  className="font-bold text-primary hover:underline"
+                  className="font-bold text-main hover:underline"
                   onMouseEnter={userPreviewOnMouseEnter}
                   onMouseLeave={userPreviewOnMouseLeave}
                 >
@@ -58,7 +58,7 @@ const UserItem = ({
                 </span>
               </Link>
               <p
-                className="text-secondary text-sm truncate"
+                className="text-sm truncate"
                 onMouseEnter={userPreviewOnMouseEnter}
                 onMouseLeave={userPreviewOnMouseLeave}
               >

@@ -33,9 +33,9 @@ const BookmarksPage = () => {
 
   return (
     <PageLayout>
-      <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10">
+      <div className="sticky top-0 bg-primary border-b border-primary px-4 py-1 z-10">
         <h2 className="text-lg font-bold leading-6">Bookmarks</h2>
-        <p className="pb-1 text-xs text-secondary">@{user?.username}</p>
+        <p className="pb-1 text-xs text-muted">@{user?.username}</p>
       </div>
       {ids.map((id) => {
         return <Post key={id} scratchId={id} />;

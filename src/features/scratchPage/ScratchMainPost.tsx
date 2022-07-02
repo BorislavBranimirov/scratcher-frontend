@@ -60,10 +60,10 @@ const ScratchMainPost = ({
         </div>
         <div className="min-w-0 grow">
           <div className="flex justify-between gap-3">
-            <div className="text-secondary flex items-baseline min-w-0">
+            <div className="text-muted flex items-baseline min-w-0">
               <Link className="truncate flex flex-col" to={userPath}>
                 <span
-                  className="font-bold text-primary hover:underline"
+                  className="font-bold text-main hover:underline"
                   onMouseEnter={userPreviewOnMouseEnter}
                   onMouseLeave={userPreviewOnMouseLeave}
                 >
@@ -96,7 +96,7 @@ const ScratchMainPost = ({
           <EmbeddedRescratch rescratchedId={scratch.rescratchedId} />
         )}
       </div>
-      <div className="my-3 whitespace-nowrap text-secondary text-sm">
+      <div className="my-3 whitespace-nowrap text-sm text-muted">
         <span className="hover:underline">
           {format(createdAtDate, 'h:mm a · d MMM y')}
         </span>
@@ -106,13 +106,13 @@ const ScratchMainPost = ({
           {scratch.rescratchCount > 0 && (
             <div>
               <span className="font-bold">{scratch.rescratchCount}</span>{' '}
-              <span className="text-secondary">Rescratches</span>
+              <span className="text-muted">Rescratches</span>
             </div>
           )}
           {scratch.likeCount > 0 && (
             <div>
               <span className="font-bold">{scratch.likeCount}</span>{' '}
-              <span className="text-secondary">Likes</span>
+              <span className="text-muted">Likes</span>
             </div>
           )}
         </div>

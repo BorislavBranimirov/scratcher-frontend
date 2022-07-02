@@ -81,9 +81,9 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
 
   return (
     <div className="px-4 py-3 border-b border-primary">
-      <div className="ml-12 pl-3 flex gap-1 text-sm text-secondary">
+      <div className="ml-12 pl-3 flex gap-1 text-sm text-muted">
         <span>Replying to</span>
-        <Link className="text-blue hover:underline" to={parentUserPath}>
+        <Link className="text-accent hover:underline" to={parentUserPath}>
           @{parentScratch.author.username}
         </Link>
       </div>
@@ -119,7 +119,7 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
                 />
               </div>
               <button
-                className="bg-blue text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+                className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
                 onClick={handleSubmit}
                 disabled={!body && !file}
               >

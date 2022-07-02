@@ -22,13 +22,13 @@ const SearchPageTabs = () => {
     <div className="flex border-b border-primary">
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'scratches' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          tab === 'scratches' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
             `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-secondary'
+              isActive ? 'font-bold' : 'text-muted'
             }`
           }
           to={searchScratchesPath}
@@ -37,20 +37,20 @@ const SearchPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Scratches</span>
             {tab === 'scratches' && (
-              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
         </NavLink>
       </div>
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'users' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          tab === 'users' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
             `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-secondary'
+              isActive ? 'font-bold' : 'text-muted'
             }`
           }
           to={searchUsersPath}
@@ -59,7 +59,7 @@ const SearchPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Users</span>
             {tab === 'users' && (
-              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
         </NavLink>

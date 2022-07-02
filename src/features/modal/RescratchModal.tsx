@@ -88,7 +88,7 @@ const RescratchModal = () => {
           {rescratchedId ? (
             <EmbeddedRescratch rescratchedId={rescratchedId} />
           ) : (
-            <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-secondary text-sm transition-colors duration-200 hover:bg-primary/5">
+            <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-sm text-muted transition-colors duration-200 hover:bg-hover-1">
               Scratch not found
             </div>
           )}

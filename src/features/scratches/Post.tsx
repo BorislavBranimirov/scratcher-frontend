@@ -56,7 +56,7 @@ const Post = ({
     <div
       className={`${
         timelineScratch ? 'relative' : 'border-b border-primary'
-      } px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-primary/5`}
+      } px-4 py-2 cursor-pointer w-full transition-colors duration-200 hover:bg-hover-1`}
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(scratchPath);
@@ -68,7 +68,7 @@ const Post = ({
         </div>
       )}
       {pinned && (
-        <div className="mb-1 flex gap-3 items-center text-sm text-secondary">
+        <div className="mb-1 flex gap-3 items-center text-sm text-muted">
           <div className="w-12">
             <Paperclip className="ml-auto" size={13} />
           </div>
@@ -90,10 +90,10 @@ const Post = ({
         </div>
         <div className="min-w-0 grow">
           <div className="flex justify-between gap-3">
-            <div className="text-secondary flex items-baseline min-w-0">
+            <div className="text-muted flex items-baseline min-w-0">
               <Link className="truncate" to={userPath}>
                 <span
-                  className="font-bold text-primary hover:underline"
+                  className="font-bold text-main hover:underline"
                   onMouseEnter={userPreviewOnMouseEnter}
                   onMouseLeave={userPreviewOnMouseLeave}
                 >

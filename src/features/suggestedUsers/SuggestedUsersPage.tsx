@@ -28,7 +28,7 @@ const SuggestedUsersPage = () => {
 
   return (
     <PageLayout omitSuggestedUsersWindow>
-      <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-3 z-10 flex items-center">
+      <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10 flex items-center">
         <button
           className="h-full mr-4"
           onClick={() => {
@@ -36,7 +36,7 @@ const SuggestedUsersPage = () => {
           }}
         >
           <div className="relative" title="Back">
-            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-primary/10 active:bg-primary/20"></div>
+            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-hover-2 active:bg-hover-3"></div>
             <ArrowLeft size={16} />
           </div>
         </button>

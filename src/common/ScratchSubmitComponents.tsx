@@ -18,7 +18,7 @@ export const ScratchSubmitImagePreview = ({
   return (
     <div className="relative my-2 rounded-2xl overflow-hidden">
       <button
-        className="absolute top-2 left-2 p-1.5 rounded-full transition-colors bg-neutral hover:bg-neutral/80 active:bg-neutral/60"
+        className="absolute top-2 left-2 p-1.5 rounded-full transition-colors bg-backdrop hover:bg-backdrop/80 active:bg-backdrop/60"
         onClick={handleRemoveFileInput}
         title="Remove"
       >
@@ -56,8 +56,8 @@ export const ScratchSubmitFileUploadButton = ({
         onChange={handleFileInputChange}
       />
       <label htmlFor={id} title="Media">
-        <div className="relative text-post-btn-default cursor-pointer">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-blue/10 active:bg-blue/20"></div>
+        <div className="relative text-accent cursor-pointer">
+          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
           <Image size={20} />
         </div>
       </label>

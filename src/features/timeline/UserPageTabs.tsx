@@ -32,13 +32,13 @@ const UserPageTabs = () => {
       <div className="flex border-b border-primary">
         <div
           className={`grow flex justify-center transition-colors ${
-            tab === 'followers' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+            tab === 'followers' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
           }`}
         >
           <NavLink
             className={({ isActive }) =>
               `px-4 text-center w-full ${
-                isActive ? 'font-bold' : 'text-secondary'
+                isActive ? 'font-bold' : 'text-muted'
               }`
             }
             to={userFollowersPath}
@@ -47,20 +47,20 @@ const UserPageTabs = () => {
             <div className="relative py-3 w-fit mx-auto">
               <span>Followers</span>
               {tab === 'followers' && (
-                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
               )}
             </div>
           </NavLink>
         </div>
         <div
           className={`grow flex justify-center transition-colors ${
-            tab === 'following' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+            tab === 'following' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
           }`}
         >
           <NavLink
             className={({ isActive }) =>
               `px-4 text-center w-full ${
-                isActive ? 'font-bold' : 'text-secondary'
+                isActive ? 'font-bold' : 'text-muted'
               }`
             }
             to={userFollowingPath}
@@ -69,7 +69,7 @@ const UserPageTabs = () => {
             <div className="relative py-3 w-fit mx-auto">
               <span>Following</span>
               {tab === 'following' && (
-                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+                <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
               )}
             </div>
           </NavLink>
@@ -82,13 +82,13 @@ const UserPageTabs = () => {
     <div className="flex border-b border-primary">
       <div
         className={`grow flex justify-center transition-colors ${
-          !tab ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          !tab ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
             `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-secondary'
+              isActive ? 'font-bold' : 'text-muted'
             }`
           }
           to={userPath}
@@ -97,20 +97,20 @@ const UserPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Scratches</span>
             {!tab && (
-              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
         </NavLink>
       </div>
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'media' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          tab === 'media' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
             `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-secondary'
+              isActive ? 'font-bold' : 'text-muted'
             }`
           }
           to={userMediaPath}
@@ -125,20 +125,20 @@ const UserPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Media</span>
             {tab === 'media' && (
-              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
         </NavLink>
       </div>
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'likes' ? 'hover:bg-primary/10' : 'hover:bg-primary/5'
+          tab === 'likes' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
             `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-secondary'
+              isActive ? 'font-bold' : 'text-muted'
             }`
           }
           to={userLikesPath}
@@ -153,7 +153,7 @@ const UserPageTabs = () => {
           <div className="relative py-3 w-fit mx-auto">
             <span>Likes</span>
             {tab === 'likes' && (
-              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-blue"></div>
+              <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
         </NavLink>

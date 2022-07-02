@@ -26,16 +26,16 @@ const SearchInput = () => {
 
   return (
     <div
-      className="w-full bg-secondary rounded-full px-3 group focus-within:outline focus-within:outline-2 focus-within:outline-blue"
+      className="w-full bg-secondary rounded-full px-3 group focus-within:outline focus-within:outline-2 focus-within:outline-accent"
       onClick={() => {
         if (inputFieldRef.current) {
           inputFieldRef.current.focus();
         }
       }}
     >
-      <div className="text-sm text-secondary w-full flex items-center">
+      <div className="text-sm text-muted w-full flex items-center">
         <Search
-          className="flex-shrink-0 group-focus-within:text-blue"
+          className="flex-shrink-0 group-focus-within:text-accent"
           size={20}
         />
         <input
@@ -50,7 +50,7 @@ const SearchInput = () => {
           onKeyDown={handleSearch}
         />
         <button
-          className={`text-secondary invisible group-focus-within:text-blue ${
+          className={`invisible group-focus-within:text-accent ${
             !!search ? 'group-focus-within:visible' : ''
           }`}
           onClick={() => {

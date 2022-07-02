@@ -58,7 +58,7 @@ const UserPage = () => {
 
   return (
     <PageLayout>
-      <div className="sticky top-0 bg-neutral border-b border-primary px-4 py-1 z-10 flex items-center">
+      <div className="sticky top-0 bg-primary border-b border-primary px-4 py-1 z-10 flex items-center">
         <button
           className="h-full mr-4"
           onClick={() => {
@@ -70,14 +70,14 @@ const UserPage = () => {
           }}
         >
           <div className="relative" title="Back">
-            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-primary/10 active:bg-primary/20"></div>
+            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-hover-2 active:bg-hover-3"></div>
             <ArrowLeft size={16} />
           </div>
         </button>
         {user ? (
           <div>
             <h2 className="text-lg font-bold leading-6">{user.name}</h2>
-            <p className="pb-1 text-xs text-secondary">@{user.username}</p>
+            <p className="pb-1 text-xs text-muted">@{user.username}</p>
           </div>
         ) : (
           <h2 className="py-2 text-lg font-bold leading-6">Profile</h2>
@@ -96,7 +96,7 @@ const UserPage = () => {
       ) : (
         <div className="mt-4 text-center">
           <h2 className="text-lg font-bold">This account doesn't exist</h2>
-          <p className="text-sm text-secondary">Try searching for another.</p>
+          <p className="text-sm text-muted">Try searching for another.</p>
         </div>
       )}
     </PageLayout>

@@ -38,7 +38,7 @@ const Login = () => {
           <div className="flex flex-col gap-6">
             <div className="relative">
               <input
-                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-blue"
+                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-accent"
                 type="text"
                 name="username"
                 id="username"
@@ -50,7 +50,7 @@ const Login = () => {
                 required
               />
               <label
-                className="absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-blue"
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
                 htmlFor="username"
               >
                 Username
@@ -58,7 +58,7 @@ const Login = () => {
             </div>
             <div className="relative">
               <input
-                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-blue"
+                className="peer w-full bg-transparent placeholder-transparent border border-primary rounded-md p-2 pt-6 outline-none focus:outline-accent"
                 type="password"
                 name="password"
                 id="password"
@@ -70,7 +70,7 @@ const Login = () => {
                 required
               />
               <label
-                className="absolute left-0 top-0 px-2 pt-1 text-sm text-secondary transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-blue"
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
                 htmlFor="password"
               >
                 Password
@@ -78,7 +78,7 @@ const Login = () => {
             </div>
           </div>
           <button
-            className="w-full bg-blue rounded-full py-3 font-bold transition-colors enabled:hover:bg-blue/80 enabled:active:bg-blue/60 disabled:opacity-75"
+            className="w-full bg-accent rounded-full py-3 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
             type="submit"
             disabled={!username || !password}
           >
@@ -87,7 +87,7 @@ const Login = () => {
         </form>
         <div className="my-4 flex gap-1 mx-auto w-[80%]">
           <span>Don't have an account?</span>
-          <Link className="text-blue hover:underline" to="/signup">
+          <Link className="text-accent hover:underline" to="/signup">
             Sign up
           </Link>
         </div>

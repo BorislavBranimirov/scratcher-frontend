@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   closeUserPreview,
   selectUserPreviewMouseLeft,
@@ -9,7 +9,7 @@ import {
 import { FollowButton, UserFollowerCounters } from '../users/UserComponents';
 import { Link, useLocation } from 'react-router-dom';
 import { generateUserPath } from '../../common/routePaths';
-import { shallowEqual, useDispatch } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { selectAuthUser } from '../auth/authSlice';
 import { useRef } from 'react';
@@ -17,7 +17,7 @@ import { useLayoutEffect } from 'react';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
 
 const UserPreviewWindow = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const parentPos = useAppSelector(selectUserPreviewPos, shallowEqual);
   const mouseLeft = useAppSelector(selectUserPreviewMouseLeft);
   const user = useAppSelector(selectUserPreviewUser);
@@ -99,7 +99,7 @@ const UserPreviewWindow = () => {
 
   return (
     <div
-      className="absolute w-80 z-30 bg-neutral shadow rounded-2xl transition-opacity duration-300 opacity-0"
+      className="absolute w-80 z-30 bg-primary shadow rounded-2xl transition-opacity duration-300 opacity-0"
       ref={popupRef}
       onMouseEnter={() => {
         dispatch(setUserPreviewMouseLeft(false));
@@ -127,7 +127,7 @@ const UserPreviewWindow = () => {
         <div className="mt-2 w-max">
           <Link to={userPath}>
             <h2 className="font-bold hover:underline leading-5">{user.name}</h2>
-            <p className="text-sm text-secondary">@{user.username}</p>
+            <p className="text-sm text-muted">@{user.username}</p>
           </Link>
         </div>
         <div className="mt-1">
