@@ -30,7 +30,7 @@ const UserProfile = () => {
       <div className="relative w-full overflow-hidden">
         <div className="pb-[33.3333%]"></div>
         <img
-          className="absolute top-0 left-0 right-0 mx-auto cursor-pointer"
+          className="absolute inset-0 mx-auto cursor-pointer"
           src={profileBannerUrl}
           alt="banner"
           onClick={(e) => {

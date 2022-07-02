@@ -67,7 +67,7 @@ const MobileSideBar = () => {
                   }}
                   title="Close"
                 >
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-hover-1 active:bg-hover-3"></div>
+                  <div className="absolute inset-0 -m-1.5 rounded-full transition-colors hover:bg-hover-1 active:bg-hover-3"></div>
                   <X />
                 </button>
               </div>
@@ -176,7 +176,7 @@ const MobileSideBar = () => {
                   }}
                   title="Close"
                 >
-                  <div className="absolute top-0 left-0 right-0 bottom-0 -m-1.5 rounded-full transition-colors hover:bg-hover-1 active:bg-hover-3"></div>
+                  <div className="absolute inset-0 -m-1.5 rounded-full transition-colors hover:bg-hover-1 active:bg-hover-3"></div>
                   <X />
                 </button>
               </div>

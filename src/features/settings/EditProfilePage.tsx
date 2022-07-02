@@ -171,7 +171,7 @@ const EditProfilePage = () => {
       <div className="relative w-full overflow-hidden">
         <div className="pb-[33.3333%]"></div>
         <img
-          className="absolute top-0 left-0 right-0 mx-auto cursor-pointer"
+          className="absolute inset-0 mx-auto cursor-pointer"
           src={profileBannerUrl}
           alt="banner"
           onClick={(e) => {
@@ -179,7 +179,7 @@ const EditProfilePage = () => {
             dispatch(openImagePreview(profileBannerUrl));
           }}
         />
-        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-backdrop/50">
+        <div className="absolute inset-0 w-full h-full bg-backdrop/50">
           <div className="w-full h-full flex justify-center items-center gap-5 opacity-75">
             <EditProfileFileUploadButton
               handleFileInputChange={(e) => {
@@ -219,7 +219,7 @@ const EditProfilePage = () => {
               dispatch(openImagePreview(profileImageUrl));
             }}
           />
-          <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-backdrop/50">
+          <div className="absolute inset-0 w-full h-full bg-backdrop/50">
             <div className="w-full h-full flex justify-center items-center opacity-75">
               <EditProfileFileUploadButton
                 handleFileInputChange={(e) => {

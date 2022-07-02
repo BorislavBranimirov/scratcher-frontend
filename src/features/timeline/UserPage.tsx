@@ -70,7 +70,7 @@ const UserPage = () => {
           }}
         >
           <div className="relative" title="Back">
-            <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-hover-2 active:bg-hover-3"></div>
+            <div className="absolute inset-0 -m-2 rounded-full transition-colors hover:bg-hover-2 active:bg-hover-3"></div>
             <ArrowLeft size={16} />
           </div>
         </button>

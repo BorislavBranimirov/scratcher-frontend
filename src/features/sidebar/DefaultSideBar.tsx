@@ -147,7 +147,7 @@ const DefaultSideBar = () => {
           <div>
             <div className="relative">
               <div
-                className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto ${
+                className={`fixed inset-0 cursor-auto ${
                   !userOptionsToggle ? 'hidden' : ''
                 }`}
                 onClick={() => {

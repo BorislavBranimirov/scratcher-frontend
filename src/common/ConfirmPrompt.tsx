@@ -32,7 +32,7 @@ const ConfirmPrompt = ({
   return createPortal(
     <div className="fixed h-full w-full z-30 mx-auto text-main flex justify-center items-center">
       <div
-        className="fixed top-0 right-0 bottom-0 left-0 cursor-auto bg-hover-2"
+        className="fixed inset-0 cursor-auto bg-hover-2"
         onClick={(e) => {
           e.stopPropagation();
           declineCallback();

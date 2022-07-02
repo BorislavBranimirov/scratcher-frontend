@@ -113,12 +113,12 @@ export const ScratchMoreButton = ({
         }}
       >
         <div className="relative" title="More">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
+          <div className="absolute inset-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
           <MoreHorizontal size={16} className="stroke-current" />
         </div>
       </button>
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
+        className={`fixed inset-0 cursor-auto z-20 ${
           !moreOptionsToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
@@ -244,7 +244,7 @@ export const ScratchReplyButton = ({
         }}
       >
         <div className="relative mr-3" title="Reply">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-accent/10 group-active:bg-accent/20"></div>
+          <div className="absolute inset-0 -m-2 rounded-full transition-colors group-hover:bg-accent/10 group-active:bg-accent/20"></div>
           <MessageCircle size={iconSize} className="stroke-current" />
         </div>
         {text}
@@ -281,13 +281,13 @@ export const ScratchRescratchButton = ({
         }}
       >
         <div className="relative mr-3" title="Rescratch">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-btn-share/10 group-active:bg-btn-share/20"></div>
+          <div className="absolute inset-0 -m-2 rounded-full transition-colors group-hover:bg-btn-share/10 group-active:bg-btn-share/20"></div>
           <Repeat size={iconSize} className="stroke-current" />
         </div>
         <span>{text}</span>
       </button>
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
+        className={`fixed inset-0 cursor-auto z-20 ${
           !rescratchToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
@@ -362,7 +362,7 @@ export const ScratchLikeButton = ({
         }}
       >
         <div className="relative mr-3" title="Like">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors group-hover:bg-btn-like/10 group-active:bg-btn-like/20"></div>
+          <div className="absolute inset-0 -m-2 rounded-full transition-colors group-hover:bg-btn-like/10 group-active:bg-btn-like/20"></div>
           <Heart
             size={iconSize}
             className={`stroke-current ${scratchIsLiked ? 'fill-current' : ''}`}
@@ -405,12 +405,12 @@ export const ScratchShareButton = ({
         }}
       >
         <div className="relative" title="Share">
-          <div className="absolute top-0 left-0 right-0 bottom-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
+          <div className="absolute inset-0 -m-2 rounded-full transition-colors hover:bg-accent/10 active:bg-accent/20"></div>
           <Share size={iconSize} className="stroke-current" />
         </div>
       </button>
       <div
-        className={`fixed top-0 right-0 bottom-0 left-0 cursor-auto z-20 ${
+        className={`fixed inset-0 cursor-auto z-20 ${
           !shareToggle ? 'hidden' : ''
         }`}
         onClick={(e) => {
