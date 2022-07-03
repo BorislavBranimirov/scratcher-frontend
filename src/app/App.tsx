@@ -34,12 +34,18 @@ import SearchPage from '../features/search/SearchPage';
 import UserPreviewWindow from '../features/userPreview/UserPreviewWindow';
 import ImagePreviewModal from '../features/imagePreview/ImagePreviewModal';
 import SettingsPage from '../features/settings/SettingsPage';
+import {
+  selectThemeAccent,
+  selectThemeBackground,
+} from '../features/theme/themeSlice';
 
 const App = () => {
   const dispatch = useAppDispatch();
   const isLogged = useAppSelector(selectAuthIsLogged);
   const isLoading = useAppSelector(selectAuthIsLoading);
   const hasToken = useAppSelector(selectAuthHasToken);
+  const themeAccent = useAppSelector(selectThemeAccent);
+  const themeBackground = useAppSelector(selectThemeBackground);
 
   useEffect(() => {
     if (hasToken && !isLogged) {
@@ -49,15 +55,19 @@ const App = () => {
 
   if ((hasToken && !isLogged) || isLoading) {
     return (
-      <div className="bg-primary text-main min-h-screen pt-10">
-        <Loader size={32} className="animate-spin-slow w-full" />
+      <div
+        className={`${themeAccent} ${themeBackground} bg-primary text-main h-screen w-screen flex justify-center items-center pt-10`}
+      >
+        <Loader size={32} className="animate-spin-slow" />
       </div>
     );
   }
 
   return (
     <Router>
-      <div className="bg-primary grid grid-cols-1 sm:grid-cols-8 md:grid-cols-11 lg:grid-cols-10 xl:grid-cols-12 text-main min-h-screen">
+      <div
+        className={`${themeAccent} ${themeBackground} bg-primary grid grid-cols-1 sm:grid-cols-8 md:grid-cols-11 lg:grid-cols-10 xl:grid-cols-12 text-main min-h-screen`}
+      >
         <SideBarMenu />
         <Notification />
         <Modal />

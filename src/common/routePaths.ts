@@ -13,6 +13,7 @@ export const searchPagePath = `/search/:tab`;
 export type searchPagePathValue = 'scratches' | 'users';
 
 export type settingsPageTabValue =
+  | 'theme-picker'
   | 'edit-profile'
   | 'change-password'
   | 'delete-account';

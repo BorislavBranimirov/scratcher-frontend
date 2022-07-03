@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
+import themeReducer from '../features/theme/themeSlice';
 import notificationReducer from '../features/notification/notificationSlice';
 import timelineReducer from '../features/timeline/timelineSlice';
 import bookmarkReducer from '../features/bookmarks/bookmarksSlice';
@@ -15,6 +16,7 @@ import imagePreviewReducer from '../features/imagePreview/imagePreviewSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    theme: themeReducer,
     notification: notificationReducer,
     modal: modalReducer,
     imagePreview: imagePreviewReducer,

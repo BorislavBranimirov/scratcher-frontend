@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useAppSelector } from '../app/hooks';
+import {
+  selectThemeAccent,
+  selectThemeBackground,
+} from '../features/theme/themeSlice';
 
 const ConfirmPrompt = ({
   title,
@@ -16,6 +21,8 @@ const ConfirmPrompt = ({
   acceptCallback: () => void;
   declineCallback: () => void;
 }) => {
+  const themeAccent = useAppSelector(selectThemeAccent);
+  const themeBackground = useAppSelector(selectThemeBackground);
   const promptRoot = useRef(document.getElementById('confirmPrompt'));
 
   useEffect(() => {
@@ -30,7 +37,9 @@ const ConfirmPrompt = ({
   }
 
   return createPortal(
-    <div className="fixed h-full w-full z-30 mx-auto text-main flex justify-center items-center">
+    <div
+      className={`${themeAccent} ${themeBackground} fixed h-full w-full z-30 mx-auto text-main flex justify-center items-center`}
+    >
       <div
         className="fixed inset-0 cursor-auto bg-hover-2"
         onClick={(e) => {

@@ -6,6 +6,8 @@ import {
   PostScratchRequestObj,
   Scratch,
   ScratchResponseObj,
+  themeAccent,
+  themeBackground,
   User,
 } from './common/types';
 import { logout, setAccessToken } from './features/auth/authSlice';
@@ -17,18 +19,31 @@ let store: AppStore;
 export const injectStore = (_store: AppStore) => {
   store = _store;
 
-  // sync local storage with token in redux state
+  // sync local storage with redux state
   let currentToken: string | null = null;
+  let currentThemeAccent: themeAccent | null = null;
+  let currentThemeBackground: themeBackground | null = null;
   store.subscribe(() => {
     const oldToken = currentToken;
     currentToken = store.getState().auth.token;
-
     if (currentToken !== oldToken) {
       if (currentToken) {
         localStorage.setItem('accessToken', currentToken);
       } else {
         localStorage.removeItem('accessToken');
       }
+    }
+
+    const oldThemeAccent = currentThemeAccent;
+    currentThemeAccent = store.getState().theme.accent;
+    if (oldThemeAccent !== currentThemeAccent) {
+      localStorage.setItem('themeAccent', currentThemeAccent);
+    }
+
+    const oldThemeBackground = currentThemeBackground;
+    currentThemeBackground = store.getState().theme.background;
+    if (oldThemeBackground !== currentThemeBackground) {
+      localStorage.setItem('themeBackground', currentThemeBackground);
     }
   });
 };

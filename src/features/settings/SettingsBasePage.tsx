@@ -7,6 +7,15 @@ const SettingsBasePage = () => {
       <div className="transition-colors hover:bg-hover-1">
         <Link
           className="flex justify-between items-center px-4 py-3 w-full"
+          to="theme-picker"
+        >
+          <span>Theme Picker</span>
+          <ArrowRight size={20} />
+        </Link>
+      </div>
+      <div className="transition-colors hover:bg-hover-1">
+        <Link
+          className="flex justify-between items-center px-4 py-3 w-full"
           to="edit-profile"
         >
           <span>Edit Profile</span>

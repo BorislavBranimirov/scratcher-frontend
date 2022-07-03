@@ -7,6 +7,7 @@ import ChangePasswordPage from './ChangePasswordPage';
 import SettingsBasePage from './SettingsBasePage';
 import EditProfilePage from './EditProfilePage';
 import DeleteAccountPage from './DeleteAccountPage';
+import ThemePickerPage from '../theme/ThemePickerPage';
 
 const SettingsPage = () => {
   const { tab } = useParams() as {
@@ -15,7 +16,9 @@ const SettingsPage = () => {
   const navigate = useNavigate();
 
   let headerText = 'Settings';
-  if (tab === 'edit-profile') {
+  if (tab === 'theme-picker') {
+    headerText = 'Theme Picker';
+  } else if (tab === 'edit-profile') {
     headerText = 'Edit Profile';
   } else if (tab === 'change-password') {
     headerText = 'Change Password';
@@ -42,6 +45,7 @@ const SettingsPage = () => {
         <h2 className="text-lg font-bold leading-6">{headerText}</h2>
       </div>
       {!tab && <SettingsBasePage />}
+      {tab === 'theme-picker' && <ThemePickerPage />}
       {tab === 'edit-profile' && <EditProfilePage />}
       {tab === 'change-password' && <ChangePasswordPage />}
       {tab === 'delete-account' && <DeleteAccountPage />}

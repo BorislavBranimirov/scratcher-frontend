@@ -83,3 +83,28 @@ export interface decodedJWT {
 export interface apiError {
   err: string;
 }
+
+const themeAccentValues = [
+  'theme-accent-blue',
+  'theme-accent-yellow',
+  'theme-accent-rose',
+  'theme-accent-purple',
+  'theme-accent-orange',
+  'theme-accent-green',
+] as const;
+export type themeAccent = typeof themeAccentValues[number];
+
+export const isThemeAccent = (arg: any): arg is themeAccent => {
+  return themeAccentValues.includes(arg);
+};
+
+const themeBackgroundValues = [
+  'theme-background-light',
+  'theme-background-dark',
+  'theme-background-lights-out',
+] as const;
+export type themeBackground = typeof themeBackgroundValues[number];
+
+export const isThemeBackground = (arg: any): arg is themeBackground => {
+  return themeBackgroundValues.includes(arg);
+};
