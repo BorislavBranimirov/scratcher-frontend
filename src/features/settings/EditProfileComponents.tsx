@@ -122,7 +122,7 @@ export const ImageCropper = ({
               }
             }
           }}
-          className={`bg-accent rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
+          className={`bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60`}
         >
           Apply
         </button>
@@ -158,7 +158,7 @@ export const EditProfileFileUploadButton = ({
         onChange={handleFileInputChange}
       />
       <label htmlFor={id} title="Add photo">
-        <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition-colors bg-backdrop/80 hover:bg-backdrop/60 active:bg-backdrop/40">
+        <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer transition-colors bg-backdrop/80 text-accent-inverted hover:bg-backdrop/60 active:bg-backdrop/40">
           <Camera size={20} />
         </div>
       </label>

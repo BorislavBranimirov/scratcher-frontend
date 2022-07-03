@@ -194,7 +194,7 @@ const EditProfilePage = () => {
             {!bannerDeleted &&
               (loggedUser.profileBannerUrl || profileBannerFile) && (
                 <button
-                  className="w-10 h-10 flex items-center justify-center rounded-full transition-colors bg-backdrop/80 hover:bg-backdrop/60 active:bg-backdrop/40"
+                  className="w-10 h-10 flex items-center justify-center rounded-full transition-colors bg-backdrop/80 text-accent-inverted hover:bg-backdrop/60 active:bg-backdrop/40"
                   onClick={() => {
                     setBannerDeleted(true);
                     setProfileBannerFile(null);
@@ -261,7 +261,7 @@ const EditProfilePage = () => {
               e.stopPropagation();
               handleSubmit();
             }}
-            className={`bg-accent rounded-full py-1.5 px-8 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
+            className={`bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60`}
           >
             Save
           </button>

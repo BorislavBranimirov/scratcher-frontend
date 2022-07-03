@@ -3,14 +3,14 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     colors: {
-      primary: 'rgb(21, 32, 43)',
-      secondary: 'rgb(25, 39, 52)',
+      primary: 'rgb(var(--color-background-primary) / <alpha-value>)',
+      secondary: 'rgb(var(--color-background-secondary) / <alpha-value>)',
       hover: {
-        1: 'rgb(255 255 255 / 0.05)',
-        2: 'rgb(255 255 255 / 0.1)',
-        3: 'rgb(255 255 255 / 0.2)',
+        1: 'rgb(var(--color-hover) / 0.05)',
+        2: 'rgb(var(--color-hover) / 0.1)',
+        3: 'rgb(var(--color-hover) / 0.2)',
       },
-      accent: 'rgb(29, 155, 240)',
+      accent: 'rgb(var(--color-accent) / <alpha-value>)',
       danger: 'rgb(244, 33, 46)',
       error: 'rgb(244, 33, 46)',
       backdrop: 'rgb(21, 32, 43)',
@@ -22,9 +22,10 @@ module.exports = {
       'reply-line': 'rgb(61, 84, 102)',
     },
     textColor: {
-      main: 'rgb(255, 255, 255)',
-      muted: 'rgb(136, 153, 166)',
-      accent: 'rgb(29, 155, 240)',
+      main: 'rgb(var(--color-text-main) / <alpha-value>)',
+      muted: 'rgb(var(--color-text-muted) / <alpha-value>)',
+      accent: 'rgb(var(--color-accent) / <alpha-value>)',
+      'accent-inverted': 'rgb(255, 255, 255)',
       danger: 'rgb(244, 33, 46)',
       error: 'rgb(244, 33, 46)',
       btn: {
@@ -33,11 +34,12 @@ module.exports = {
       },
     },
     borderColor: {
-      primary: 'rgb(56, 68, 77)',
-      'match-background': 'rgb(21, 32, 43)',
+      primary: 'rgb(var(--color-border) / <alpha-value>)',
+      'match-background':
+        'rgb(var(--color-background-primary) / <alpha-value>)',
     },
     boxShadow: {
-      DEFAULT: '0 0 10px rgba(255, 255, 255, 0.1)',
+      DEFAULT: '0 0 10px rgb(var(--color-shadow) / 0.1)',
       none: 'none',
     },
     extend: {

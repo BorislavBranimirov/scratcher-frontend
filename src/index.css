@@ -1,3 +1,70 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-accent: 29 155 240;
+    --color-background-primary: 21 32 43;
+    --color-background-secondary: 25 39 52;
+    --color-hover: 255 255 255;
+    --color-text-main: 255 255 255;
+    --color-text-muted: 136 153 166;
+    --color-border: 56 68 77;
+    --color-shadow: 255 255 255;
+  }
+
+  .theme-accent-blue {
+    --color-accent: 29 155 240;
+  }
+
+  .theme-accent-yellow {
+    --color-accent: 255 212 0;
+  }
+
+  .theme-accent-rose {
+    --color-accent: 249 24 128;
+  }
+
+  .theme-accent-purple {
+    --color-accent: 120 86 255;
+  }
+
+  .theme-accent-orange {
+    --color-accent: 255 122 0;
+  }
+
+  .theme-accent-green {
+    --color-accent: 0 186 124;
+  }
+
+  .theme-background-light {
+    --color-background-primary: 255 255 255;
+    --color-background-secondary: 239 243 244;
+    --color-hover: 0 0 0;
+    --color-text-main: 15 20 25;
+    --color-text-muted: 83 100 113;
+    --color-border: 210 210 210;
+    --color-shadow: 0 0 0;
+  }
+
+  .theme-background-dark {
+    --color-background-primary: 21 32 43;
+    --color-background-secondary: 25 39 52;
+    --color-hover: 255 255 255;
+    --color-text-main: 255 255 255;
+    --color-text-muted: 136 153 166;
+    --color-border: 56 68 77;
+    --color-shadow: 255 255 255;
+  }
+
+  .theme-background-lights-out {
+    --color-background-primary: 0 0 0;
+    --color-background-secondary: 22 24 28;
+    --color-hover: 255 255 255;
+    --color-text-main: 255 255 255;
+    --color-text-muted: 136 153 166;
+    --color-border: 56 68 77;
+    --color-shadow: 255 255 255;
+  }
+}

@@ -34,7 +34,7 @@ const MobileSideBar = () => {
   if (!openSideBar) {
     return (
       <button
-        className="sm:hidden fixed w-10 h-10 rounded-full bg-accent top-3 right-3 z-30"
+        className="sm:hidden fixed w-10 h-10 rounded-full bg-accent text-accent-inverted top-3 right-3 z-30"
         onClick={() => {
           setOpenSideBar(true);
         }}
@@ -144,7 +144,7 @@ const MobileSideBar = () => {
                 <span>Settings</span>
               </NavLink>
               <button
-                className="mx-auto w-[90%] bg-accent rounded-full my-2 p-3 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60"
+                className="mx-auto w-[90%] bg-accent rounded-full my-2 p-3 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60"
                 onClick={() => {
                   setOpenSideBar(false);
                   dispatch(openPostModal());

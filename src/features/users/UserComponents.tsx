@@ -58,7 +58,7 @@ export const FollowButton = ({
           followBtnHover
             ? 'bg-danger hover:bg-danger/80 active:bg-danger/60'
             : 'bg-accent hover:bg-accent/80 active:bg-accent/60'
-        } text-${textSize} rounded-full py-1.5 px-4 font-bold transition-colors`}
+        } text-${textSize} text-accent-inverted rounded-full py-1.5 px-4 font-bold transition-colors`}
       >
         {followBtnHover ? 'Unfollow' : 'Following'}
       </button>
@@ -69,7 +69,7 @@ export const FollowButton = ({
         e.stopPropagation();
         dispatch(followUser({ id: userId }));
       }}
-      className={`bg-accent text-${textSize} rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
+      className={`bg-accent text-${textSize} text-accent-inverted rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60`}
     >
       Follow
     </button>

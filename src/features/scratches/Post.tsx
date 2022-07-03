@@ -132,7 +132,7 @@ const Post = ({
             {scratch.rescratchType === 'quote' && scratch.rescratchedId && (
               <EmbeddedRescratch rescratchedId={scratch.rescratchedId} />
             )}
-            <div className="flex justify-between w-10/12 mt-2">
+            <div className="flex justify-between w-10/12 mt-2 mb-1">
               <ScratchReplyButton
                 scratchId={scratch.id}
                 text={scratch.replyCount.toString()}

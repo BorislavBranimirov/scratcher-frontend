@@ -17,7 +17,7 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
 
   if (!rescratch) {
     return (
-      <div className="mt-2 mb-0.5 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-sm text-muted transition-colors duration-200 hover:bg-hover-1">
+      <div className="mt-2 mb-1 border border-primary rounded-xl py-2 px-2.5 cursor-pointer text-sm text-muted transition-colors duration-200 hover:bg-hover-1">
         Scratch not found
       </div>
     );
@@ -35,7 +35,7 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
 
   return (
     <div
-      className="mt-2 mb-0.5 border border-primary rounded-xl pt-1 pb-2 px-2.5 cursor-pointer transition-colors duration-200 hover:bg-hover-1"
+      className="mt-2 mb-1 border border-primary rounded-xl pt-1 pb-2 px-2.5 cursor-pointer transition-colors duration-200 hover:bg-hover-1"
       onClick={(e) => {
         e.stopPropagation();
         const target = e.target as Element;

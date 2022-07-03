@@ -117,7 +117,7 @@ const ScratchMainPost = ({
           )}
         </div>
       )}
-      <div className="border-t border-primary py-3 flex justify-around">
+      <div className="border-t border-primary py-3.5 flex justify-around">
         <ScratchReplyButton scratchId={scratch.id} iconSize={20} />
         <ScratchRescratchButton
           scratchId={scratch.id}

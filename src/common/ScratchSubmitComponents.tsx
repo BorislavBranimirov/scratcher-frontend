@@ -18,7 +18,7 @@ export const ScratchSubmitImagePreview = ({
   return (
     <div className="relative my-2 rounded-2xl overflow-hidden">
       <button
-        className="absolute top-2 left-2 p-1.5 rounded-full transition-colors bg-backdrop hover:bg-backdrop/80 active:bg-backdrop/60"
+        className="absolute top-2 left-2 p-1.5 rounded-full transition-colors bg-backdrop text-accent-inverted hover:bg-backdrop/80 active:bg-backdrop/60"
         onClick={handleRemoveFileInput}
         title="Remove"
       >

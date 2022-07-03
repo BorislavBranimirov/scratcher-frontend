@@ -48,7 +48,7 @@ const ConfirmPrompt = ({
             e.stopPropagation();
             acceptCallback();
           }}
-          className="bg-danger rounded-full py-2 mt-4 font-bold transition-colors hover:bg-danger/80 active:bg-danger/60"
+          className="bg-danger rounded-full py-2 mt-4 font-bold text-accent-inverted transition-colors hover:bg-danger/80 active:bg-danger/60"
         >
           {acceptText}
         </button>

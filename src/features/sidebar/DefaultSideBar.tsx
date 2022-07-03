@@ -94,7 +94,7 @@ const DefaultSideBar = () => {
                 <span className="hidden xl:block">Settings</span>
               </NavLink>
               <button
-                className="xl:w-[90%] bg-accent rounded-full mt-2 p-3 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60"
+                className="xl:w-[90%] bg-accent rounded-full mt-2 p-3 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60"
                 onClick={() => {
                   dispatch(openPostModal());
                 }}

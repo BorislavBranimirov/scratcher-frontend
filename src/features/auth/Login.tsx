@@ -78,7 +78,7 @@ const Login = () => {
             </div>
           </div>
           <button
-            className="w-full bg-accent rounded-full py-3 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
+            className="w-full bg-accent rounded-full py-3 font-bold text-accent-inverted transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
             type="submit"
             disabled={!username || !password}
           >

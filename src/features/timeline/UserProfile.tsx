@@ -55,7 +55,7 @@ const UserProfile = () => {
           </div>
           {loggedUser?.id === user.id ? (
             <button
-              className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold transition-colors hover:bg-accent/80 active:bg-accent/60"
+              className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60"
               onClick={() => {
                 navigate('/settings/edit-profile');
               }}

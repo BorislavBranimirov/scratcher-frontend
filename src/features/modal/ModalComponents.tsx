@@ -141,7 +141,7 @@ export const ScratchModalControlButtons = ({
       </div>
       <button
         onClick={handleSubmit}
-        className="bg-accent text-sm rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
+        className="bg-accent text-sm text-accent-inverted rounded-full py-1.5 px-4 font-bold transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
         disabled={disabledSubmitBtnCondition}
       >
         {submitBtnText}
