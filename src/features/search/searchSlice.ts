@@ -59,9 +59,6 @@ export const loadMoreOfScratchSearch = createAsyncThunk<
 >('search/loadMoreOfScratchSearch', async (args, thunkApi) => {
   try {
     const searchPattern = thunkApi.getState().search.searchPattern;
-    if (!searchPattern) {
-      throw new Error('Search pattern not specified.');
-    }
 
     const res = await getSearchScratches(searchPattern, args.limit, args.after);
 
@@ -132,9 +129,6 @@ export const loadMoreOfUserSearch = createAsyncThunk<
 >('search/loadMoreOfUserSearch', async (args, thunkApi) => {
   try {
     const searchPattern = thunkApi.getState().search.searchPattern;
-    if (!searchPattern) {
-      throw new Error('Search pattern not specified.');
-    }
 
     const res = await getSearchUsers(searchPattern, args.limit, args.after);
 
@@ -155,7 +149,7 @@ export const loadMoreOfUserSearch = createAsyncThunk<
 
 export interface searchState {
   type: 'scratches' | 'users' | null;
-  searchPattern: string | null;
+  searchPattern: string;
   scratchIds: number[];
   userIds: number[];
   isFinished: boolean;
@@ -165,7 +159,7 @@ export interface searchState {
 
 const initialState: searchState = {
   type: null,
-  searchPattern: null,
+  searchPattern: '',
   scratchIds: [],
   userIds: [],
   isFinished: false,

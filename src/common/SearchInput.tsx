@@ -10,7 +10,7 @@ const SearchInput = () => {
   const [searchParams] = useSearchParams();
   const searchPattern = searchParams.get('q');
   const navigate = useNavigate();
-  const [search, setSearch] = useState<string | null>(searchPattern);
+  const [search, setSearch] = useState<string>(searchPattern || '');
   const inputFieldRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ const SearchInput = () => {
           id="search"
           ref={inputFieldRef}
           placeholder="Search Scratcher"
-          value={search || ''}
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={handleSearch}
         />
