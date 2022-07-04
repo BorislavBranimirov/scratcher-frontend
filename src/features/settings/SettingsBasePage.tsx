@@ -1,4 +1,4 @@
-import { ArrowRight } from 'react-feather';
+import { ArrowRight, Edit, Key, Monitor, UserX } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 const SettingsBasePage = () => {
@@ -9,7 +9,10 @@ const SettingsBasePage = () => {
           className="flex justify-between items-center px-4 py-3 w-full"
           to="theme-picker"
         >
-          <span>Theme Picker</span>
+          <div className="flex gap-3 items-center">
+            <Monitor size={20} />
+            <span>Theme Picker</span>
+          </div>
           <ArrowRight size={20} />
         </Link>
       </div>
@@ -18,7 +21,10 @@ const SettingsBasePage = () => {
           className="flex justify-between items-center px-4 py-3 w-full"
           to="edit-profile"
         >
-          <span>Edit Profile</span>
+          <div className="flex gap-3 items-center">
+            <Edit size={20} />
+            <span>Edit Profile</span>
+          </div>
           <ArrowRight size={20} />
         </Link>
       </div>
@@ -27,7 +33,10 @@ const SettingsBasePage = () => {
           className="flex justify-between items-center px-4 py-3 w-full"
           to="change-password"
         >
-          <span>Change Password</span>
+          <div className="flex gap-3 items-center">
+            <Key size={20} />
+            <span>Change Password</span>
+          </div>
           <ArrowRight size={20} />
         </Link>
       </div>
@@ -36,7 +45,10 @@ const SettingsBasePage = () => {
           className="flex justify-between items-center px-4 py-3 w-full"
           to="delete-account"
         >
-          <span>Delete Account</span>
+          <div className="flex gap-3 items-center">
+            <UserX size={20} />
+            <span>Delete Account</span>
+          </div>
           <ArrowRight size={20} />
         </Link>
       </div>
