@@ -1,4 +1,4 @@
-import { ArrowLeft, Loader } from 'react-feather';
+import { ArrowLeft } from 'react-feather';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -48,16 +48,8 @@ const UserPage = () => {
     }
   }, [tab, username, userPath, isLogged, navigate, dispatch]);
 
-  if (isLoading) {
-    return (
-      <PageLayout omitBottomOffset>
-        <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
-      </PageLayout>
-    );
-  }
-
   return (
-    <PageLayout>
+    <PageLayout isLoading={isLoading}>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-1 z-10 flex items-center">
         <button
           className="h-full mr-4"

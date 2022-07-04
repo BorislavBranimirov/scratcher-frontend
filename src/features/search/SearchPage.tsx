@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowLeft, Loader } from 'react-feather';
+import { ArrowLeft } from 'react-feather';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import PageLayout from '../../common/PageLayout';
@@ -36,16 +36,8 @@ const SearchPage = () => {
     }
   }, [dispatch, navigate, searchParams, tab]);
 
-  if (isLoading) {
-    return (
-      <PageLayout omitSearchWindow>
-        <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
-      </PageLayout>
-    );
-  }
-
   return (
-    <PageLayout omitSearchWindow>
+    <PageLayout isLoading={isLoading} omitSearchWindow>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 pr-24 sm:pr-4 py-3 z-10 flex items-center">
         <button
           className="h-full mr-4"

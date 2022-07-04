@@ -12,7 +12,7 @@ import {
 import ScratchSubmit from './scratchPageSubmit';
 import ScratchMainPostWrapper from './ScratchMainPostWrapper';
 import ScratchRedirect from './ScratchRedirect';
-import { ArrowLeft, Loader } from 'react-feather';
+import { ArrowLeft } from 'react-feather';
 import PageLayout from '../../common/PageLayout';
 
 const ScratchPage = () => {
@@ -28,16 +28,8 @@ const ScratchPage = () => {
     dispatch(loadScratchConversation({ id: parseInt(id, 10) }));
   }, [id, dispatch]);
 
-  if (isLoading) {
-    return (
-      <PageLayout omitBottomOffset>
-        <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
-      </PageLayout>
-    );
-  }
-
   return (
-    <PageLayout>
+    <PageLayout isLoading={isLoading}>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10 flex items-center">
         <button
           className="h-full mr-4"
@@ -65,9 +57,7 @@ const ScratchPage = () => {
       ) : (
         <div className="mt-4 text-center">
           <h2 className="text-lg font-bold">Scratch not found</h2>
-          <p className="text-sm text-muted">
-            It doesn't exist or was deleted.
-          </p>
+          <p className="text-sm text-muted">It doesn't exist or was deleted.</p>
         </div>
       )}
     </PageLayout>
