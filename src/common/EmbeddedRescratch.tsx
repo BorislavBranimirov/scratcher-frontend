@@ -49,13 +49,10 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
             onMouseEnter={userPreviewOnMouseEnter}
             onMouseLeave={userPreviewOnMouseLeave}
           >
-            <img
-              src={profileImageUrl}
-              alt="avatar"
-            />
+            <img src={profileImageUrl} alt="avatar" />
           </Link>
         </div>
-        <div className="text-muted flex items-baseline">
+        <div className="text-muted flex items-baseline min-w-0">
           <Link className="truncate" to={rescratchedUserPath}>
             <span
               className="font-bold text-main hover:underline"
@@ -73,7 +70,9 @@ const EmbeddedRescratch = ({ rescratchedId }: { rescratchedId: number }) => {
             </span>
           </Link>
           <span className="text-sm px-1">·</span>
-          <TimeAgo createdAt={rescratch.createdAt} />
+          <div className="whitespace-nowrap">
+            <TimeAgo createdAt={rescratch.createdAt} />
+          </div>
         </div>
       </div>
       <p className="break-words whitespace-pre-wrap">{rescratch.body}</p>
