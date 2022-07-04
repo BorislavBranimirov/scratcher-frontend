@@ -30,7 +30,7 @@ const ScratchPage = () => {
 
   if (isLoading) {
     return (
-      <PageLayout>
+      <PageLayout omitBottomOffset>
         <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
       </PageLayout>
     );

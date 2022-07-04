@@ -20,7 +20,7 @@ const SuggestedUsersPage = () => {
 
   if (isLoading) {
     return (
-      <PageLayout omitSuggestedUsersWindow>
+      <PageLayout omitBottomOffset omitSuggestedUsersWindow>
         <Loader size={32} className="animate-spin-slow w-full mx-auto mt-10" />
       </PageLayout>
     );

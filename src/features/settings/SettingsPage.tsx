@@ -27,7 +27,7 @@ const SettingsPage = () => {
   }
 
   return (
-    <PageLayout omitSearchWindow omitSuggestedUsersWindow>
+    <PageLayout omitBottomOffset omitSearchWindow omitSuggestedUsersWindow>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10 flex items-center">
         {!!tab && (
           <button
