@@ -31,9 +31,11 @@ const PageLayout = ({
           </>
         )}
       </div>
-      <div className="hidden lg:flex lg:flex-col lg:gap-y-3 lg:ml-6 lg:col-span-3 lg:mr-12 pt-2">
-        {!omitSearchWindow && <SearchInput />}
-        {!omitSuggestedUsersWindow && <SuggestedUsersWindow />}
+      <div className="hidden lg:block lg:ml-6 lg:col-span-3 lg:mr-12">
+        <div className="sticky flex flex-col gap-y-3 top-2">
+          {!omitSearchWindow && <SearchInput />}
+          {!omitSuggestedUsersWindow && <SuggestedUsersWindow />}
+        </div>
       </div>
     </>
   );
