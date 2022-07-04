@@ -1,9 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  isAnyOf,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { RootState } from '../../app/store';
@@ -92,11 +87,16 @@ export const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.userId = action.payload.user.id;
       state.token = action.payload.token;
-      state.isLoading = false;
     });
 
+    builder.addCase(loginFromToken.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(loginFromToken.fulfilled, (state, action) => {
       state.userId = action.payload.user.id;
+      state.isLoading = false;
+    });
+    builder.addCase(loginFromToken.rejected, (state) => {
       state.isLoading = false;
     });
 
@@ -104,20 +104,6 @@ export const authSlice = createSlice({
       state.userId = null;
       state.token = null;
     });
-
-    builder.addMatcher(
-      isAnyOf(login.pending, loginFromToken.pending),
-      (state) => {
-        state.isLoading = true;
-      }
-    );
-
-    builder.addMatcher(
-      isAnyOf(login.rejected, loginFromToken.rejected),
-      (state) => {
-        state.isLoading = false;
-      }
-    );
   },
 });
 

@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { passwordPattern, passwordPatternTitle, usernamePattern, usernamePatternTitle } from '../../common/regexUtils';
+import {
+  passwordPattern,
+  passwordPatternTitle,
+  usernamePattern,
+  usernamePatternTitle,
+} from '../../common/regexUtils';
 import { login, selectAuthIsLogged } from './authSlice';
 
 const Login = () => {
