@@ -115,7 +115,6 @@ const ScratchSubmit = ({ parentScratchId }: { parentScratchId: number }) => {
               <div className="my-auto">
                 <ScratchSubmitFileUploadButton
                   handleFileInputChange={handleFileInputChange}
-                  id="scratch-file-input"
                 />
               </div>
               <button

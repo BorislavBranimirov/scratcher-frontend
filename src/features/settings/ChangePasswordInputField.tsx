@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useId } from 'react';
 import { passwordPattern, passwordPatternTitle } from '../../common/regexUtils';
 
 const ChangePasswordInputField = ({
@@ -14,6 +14,8 @@ const ChangePasswordInputField = ({
   passwordError: string | null;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) => {
+  const id = useId();
+
   return (
     <div className="relative">
       <input
@@ -22,7 +24,7 @@ const ChangePasswordInputField = ({
         }`}
         type="password"
         name={name}
-        id={name}
+        id={id}
         pattern={passwordPattern}
         title={passwordPatternTitle}
         placeholder={placeholder}
@@ -34,7 +36,7 @@ const ChangePasswordInputField = ({
         className={`absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
           passwordError ? 'text-error' : 'peer-focus:text-accent'
         }`}
-        htmlFor={name}
+        htmlFor={id}
       >
         {placeholder}
       </label>

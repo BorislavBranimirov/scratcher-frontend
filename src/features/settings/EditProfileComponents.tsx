@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useId, useState } from 'react';
 import Cropper, { Area } from 'react-easy-crop';
 import { Camera, ZoomIn, ZoomOut } from 'react-feather';
 import useSyncTextareaHeight from '../../common/useSyncTextareaHeight';
@@ -133,11 +133,11 @@ export const ImageCropper = ({
 
 export const EditProfileFileUploadButton = ({
   handleFileInputChange,
-  id,
 }: {
   handleFileInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  id: string;
 }) => {
+  const id = useId();
+
   return (
     <>
       <input

@@ -97,7 +97,6 @@ const HomeScratchSubmit = () => {
             <div className="my-auto">
               <ScratchSubmitFileUploadButton
                 handleFileInputChange={handleFileInputChange}
-                id="home-file-input"
               />
             </div>
             <button

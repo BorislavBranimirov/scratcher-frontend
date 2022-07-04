@@ -189,7 +189,6 @@ const EditProfilePage = () => {
                   setProfileBannerFile(files[0]);
                 }
               }}
-              id="settings-banner-file-input"
             />
             {!bannerDeleted &&
               (loggedUser.profileBannerUrl || profileBannerFile) && (
@@ -228,7 +227,6 @@ const EditProfilePage = () => {
                     setProfileImageFile(files[0]);
                   }
                 }}
-                id="settings-image-file-input"
               />
             </div>
           </div>

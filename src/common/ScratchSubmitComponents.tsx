@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useId } from 'react';
 import { Image, X } from 'react-feather';
 import usePreviewImage from './usePreviewImage';
 
@@ -31,11 +31,11 @@ export const ScratchSubmitImagePreview = ({
 
 export const ScratchSubmitFileUploadButton = ({
   handleFileInputChange,
-  id,
 }: {
   handleFileInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  id: string;
 }) => {
+  const id = useId();
+
   return (
     <>
       <input

@@ -136,7 +136,6 @@ export const ScratchModalControlButtons = ({
       <div className="my-auto">
         <ScratchSubmitFileUploadButton
           handleFileInputChange={handleFileInputChange}
-          id="modal-file-input"
         />
       </div>
       <button
