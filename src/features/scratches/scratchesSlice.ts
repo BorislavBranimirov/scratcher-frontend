@@ -232,7 +232,7 @@ export const pinScratch = createAsyncThunk<
 >('scratches/pinScratch', async (args, thunkApi) => {
   try {
     const res = await setScratchPin(args.id);
-    return { userId: res.data.id, scratchId: res.data.pinnedId };
+    return { userId: res.data.userId, scratchId: res.data.scratchId };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -248,7 +248,7 @@ export const unpinScratch = createAsyncThunk<
 >('scratches/unpinScratch', async (args, thunkApi) => {
   try {
     const res = await deleteScratchPin(args.id);
-    return { userId: res.data.id, scratchId: res.data.pinnedId };
+    return { userId: res.data.userId, scratchId: res.data.scratchId };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);

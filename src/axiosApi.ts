@@ -341,8 +341,8 @@ export const deleteScratchBookmark = (id: number) => {
 
 interface PinResponseJson {
   success: boolean;
-  id: number;
-  pinnedId: number;
+  userId: number;
+  scratchId: number;
 }
 
 export const setScratchPin = (id: number) => {
