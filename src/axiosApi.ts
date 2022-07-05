@@ -367,12 +367,46 @@ export const deleteUserFollow = (id: number) => {
   return axiosApi.delete<FollowResponseJson>(`/api/users/${id}/follow`);
 };
 
-export const getUserFollowers = (id: number) => {
-  return axiosApi.get<User[]>(`/api/users/${id}/followers`);
+interface UserFollowersResponseJson {
+  users: User[];
+  isFinished: boolean;
+}
+
+export const getUserFollowers = (
+  id: number,
+  limit?: number,
+  after?: number
+) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<UserFollowersResponseJson>(`/api/users/${id}/followers`, {
+    params: queryParams,
+  });
 };
 
-export const getUserFollowed = (id: number) => {
-  return axiosApi.get<User[]>(`/api/users/${id}/followed`);
+interface UserFollowedResponseJson {
+  users: User[];
+  isFinished: boolean;
+}
+
+export const getUserFollowed = (id: number, limit?: number, after?: number) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<UserFollowedResponseJson>(`/api/users/${id}/followed`, {
+    params: queryParams,
+  });
 };
 
 interface UserScratchBookmarksReponseJson {

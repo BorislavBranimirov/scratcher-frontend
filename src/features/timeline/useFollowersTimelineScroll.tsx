@@ -1,15 +1,15 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  loadMoreOfTimeline,
+  loadMoreOfUserFollowers,
   selectTimelineIsFinished,
   selectTimelineIsLoadingMore,
-  selectTimelineLastScratchId,
+  selectTimelineLastFollowerId,
 } from './timelineSlice';
 
-function useTimelineScroll() {
+function useFollowersTimelineScroll() {
   const dispatch = useAppDispatch();
-  const lastId = useAppSelector(selectTimelineLastScratchId);
+  const lastId = useAppSelector(selectTimelineLastFollowerId);
   const isLoadingMore = useAppSelector(selectTimelineIsLoadingMore);
   const isFinished = useAppSelector(selectTimelineIsFinished);
 
@@ -34,7 +34,7 @@ function useTimelineScroll() {
       Math.floor(document.documentElement.scrollTop + window.innerHeight) >=
         yCoordinateToLoadMoreOn
     ) {
-      dispatch(loadMoreOfTimeline({ after: lastId }));
+      dispatch(loadMoreOfUserFollowers({ after: lastId }));
     }
   }, [dispatch, lastId, isFinished, isLoadingMore]);
 
@@ -46,4 +46,4 @@ function useTimelineScroll() {
   }, [handleScroll]);
 }
 
-export default useTimelineScroll;
+export default useFollowersTimelineScroll;

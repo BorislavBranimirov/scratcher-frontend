@@ -8,6 +8,7 @@ import { pinScratch, unpinScratch } from '../scratches/scratchesSlice';
 import { loadMoreOfUserSearch, loadUserSearch } from '../search/searchSlice';
 import { loadSuggestedUsers } from '../suggestedUsers/suggestedUsersSlice';
 import {
+  loadMoreOfUserFollowers,
   loadUserFollowers,
   loadUserFollowing,
   loadUserLikes,
@@ -108,6 +109,7 @@ export const usersSlice = createSlice({
       isAnyOf(
         loadUserFollowers.fulfilled,
         loadUserFollowing.fulfilled,
+        loadMoreOfUserFollowers.fulfilled,
         loadSuggestedUsers.fulfilled,
         loadUserSearch.fulfilled,
         loadMoreOfUserSearch.fulfilled

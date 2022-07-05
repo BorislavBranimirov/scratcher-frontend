@@ -243,7 +243,8 @@ export const loadMoreOfTimeline = createAsyncThunk<
 interface LoadUserFollowersReturnObj {
   userId: number;
   entities: { users: { [key: string]: User } };
-  followerIds: number[];
+  result: number[];
+  isFinished: boolean;
 }
 
 export const loadUserFollowers = createAsyncThunk<
@@ -259,13 +260,14 @@ export const loadUserFollowers = createAsyncThunk<
     const normalized = normalize<
       User,
       LoadUserFollowersReturnObj['entities'],
-      LoadUserFollowersReturnObj['followerIds']
-    >(res.data, [userEntity]);
+      LoadUserFollowersReturnObj['result']
+    >(res.data.users, [userEntity]);
 
     return {
       userId: user.id,
       entities: { ...normalized.entities, [user.id]: user },
-      followerIds: normalized.result,
+      result: normalized.result,
+      isFinished: res.data.isFinished,
     };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
@@ -288,13 +290,61 @@ export const loadUserFollowing = createAsyncThunk<
     const normalized = normalize<
       User,
       LoadUserFollowersReturnObj['entities'],
-      LoadUserFollowersReturnObj['followerIds']
-    >(res.data, [userEntity]);
+      LoadUserFollowersReturnObj['result']
+    >(res.data.users, [userEntity]);
 
     return {
       userId: user.id,
       entities: { ...normalized.entities, [user.id]: user },
-      followerIds: normalized.result,
+      result: normalized.result,
+      isFinished: res.data.isFinished,
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response) {
+      return thunkApi.rejectWithValue((err.response.data as apiError).err);
+    }
+    return Promise.reject(err);
+  }
+});
+
+interface loadMoreOfUserFollowersReturnObj {
+  entities: { users: { [key: string]: User } };
+  result: number[];
+  isFinished: boolean;
+}
+
+export const loadMoreOfUserFollowers = createAsyncThunk<
+  loadMoreOfUserFollowersReturnObj,
+  { limit?: number; after: number },
+  { rejectValue: string; state: RootState }
+>('timeline/loadMoreOfUserFollowers', async (args, thunkApi) => {
+  try {
+    const type = thunkApi.getState().timeline.type;
+    const userId = thunkApi.getState().timeline.userId;
+
+    let res;
+    if (userId) {
+      if (type === 'followers') {
+        res = await getUserFollowers(userId, args.limit, args.after);
+      } else if (type === 'following') {
+        res = await getUserFollowed(userId, args.limit, args.after);
+      }
+    }
+
+    if (!res) {
+      throw new Error('User not provided.');
+    }
+
+    const normalized = normalize<
+      User,
+      loadMoreOfUserFollowersReturnObj['entities'],
+      loadMoreOfUserFollowersReturnObj['result']
+    >(res.data.users, [userEntity]);
+
+    return {
+      entities: { ...normalized.entities },
+      result: normalized.result,
+      isFinished: res.data.isFinished,
     };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
@@ -386,15 +436,9 @@ export const timelineSlice = createSlice({
       state.isLoading = false;
     });
 
-    builder.addCase(loadMoreOfTimeline.pending, (state) => {
-      state.isLoadingMore = true;
-    });
     builder.addCase(loadMoreOfTimeline.fulfilled, (state, action) => {
       state.ids.push(...action.payload.result);
       state.isFinished = action.payload.isFinished;
-      state.isLoadingMore = false;
-    });
-    builder.addCase(loadMoreOfTimeline.rejected, (state) => {
       state.isLoadingMore = false;
     });
 
@@ -436,7 +480,7 @@ export const timelineSlice = createSlice({
 
     builder.addCase(loadUserFollowers.fulfilled, (state, action) => {
       state.userId = action.payload.userId;
-      state.followerIds = action.payload.followerIds;
+      state.followerIds = action.payload.result;
 
       state.type = 'followers';
       state.isLoading = false;
@@ -444,10 +488,16 @@ export const timelineSlice = createSlice({
 
     builder.addCase(loadUserFollowing.fulfilled, (state, action) => {
       state.userId = action.payload.userId;
-      state.followerIds = action.payload.followerIds;
+      state.followerIds = action.payload.result;
 
       state.type = 'following';
       state.isLoading = false;
+    });
+
+    builder.addCase(loadMoreOfUserFollowers.fulfilled, (state, action) => {
+      state.followerIds.push(...action.payload.result);
+      state.isFinished = action.payload.isFinished;
+      state.isLoadingMore = false;
     });
 
     builder.addMatcher(
@@ -474,6 +524,20 @@ export const timelineSlice = createSlice({
       ),
       (state) => {
         state.isLoading = false;
+      }
+    );
+
+    builder.addMatcher(
+      isAnyOf(loadMoreOfTimeline.pending, loadMoreOfUserFollowers.pending),
+      (state) => {
+        state.isLoadingMore = true;
+      }
+    );
+
+    builder.addMatcher(
+      isAnyOf(loadMoreOfTimeline.rejected, loadMoreOfUserFollowers.rejected),
+      (state) => {
+        state.isLoadingMore = false;
       }
     );
 
@@ -507,8 +571,11 @@ export const selectTimelinePinnedScratchId = (state: RootState) =>
 
 export const selectTimelineIds = (state: RootState) => state.timeline.ids;
 
-export const selectTimelineLastId = (state: RootState) =>
+export const selectTimelineLastScratchId = (state: RootState) =>
   state.timeline.ids[state.timeline.ids.length - 1];
+
+export const selectTimelineLastFollowerId = (state: RootState) =>
+  state.timeline.followerIds[state.timeline.followerIds.length - 1];
 
 export const selectTimelineIsLoading = (state: RootState) =>
   state.timeline.isLoading;
