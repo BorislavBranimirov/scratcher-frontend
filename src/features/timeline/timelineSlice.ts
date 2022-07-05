@@ -156,6 +156,7 @@ interface LoadUserLikesReturnObj {
   user: User;
   entities: { scratches: { [key: string]: Scratch } };
   result: number[];
+  isFinished: boolean;
 }
 
 export const loadUserLikes = createAsyncThunk<
@@ -172,14 +173,14 @@ export const loadUserLikes = createAsyncThunk<
       Scratch,
       LoadUserLikesReturnObj['entities'],
       LoadUserLikesReturnObj['result']
-    >(res.data.likes, [scratchEntity]);
+    >(res.data.scratches, [scratchEntity]);
 
     normalized.entities.scratches = {
       ...normalized.entities.scratches,
       ...res.data.extraScratches,
     };
 
-    return { user, ...normalized };
+    return { user, ...normalized, isFinished: res.data.isFinished };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -209,6 +210,8 @@ export const loadMoreOfTimeline = createAsyncThunk<
         res = await getUserTimeline(userId, args.limit, args.after);
       } else if (type === 'userMediaScratches') {
         res = await getUserMediaScratches(userId, args.limit, args.after);
+      } else if (type === 'userLikes') {
+        res = await getUserLikes(userId, args.limit, args.after);
       }
     } else {
       if (type === 'home') {
@@ -341,11 +344,7 @@ export const loadMoreOfUserFollowers = createAsyncThunk<
       loadMoreOfUserFollowersReturnObj['result']
     >(res.data.users, [userEntity]);
 
-    return {
-      entities: { ...normalized.entities },
-      result: normalized.result,
-      isFinished: res.data.isFinished,
-    };
+    return { ...normalized, isFinished: res.data.isFinished };
   } catch (err) {
     if (axios.isAxiosError(err) && err.response) {
       return thunkApi.rejectWithValue((err.response.data as apiError).err);
@@ -430,7 +429,7 @@ export const timelineSlice = createSlice({
       }
       state.userId = action.payload.user.id;
       state.ids = action.payload.result;
-      state.isFinished = true;
+      state.isFinished = action.payload.isFinished;
 
       state.type = 'userLikes';
       state.isLoading = false;

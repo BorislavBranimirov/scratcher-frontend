@@ -21,7 +21,10 @@ import {
   Scratch,
   ScratchResponseObj,
 } from '../../common/types';
-import { loadBookmarks } from '../bookmarks/bookmarksSlice';
+import {
+  loadBookmarks,
+  loadMoreOfBookmarks,
+} from '../bookmarks/bookmarksSlice';
 import { openReplyModal, openRescratchModal } from '../modal/modalSlice';
 import { loadScratchConversation } from '../scratchPage/scratchPageSlice';
 import {
@@ -364,6 +367,7 @@ export const scratchesSlice = createSlice({
         loadUserLikes.fulfilled,
         loadMoreOfTimeline.fulfilled,
         loadBookmarks.fulfilled,
+        loadMoreOfBookmarks.fulfilled,
         loadScratchConversation.fulfilled,
         loadScratchSearch.fulfilled,
         loadMoreOfScratchSearch.fulfilled

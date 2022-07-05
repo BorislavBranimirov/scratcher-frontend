@@ -8,6 +8,7 @@ import {
   selectBookmarkIds,
   selectBookmarksIsLoading,
 } from './bookmarksSlice';
+import useBookmarksScroll from './useBookmarksScroll';
 
 const BookmarksPage = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,8 @@ const BookmarksPage = () => {
       dispatch(loadBookmarks({ id: userId }));
     }
   }, [userId, dispatch]);
+
+  useBookmarksScroll();
 
   return (
     <PageLayout isLoading={isLoading}>

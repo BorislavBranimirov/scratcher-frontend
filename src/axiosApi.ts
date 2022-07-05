@@ -297,12 +297,23 @@ export const getScratchConversation = (id: number) => {
 };
 
 interface UserScratchLikesReponseJson {
-  likes: Scratch[];
+  scratches: Scratch[];
+  isFinished: boolean;
   extraScratches: { [key: string]: Scratch };
 }
 
-export const getUserLikes = (id: number) => {
-  return axiosApi.get<UserScratchLikesReponseJson>(`/api/users/${id}/likes`);
+export const getUserLikes = (id: number, limit?: number, after?: number) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
+  return axiosApi.get<UserScratchLikesReponseJson>(`/api/users/${id}/likes`, {
+    params: queryParams,
+  });
 };
 
 export const getSuggestedUsers = (limit?: number) => {
@@ -410,13 +421,23 @@ export const getUserFollowed = (id: number, limit?: number, after?: number) => {
 };
 
 interface UserScratchBookmarksReponseJson {
-  bookmarks: Scratch[];
+  scratches: Scratch[];
+  isFinished: boolean;
   extraScratches: { [key: string]: Scratch };
 }
 
-export const getBookmarks = (id: number) => {
+export const getBookmarks = (id: number, limit?: number, after?: number) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+
   return axiosApi.get<UserScratchBookmarksReponseJson>(
-    `/api/users/${id}/bookmarks`
+    `/api/users/${id}/bookmarks`,
+    { params: queryParams }
   );
 };
 
