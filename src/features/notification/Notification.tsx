@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { popNotification, selectNotification } from './notificationSlice';
+import { popNotification, selectNotifications } from './notificationSlice';
 
 const Notification = () => {
   const dispatch = useAppDispatch();
-  const message = useAppSelector(selectNotification);
+  const messages = useAppSelector(selectNotifications);
 
   useEffect(() => {
-    if (message) {
+    if (messages.length > 0) {
       const timeout = setTimeout(() => {
         dispatch(popNotification());
       }, 5000);
@@ -16,16 +16,16 @@ const Notification = () => {
         clearTimeout(timeout);
       };
     }
-  }, [message, dispatch]);
+  }, [messages, dispatch]);
 
-  if (!message) {
+  if (messages.length === 0) {
     return null;
   }
 
   return (
     <div className="fixed right-0 bottom-0 left-0 mx-auto mb-8 z-50 w-fit max-w-md flex justify-center">
       <div className="bg-accent py-3 px-6 rounded text-accent-inverted overflow-hidden">
-        <p>{message}</p>
+        <p>{messages[0]}</p>
       </div>
     </div>
   );
