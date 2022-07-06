@@ -29,6 +29,7 @@ import {
 const EditProfilePage = () => {
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(selectAuthUser);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [profileBannerFile, setProfileBannerFile] = useState<File | null>(null);
   const [bannerDeleted, setBannerDeleted] = useState(false);
@@ -67,7 +68,8 @@ const EditProfilePage = () => {
   const handleSubmit = async () => {
     setNameError(false);
     setDescriptionError(false);
-    if (loggedUser) {
+    if (loggedUser && !isSubmitting) {
+      setIsSubmitting(true);
       if (
         name === loggedUser.name &&
         description === loggedUser.description &&
@@ -119,6 +121,7 @@ const EditProfilePage = () => {
           dispatch(pushNotification((err.response.data as apiError).err));
         }
       }
+      setIsSubmitting(false);
     }
   };
 
@@ -259,7 +262,8 @@ const EditProfilePage = () => {
               e.stopPropagation();
               handleSubmit();
             }}
-            className={`bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60`}
+            className="bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
+            disabled={isSubmitting}
           >
             Save
           </button>
