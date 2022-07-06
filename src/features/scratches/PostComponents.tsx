@@ -203,8 +203,7 @@ export const ScratchImageAttachment = ({
   cropImage?: boolean;
 }) => {
   const dispatch = useAppDispatch();
-  const mediaUrl =
-    'https://res.cloudinary.com/quiz-media/image/upload/f_auto/' + url;
+  const mediaUrl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto/${url}`;
 
   return (
     <div
