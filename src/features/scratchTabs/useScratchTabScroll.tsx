@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import useInfiniteScroll from '../../common/useInfiniteScroll';
 import {
   loadMoreOfScratchTab,
   selectScratchTabIsFinished,
@@ -13,37 +13,11 @@ function useScratchTabScroll() {
   const isLoadingMore = useAppSelector(selectScratchTabIsLoadingMore);
   const isFinished = useAppSelector(selectScratchTabIsFinished);
 
-  const handleScroll = useCallback(() => {
-    let yCoordinateToLoadMoreOn: number;
+  const handleLoadMore = () => {
+    dispatch(loadMoreOfScratchTab({ after: lastId }));
+  };
 
-    const bottomOffsetElement = document.getElementById(
-      'page-layout-content-offset'
-    );
-    // if offset element exists, load more once it's reached
-    // otherwise, load more once bottom of page is reached
-    if (bottomOffsetElement) {
-      yCoordinateToLoadMoreOn =
-        bottomOffsetElement.getBoundingClientRect().top + window.scrollY - 100;
-    } else {
-      yCoordinateToLoadMoreOn = document.documentElement.scrollHeight - 100;
-    }
-
-    if (
-      !isFinished &&
-      !isLoadingMore &&
-      Math.floor(document.documentElement.scrollTop + window.innerHeight) >=
-        yCoordinateToLoadMoreOn
-    ) {
-      dispatch(loadMoreOfScratchTab({ after: lastId }));
-    }
-  }, [dispatch, lastId, isFinished, isLoadingMore]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
+  useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);
 }
 
 export default useScratchTabScroll;
