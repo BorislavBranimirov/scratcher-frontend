@@ -2,6 +2,10 @@ import { generatePath } from 'react-router-dom';
 
 export const scratchPath = `/user/:username/scratch/:id`;
 
+export const scratchPathWithTab = `/user/:username/scratch/:id/:tab`;
+
+export type scratchPageTabValue = 'rescratches' | 'likes';
+
 export const userPagePath = `/user/:username`;
 
 export const userPagePathWithTab = `/user/:username/:tab`;
@@ -26,6 +30,18 @@ export const generateScratchPath = ({
   id: number;
 }) => {
   return generatePath(scratchPath, { username, id: id.toString() });
+};
+
+export const generateScratchPathWithTab = ({
+  username,
+  id,
+  tab,
+}: {
+  username: string;
+  id: number;
+  tab: scratchPageTabValue;
+}) => {
+  return generatePath(scratchPathWithTab, { username, id: id.toString(), tab });
 };
 
 export const generateUserPath = ({ username }: { username: string }) => {

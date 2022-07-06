@@ -480,6 +480,7 @@ export const timelineSlice = createSlice({
     builder.addCase(loadUserFollowers.fulfilled, (state, action) => {
       state.userId = action.payload.userId;
       state.followerIds = action.payload.result;
+      state.isFinished = action.payload.isFinished;
 
       state.type = 'followers';
       state.isLoading = false;
@@ -488,6 +489,7 @@ export const timelineSlice = createSlice({
     builder.addCase(loadUserFollowing.fulfilled, (state, action) => {
       state.userId = action.payload.userId;
       state.followerIds = action.payload.result;
+      state.isFinished = action.payload.isFinished;
 
       state.type = 'following';
       state.isLoading = false;

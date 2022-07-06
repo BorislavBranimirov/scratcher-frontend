@@ -1,7 +1,10 @@
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectAuthUserId } from '../auth/authSlice';
 import { Link } from 'react-router-dom';
-import { generateUserPath } from '../../common/routePaths';
+import {
+  generateScratchPathWithTab,
+  generateUserPath,
+} from '../../common/routePaths';
 import EmbeddedRescratch from '../../common/EmbeddedRescratch';
 import { useLayoutEffect, useRef } from 'react';
 import { format, parseISO } from 'date-fns';
@@ -16,6 +19,7 @@ import {
 } from '../scratches/PostComponents';
 import useUserPreviewEvents from '../userPreview/useUserPreviewEvents';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
+import { pushNotification } from '../notification/notificationSlice';
 
 const ScratchMainPost = ({
   scratchId,
@@ -24,6 +28,7 @@ const ScratchMainPost = ({
   scratchId: number;
   ScratchIdToRedirectOnDelete?: number;
 }) => {
+  const dispatch = useAppDispatch();
   const userId = useAppSelector(selectAuthUserId);
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
@@ -42,6 +47,16 @@ const ScratchMainPost = ({
   const createdAtDate = parseISO(scratch.createdAt);
   const userPath = generateUserPath({ username: scratch.author.username });
   const profileImageUrl = getProfileImageUrl(scratch.author.profileImageUrl);
+  const rescratchedUsersPath = generateScratchPathWithTab({
+    username: scratch.author.username,
+    id: scratch.id,
+    tab: 'rescratches',
+  });
+  const likedUsersPath = generateScratchPathWithTab({
+    username: scratch.author.username,
+    id: scratch.id,
+    tab: 'likes',
+  });
 
   return (
     <div
@@ -104,16 +119,40 @@ const ScratchMainPost = ({
       {(scratch.rescratchCount > 0 || scratch.likeCount > 0) && (
         <div className="border-t border-primary py-3 flex gap-3 text-sm">
           {scratch.rescratchCount > 0 && (
-            <div>
+            <Link
+              className="hover:underline"
+              to={rescratchedUsersPath}
+              onClick={(e) => {
+                if (!userId) {
+                  e.preventDefault();
+                  dispatch(
+                    pushNotification(
+                      'Log in to see users who rescratched the post.'
+                    )
+                  );
+                }
+              }}
+            >
               <span className="font-bold">{scratch.rescratchCount}</span>{' '}
               <span className="text-muted">Rescratches</span>
-            </div>
+            </Link>
           )}
           {scratch.likeCount > 0 && (
-            <div>
+            <Link
+              className="hover:underline"
+              to={likedUsersPath}
+              onClick={(e) => {
+                if (!userId) {
+                  e.preventDefault();
+                  dispatch(
+                    pushNotification('Log in to see users who liked the post.')
+                  );
+                }
+              }}
+            >
               <span className="font-bold">{scratch.likeCount}</span>{' '}
               <span className="text-muted">Likes</span>
-            </div>
+            </Link>
           )}
         </div>
       )}

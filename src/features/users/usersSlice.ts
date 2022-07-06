@@ -5,6 +5,11 @@ import { deleteUserFollow, setUserFollow } from '../../axiosApi';
 import { apiError, User } from '../../common/types';
 import { login, loginFromToken } from '../auth/authSlice';
 import { pinScratch, unpinScratch } from '../scratches/scratchesSlice';
+import {
+  loadMoreOfScratchTab,
+  loadScratchLikedUsers,
+  loadScratchRescratchedUsers,
+} from '../scratchTabs/scratchTabSlice';
 import { loadMoreOfUserSearch, loadUserSearch } from '../search/searchSlice';
 import { loadSuggestedUsers } from '../suggestedUsers/suggestedUsersSlice';
 import {
@@ -112,7 +117,10 @@ export const usersSlice = createSlice({
         loadMoreOfUserFollowers.fulfilled,
         loadSuggestedUsers.fulfilled,
         loadUserSearch.fulfilled,
-        loadMoreOfUserSearch.fulfilled
+        loadMoreOfUserSearch.fulfilled,
+        loadScratchRescratchedUsers.fulfilled,
+        loadScratchLikedUsers.fulfilled,
+        loadMoreOfScratchTab.fulfilled
       ),
       (state, action) => {
         state.entities = {

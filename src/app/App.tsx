@@ -21,6 +21,7 @@ import BookmarksPage from '../features/bookmarks/BookmarksPage';
 import ScratchPage from '../features/scratchPage/ScratchPage';
 import {
   scratchPath,
+  scratchPathWithTab,
   searchPagePath,
   userPagePath,
   userPagePathWithTab,
@@ -38,6 +39,7 @@ import {
   selectThemeAccent,
   selectThemeBackground,
 } from '../features/theme/themeSlice';
+import ScratchTabsPage from '../features/scratchTabs/ScratchTabsPage';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -116,6 +118,14 @@ const App = () => {
               }
             />
             <Route path={scratchPath} element={<ScratchPage />} />
+            <Route
+              path={scratchPathWithTab}
+              element={
+                <PrivateRoute>
+                  <ScratchTabsPage />
+                </PrivateRoute>
+              }
+            />
             <Route path={userPagePath} element={<UserPage />} />
             <Route path={userPagePathWithTab} element={<UserPage />} />
             <Route path={searchPagePath} element={<SearchPage />} />

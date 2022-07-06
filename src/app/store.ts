@@ -12,6 +12,7 @@ import usersReducer from '../features/users/usersSlice';
 import searchReducer from '../features/search/searchSlice';
 import userPreviewReducer from '../features/userPreview/userPreviewSlice';
 import imagePreviewReducer from '../features/imagePreview/imagePreviewSlice';
+import scratchTabReducer from '../features/scratchTabs/scratchTabSlice';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     timeline: timelineReducer,
     bookmarks: bookmarkReducer,
     scratchPage: scratchPageReducer,
+    scratchTab: scratchTabReducer,
     suggestedUsers: suggestedUsersReducer,
     search: searchReducer,
   },

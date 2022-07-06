@@ -322,6 +322,56 @@ export const getSuggestedUsers = (limit?: number) => {
   });
 };
 
+interface ScratchRescratchedUsersResponseJson {
+  users: User[];
+  isFinished: boolean;
+}
+
+export const getScratchRescratchedUsers = (
+  id: number,
+  limit?: number,
+  after?: number
+) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+  return axiosApi.get<ScratchRescratchedUsersResponseJson>(
+    `/api/scratches/${id}/rescratches`,
+    {
+      params: queryParams,
+    }
+  );
+};
+
+interface ScratchLikedUsersResponseJson {
+  users: User[];
+  isFinished: boolean;
+}
+
+export const getScratchLikedUsers = (
+  id: number,
+  limit?: number,
+  after?: number
+) => {
+  const queryParams: { limit?: number; after?: number } = {};
+  if (limit) {
+    queryParams.limit = limit;
+  }
+  if (after) {
+    queryParams.after = after;
+  }
+  return axiosApi.get<ScratchLikedUsersResponseJson>(
+    `/api/scratches/${id}/likes`,
+    {
+      params: queryParams,
+    }
+  );
+};
+
 interface LikeResponseJson {
   success: boolean;
   userId: number;
