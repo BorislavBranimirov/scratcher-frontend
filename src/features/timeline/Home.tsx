@@ -14,7 +14,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <PageLayout isLoading={isLoading}>
+    <PageLayout isSoftLoading={isLoading}>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10">
         <h2 className="text-lg font-bold leading-6">Latest Scratches</h2>
       </div>

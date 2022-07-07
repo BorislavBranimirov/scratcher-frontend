@@ -19,7 +19,7 @@ const SuggestedUsersPage = () => {
   }, [dispatch]);
 
   return (
-    <PageLayout isLoading={isLoading} omitSuggestedUsersWindow>
+    <PageLayout isSoftLoading={isLoading} omitSuggestedUsersWindow>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10 flex items-center">
         <button
           className="h-full mr-4"

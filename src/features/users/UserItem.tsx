@@ -23,7 +23,9 @@ const UserItem = ({
 
   return (
     <div
-      className="py-2 px-3 cursor-pointer transition-colors duration-200 hover:bg-hover-1"
+      className={`py-2 ${
+        extended ? 'px-4' : 'px-3'
+      } cursor-pointer transition-colors duration-200 hover:bg-hover-1`}
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(userPath);

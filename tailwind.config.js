@@ -13,7 +13,10 @@ module.exports = {
       accent: 'rgb(var(--color-accent) / <alpha-value>)',
       danger: 'rgb(244, 33, 46)',
       error: 'rgb(244, 33, 46)',
-      backdrop: 'rgb(21, 32, 43)',
+      backdrop: {
+        DEFAULT: 'rgb(21, 32, 43)',
+        themed: 'rgb(var(--color-backdrop-themed) / 0.8)'
+      },
       btn: {
         share: 'rgb(0, 186, 124)',
         like: 'rgb(249, 24, 128)',

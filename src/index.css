@@ -8,6 +8,7 @@
     --color-background-primary: 21 32 43;
     --color-background-secondary: 25 39 52;
     --color-hover: 255 255 255;
+    --color-backdrop-themed: 21 32 42;
     --color-text-main: 255 255 255;
     --color-text-muted: 136 153 166;
     --color-border: 56 68 77;
@@ -42,6 +43,7 @@
     --color-background-primary: 255 255 255;
     --color-background-secondary: 239 243 244;
     --color-hover: 0 0 0;
+    --color-backdrop-themed: 255 255 255;
     --color-text-main: 15 20 25;
     --color-text-muted: 83 100 113;
     --color-border: 210 210 210;
@@ -52,6 +54,7 @@
     --color-background-primary: 21 32 43;
     --color-background-secondary: 25 39 52;
     --color-hover: 255 255 255;
+    --color-backdrop-themed: 21 32 42;
     --color-text-main: 255 255 255;
     --color-text-muted: 136 153 166;
     --color-border: 56 68 77;
@@ -62,6 +65,7 @@
     --color-background-primary: 0 0 0;
     --color-background-secondary: 22 24 28;
     --color-hover: 255 255 255;
+    --color-backdrop-themed: 0 0 0;
     --color-text-main: 255 255 255;
     --color-text-muted: 136 153 166;
     --color-border: 56 68 77;

@@ -49,7 +49,10 @@ const UserPage = () => {
   }, [tab, username, userPath, isLogged, navigate, dispatch]);
 
   return (
-    <PageLayout isLoading={isLoading}>
+    <PageLayout
+      isLoading={isLoading && !user}
+      isSoftLoading={isLoading && !!user}
+    >
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-1 z-10 flex items-center">
         <button
           className="h-full mr-4"
