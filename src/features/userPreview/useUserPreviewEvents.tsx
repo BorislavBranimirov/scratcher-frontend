@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   openUserPreview,
@@ -10,6 +11,15 @@ const useUserPreviewEvents = (username: string) => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserPreviewUserId);
   const timeout = useRef<NodeJS.Timeout | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
+  }, [location]);
 
   const onMouseEnter = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
