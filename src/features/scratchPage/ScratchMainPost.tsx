@@ -50,12 +50,12 @@ const ScratchMainPost = ({
   const rescratchedUsersPath = generateScratchPathWithTab({
     username: scratch.author.username,
     id: scratch.id,
-    tab: 'rescratches',
+    scratchTab: 'rescratches',
   });
   const likedUsersPath = generateScratchPathWithTab({
     username: scratch.author.username,
     id: scratch.id,
-    tab: 'likes',
+    scratchTab: 'likes',
   });
 
   return (

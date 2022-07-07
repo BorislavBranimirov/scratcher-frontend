@@ -25,7 +25,7 @@ const MobileSideBar = () => {
   const user = useAppSelector(selectAuthUser);
   const location = useLocation();
   const [openSideBar, setOpenSideBar] = useState(window.innerWidth >= 640);
-  const searchScratchesPath = generateSearchPath({ tab: 'scratches' });
+  const searchScratchesPath = generateSearchPath({ searchTab: 'scratches' });
 
   useEffect(() => {
     setOpenSideBar(false);

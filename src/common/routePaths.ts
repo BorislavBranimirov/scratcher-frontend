@@ -2,17 +2,17 @@ import { generatePath } from 'react-router-dom';
 
 export const scratchPath = `/user/:username/scratch/:id`;
 
-export const scratchPathWithTab = `/user/:username/scratch/:id/:tab`;
+export const scratchPathWithTab = `/user/:username/scratch/:id/:scratchTab`;
 
 export type scratchPageTabValue = 'rescratches' | 'likes';
 
 export const userPagePath = `/user/:username`;
 
-export const userPagePathWithTab = `/user/:username/:tab`;
+export const userPagePathWithTab = `/user/:username/:userTab`;
 
 export type userPageTabValue = 'media' | 'likes' | 'followers' | 'following';
 
-export const searchPagePath = `/search/:tab`;
+export const searchPagePath = `/search/:searchTab`;
 
 export type searchPagePathValue = 'scratches' | 'users';
 
@@ -35,13 +35,17 @@ export const generateScratchPath = ({
 export const generateScratchPathWithTab = ({
   username,
   id,
-  tab,
+  scratchTab,
 }: {
   username: string;
   id: number;
-  tab: scratchPageTabValue;
+  scratchTab: scratchPageTabValue;
 }) => {
-  return generatePath(scratchPathWithTab, { username, id: id.toString(), tab });
+  return generatePath(scratchPathWithTab, {
+    username,
+    id: id.toString(),
+    scratchTab,
+  });
 };
 
 export const generateUserPath = ({ username }: { username: string }) => {
@@ -50,14 +54,18 @@ export const generateUserPath = ({ username }: { username: string }) => {
 
 export const generateUserPathWithTab = ({
   username,
-  tab,
+  userTab,
 }: {
   username: string;
-  tab: userPageTabValue;
+  userTab: userPageTabValue;
 }) => {
-  return generatePath(userPagePathWithTab, { username, tab });
+  return generatePath(userPagePathWithTab, { username, userTab });
 };
 
-export const generateSearchPath = ({ tab }: { tab: searchPagePathValue }) => {
-  return generatePath(searchPagePath, { tab });
+export const generateSearchPath = ({
+  searchTab,
+}: {
+  searchTab: searchPagePathValue;
+}) => {
+  return generatePath(searchPagePath, { searchTab });
 };

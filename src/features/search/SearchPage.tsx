@@ -18,8 +18,8 @@ const SearchPage = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectSearchIsLoading);
 
-  const { tab } = useParams() as {
-    tab: searchPagePathValue;
+  const { searchTab } = useParams() as {
+    searchTab: searchPagePathValue;
   };
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -27,14 +27,14 @@ const SearchPage = () => {
   useEffect(() => {
     const searchPattern = searchParams.get('q') || '';
 
-    if (tab === 'scratches') {
+    if (searchTab === 'scratches') {
       dispatch(loadScratchSearch({ searchPattern }));
-    } else if (tab === 'users') {
+    } else if (searchTab === 'users') {
       dispatch(loadUserSearch({ searchPattern }));
     } else {
       navigate('/', { replace: true });
     }
-  }, [dispatch, navigate, searchParams, tab]);
+  }, [dispatch, navigate, searchParams, searchTab]);
 
   return (
     <PageLayout isSoftLoading={isLoading} omitSearchWindow>
@@ -53,8 +53,8 @@ const SearchPage = () => {
         <SearchInput />
       </div>
       <SearchPageTabs />
-      {tab === 'scratches' && <SearchPagePosts />}
-      {tab === 'users' && <SearchPageUsersList />}
+      {searchTab === 'scratches' && <SearchPagePosts />}
+      {searchTab === 'users' && <SearchPageUsersList />}
     </PageLayout>
   );
 };

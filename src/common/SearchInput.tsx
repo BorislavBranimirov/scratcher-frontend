@@ -4,8 +4,8 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { generateSearchPath, searchPagePathValue } from './routePaths';
 
 const SearchInput = () => {
-  const { tab } = useParams() as {
-    tab?: searchPagePathValue;
+  const { searchTab } = useParams() as {
+    searchTab?: searchPagePathValue;
   };
   const [searchParams] = useSearchParams();
   const searchPattern = searchParams.get('q');
@@ -15,11 +15,13 @@ const SearchInput = () => {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const redirectTab = tab || 'scratches';
+      const redirectTab = searchTab || 'scratches';
       if (!search) {
-        navigate(generateSearchPath({ tab: redirectTab }));
+        navigate(generateSearchPath({ searchTab: redirectTab }));
       } else {
-        navigate(`${generateSearchPath({ tab: redirectTab })}?q=${search}`);
+        navigate(
+          `${generateSearchPath({ searchTab: redirectTab })}?q=${search}`
+        );
       }
     }
   };

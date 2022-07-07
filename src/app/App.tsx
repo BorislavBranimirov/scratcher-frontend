@@ -110,7 +110,7 @@ const App = () => {
               }
             />
             <Route
-              path="settings/:tab"
+              path="settings/:settingsTab"
               element={
                 <PrivateRoute>
                   <SettingsPage />

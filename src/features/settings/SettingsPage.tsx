@@ -10,26 +10,26 @@ import DeleteAccountPage from './DeleteAccountPage';
 import ThemePickerPage from '../theme/ThemePickerPage';
 
 const SettingsPage = () => {
-  const { tab } = useParams() as {
-    tab?: settingsPageTabValue;
+  const { settingsTab } = useParams() as {
+    settingsTab?: settingsPageTabValue;
   };
   const navigate = useNavigate();
 
   let headerText = 'Settings';
-  if (tab === 'theme-picker') {
+  if (settingsTab === 'theme-picker') {
     headerText = 'Theme Picker';
-  } else if (tab === 'edit-profile') {
+  } else if (settingsTab === 'edit-profile') {
     headerText = 'Edit Profile';
-  } else if (tab === 'change-password') {
+  } else if (settingsTab === 'change-password') {
     headerText = 'Change Password';
-  } else if (tab === 'delete-account') {
+  } else if (settingsTab === 'delete-account') {
     headerText = 'Delete Account';
   }
 
   return (
     <PageLayout omitBottomOffset omitSearchWindow omitSuggestedUsersWindow>
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-3 z-10 flex items-center">
-        {!!tab && (
+        {!!settingsTab && (
           <button
             className="h-full mr-4"
             onClick={() => {
@@ -44,11 +44,11 @@ const SettingsPage = () => {
         )}
         <h2 className="text-lg font-bold leading-6">{headerText}</h2>
       </div>
-      {!tab && <SettingsBasePage />}
-      {tab === 'theme-picker' && <ThemePickerPage />}
-      {tab === 'edit-profile' && <EditProfilePage />}
-      {tab === 'change-password' && <ChangePasswordPage />}
-      {tab === 'delete-account' && <DeleteAccountPage />}
+      {!settingsTab && <SettingsBasePage />}
+      {settingsTab === 'theme-picker' && <ThemePickerPage />}
+      {settingsTab === 'edit-profile' && <EditProfilePage />}
+      {settingsTab === 'change-password' && <ChangePasswordPage />}
+      {settingsTab === 'delete-account' && <DeleteAccountPage />}
     </PageLayout>
   );
 };

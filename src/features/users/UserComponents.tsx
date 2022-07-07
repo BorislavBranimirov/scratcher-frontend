@@ -90,11 +90,11 @@ export const UserFollowerCounters = ({
 
   const userFollowersPath = generateUserPathWithTab({
     username: username,
-    tab: 'followers',
+    userTab: 'followers',
   });
   const userFollowingPath = generateUserPathWithTab({
     username: username,
-    tab: 'following',
+    userTab: 'following',
   });
 
   return (

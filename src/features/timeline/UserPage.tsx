@@ -25,28 +25,28 @@ const UserPage = () => {
   const isLoading = useAppSelector(selectTimelineIsLoading);
   const isLogged = useAppSelector(selectAuthIsLogged);
 
-  const { username, tab } = useParams() as {
+  const { username, userTab } = useParams() as {
     username: string;
-    tab?: userPageTabValue;
+    userTab?: userPageTabValue;
   };
   const navigate = useNavigate();
   const userPath = generateUserPath({ username });
 
   useEffect(() => {
-    if (!tab) {
+    if (!userTab) {
       dispatch(loadUserTimeline({ username }));
     } else if (!isLogged) {
       navigate(userPath, { replace: true });
-    } else if (tab === 'media') {
+    } else if (userTab === 'media') {
       dispatch(loadUserMediaScratches({ username }));
-    } else if (tab === 'likes') {
+    } else if (userTab === 'likes') {
       dispatch(loadUserLikes({ username }));
-    } else if (tab === 'followers') {
+    } else if (userTab === 'followers') {
       dispatch(loadUserFollowers({ username }));
-    } else if (tab === 'following') {
+    } else if (userTab === 'following') {
       dispatch(loadUserFollowing({ username }));
     }
-  }, [tab, username, userPath, isLogged, navigate, dispatch]);
+  }, [userTab, username, userPath, isLogged, navigate, dispatch]);
 
   return (
     <PageLayout
@@ -57,7 +57,7 @@ const UserPage = () => {
         <button
           className="h-full mr-4"
           onClick={() => {
-            if (!tab) {
+            if (!userTab) {
               navigate(-1);
             } else {
               navigate(userPath);
@@ -80,9 +80,11 @@ const UserPage = () => {
       </div>
       {user ? (
         <>
-          {!(tab === 'followers' || tab === 'following') && <UserProfile />}
+          {!(userTab === 'followers' || userTab === 'following') && (
+            <UserProfile />
+          )}
           <UserPageTabs />
-          {tab === 'followers' || tab === 'following' ? (
+          {userTab === 'followers' || userTab === 'following' ? (
             <FollowersList />
           ) : (
             <UserPagePosts />

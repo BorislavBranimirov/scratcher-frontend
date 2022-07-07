@@ -21,17 +21,17 @@ const ScratchTabsPage = () => {
   const scratchId = useAppSelector(selectScratchTabScratchId);
   const isLoading = useAppSelector(selectScratchTabIsLoading);
 
-  const { username, id, tab } = useParams() as {
+  const { username, id, scratchTab } = useParams() as {
     username: string;
     id: string;
-    tab: scratchPageTabValue;
+    scratchTab: scratchPageTabValue;
   };
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (tab === 'rescratches') {
+    if (scratchTab === 'rescratches') {
       dispatch(loadScratchRescratchedUsers({ id: parseInt(id, 10) }));
-    } else if (tab === 'likes') {
+    } else if (scratchTab === 'likes') {
       dispatch(loadScratchLikedUsers({ id: parseInt(id, 10) }));
     } else {
       navigate(
@@ -41,12 +41,12 @@ const ScratchTabsPage = () => {
         })
       );
     }
-  }, [dispatch, navigate, username, id, tab]);
+  }, [dispatch, navigate, username, id, scratchTab]);
 
   let headerText = 'Scratch';
-  if (tab === 'rescratches') {
+  if (scratchTab === 'rescratches') {
     headerText = 'Rescratched by';
-  } else if (tab === 'likes') {
+  } else if (scratchTab === 'likes') {
     headerText = 'Liked by';
   }
 

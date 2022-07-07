@@ -5,38 +5,36 @@ import {
 } from '../../common/routePaths';
 
 const SearchPageTabs = () => {
-  const { tab } = useParams() as {
-    tab: searchPagePathValue;
+  const { searchTab } = useParams() as {
+    searchTab: searchPagePathValue;
   };
   const [searchParams] = useSearchParams();
   const searchPattern = searchParams.get('q');
 
   const searchScratchesPath = !searchPattern
-    ? generateSearchPath({ tab: 'scratches' })
-    : generateSearchPath({ tab: 'scratches' }) + '?q=' + searchPattern;
+    ? generateSearchPath({ searchTab: 'scratches' })
+    : generateSearchPath({ searchTab: 'scratches' }) + '?q=' + searchPattern;
   const searchUsersPath = !searchPattern
-    ? generateSearchPath({ tab: 'users' })
-    : generateSearchPath({ tab: 'users' }) + '?q=' + searchPattern;
+    ? generateSearchPath({ searchTab: 'users' })
+    : generateSearchPath({ searchTab: 'users' }) + '?q=' + searchPattern;
 
   return (
     <div className="flex border-b border-primary">
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'scratches' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
+          searchTab === 'scratches' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
-            `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-muted'
-            }`
+            `px-4 text-center w-full ${isActive ? 'font-bold' : 'text-muted'}`
           }
           to={searchScratchesPath}
           end
         >
           <div className="relative py-3 w-fit mx-auto">
             <span>Scratches</span>
-            {tab === 'scratches' && (
+            {searchTab === 'scratches' && (
               <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>
@@ -44,21 +42,19 @@ const SearchPageTabs = () => {
       </div>
       <div
         className={`grow flex justify-center transition-colors ${
-          tab === 'users' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
+          searchTab === 'users' ? 'hover:bg-hover-2' : 'hover:bg-hover-1'
         }`}
       >
         <NavLink
           className={({ isActive }) =>
-            `px-4 text-center w-full ${
-              isActive ? 'font-bold' : 'text-muted'
-            }`
+            `px-4 text-center w-full ${isActive ? 'font-bold' : 'text-muted'}`
           }
           to={searchUsersPath}
           end
         >
           <div className="relative py-3 w-fit mx-auto">
             <span>Users</span>
-            {tab === 'users' && (
+            {searchTab === 'users' && (
               <div className="absolute bottom-0 h-1 rounded-sm w-full bg-accent"></div>
             )}
           </div>

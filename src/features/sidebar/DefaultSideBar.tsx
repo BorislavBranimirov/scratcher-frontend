@@ -25,7 +25,7 @@ const DefaultSideBar = () => {
   const navigate = useNavigate();
 
   const [userOptionsToggle, setUserOptionsToggle] = useState(false);
-  const searchScratchesPath = generateSearchPath({ tab: 'scratches' });
+  const searchScratchesPath = generateSearchPath({ searchTab: 'scratches' });
   const profileImageUrl = getProfileImageUrl(user?.profileImageUrl);
 
   return (

@@ -10,10 +10,10 @@ const ScratchTabRedirect = ({ scratchId }: { scratchId: number }) => {
   const scratch = useAppSelector((state) =>
     selectScratchById(state, scratchId)
   );
-  const { username, id, tab } = useParams() as {
+  const { username, id, scratchTab } = useParams() as {
     username: string;
     id: string;
-    tab: scratchPageTabValue;
+    scratchTab: scratchPageTabValue;
   };
 
   if (parseInt(id, 10) === scratch.id && username !== scratch.author.username) {
@@ -21,7 +21,7 @@ const ScratchTabRedirect = ({ scratchId }: { scratchId: number }) => {
     const correctScratchTabPath = generateScratchPathWithTab({
       username: scratch.author.username,
       id: scratchId,
-      tab,
+      scratchTab: scratchTab,
     });
 
     return <Navigate to={correctScratchTabPath} replace />;
