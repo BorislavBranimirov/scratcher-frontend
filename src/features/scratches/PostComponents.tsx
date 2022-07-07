@@ -212,10 +212,16 @@ export const ScratchImageAttachment = ({
         dispatch(openImagePreview(mediaUrl));
       }}
       className={`mt-2 mb-1 rounded-2xl flex items-center overflow-hidden${
-        cropImage ? ' max-h-[60vh]' : ''
+        cropImage ? ' max-h-[450px]' : ''
       }`}
     >
-      <img src={mediaUrl} alt="attachment" className="w-full h-auto" />
+      <div
+        className={`flex items-center overflow-hidden${
+          cropImage ? ' max-h-[60vh]' : ''
+        }`}
+      >
+        <img src={mediaUrl} alt="attachment" className="w-full h-auto" />
+      </div>
     </div>
   );
 };

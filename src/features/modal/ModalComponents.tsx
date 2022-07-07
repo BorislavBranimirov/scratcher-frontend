@@ -17,7 +17,7 @@ export const ScratchModalLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="bg-primary mt-10 max-h-[90vh] flex flex-col z-30 rounded-2xl overflow-hidden w-full md:w-2/3 lg:w-1/2 xl:w-2/5">
+    <div className="bg-primary mt-10 max-h-[90vh] flex flex-col z-30 rounded-2xl overflow-hidden w-full md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-xl">
       <div className="border-b border-primary p-3 flex justify-start">
         <button className="relative" onClick={handleCloseModal} title="Close">
           <div className="absolute inset-0 -m-1.5 rounded-full transition-colors hover:bg-hover-1 active:bg-hover-3"></div>

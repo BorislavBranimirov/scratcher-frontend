@@ -29,7 +29,7 @@ const ImagePreviewModal = () => {
 
   return (
     <div
-      className="fixed h-screen w-full z-30 bg-backdrop/90 p-8"
+      className="fixed inset-0 h-screen w-full z-30 bg-backdrop/90 p-8"
       onClick={(e) => {
         e.stopPropagation();
         const target = e.target as Element;

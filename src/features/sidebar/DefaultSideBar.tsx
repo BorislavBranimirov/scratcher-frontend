@@ -30,7 +30,7 @@ const DefaultSideBar = () => {
 
   return (
     <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
-      <div className="fixed h-screen flex flex-col justify-between pr-3 py-3 xl:w-1/6 z-20">
+      <div className="sticky top-0 xl:w-full h-screen flex flex-col justify-between pr-3 py-3 z-20">
         <div className="flex flex-col items-center xl:items-start">
           <p className="font-bold text-xl hidden xl:block p-3 rounded-full transition-colors hover:bg-hover-1">
             Scratcher

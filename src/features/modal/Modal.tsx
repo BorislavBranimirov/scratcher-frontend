@@ -31,7 +31,7 @@ const Modal = () => {
   }
 
   return (
-    <div className="fixed h-full w-full z-30 mx-auto flex justify-center items-start">
+    <div className="fixed inset-0 h-full w-full z-30 mx-auto flex justify-center items-start">
       {type && (
         <div
           className="fixed inset-0 cursor-auto bg-hover-2"

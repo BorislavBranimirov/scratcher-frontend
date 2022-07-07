@@ -32,7 +32,7 @@ const Login = () => {
 
   return (
     <div className="col-span-full md:col-span-7 lg:col-span-6 xl:col-span-5 flex items-center">
-      <div className="grow flex flex-col p-3 h-[80%] md:border md:border-primary md:rounded-2xl">
+      <div className="grow flex flex-col p-3 h-[80%] max-h-[650px] md:border md:border-primary md:rounded-2xl">
         <h2 className="text-center text-2xl font-bold leading-6 py-4">
           Sign in to Scratcher
         </h2>
