@@ -19,7 +19,7 @@ import { logout, selectAuthUser } from '../auth/authSlice';
 import { generateSearchPath, generateUserPath } from '../../common/routePaths';
 import { openPostModal } from '../modal/modalSlice';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
-import logo from '../../images/logo.svg';
+import logo from '../../images/logo.png';
 
 const MobileSideBar = () => {
   const dispatch = useAppDispatch();

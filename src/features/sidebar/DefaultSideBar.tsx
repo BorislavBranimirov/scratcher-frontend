@@ -18,7 +18,7 @@ import {
 import { useState } from 'react';
 import { openPostModal } from '../modal/modalSlice';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
-import logo from '../../images/logo.svg';
+import logo from '../../images/logo.png';
 
 const DefaultSideBar = () => {
   const dispatch = useAppDispatch();
