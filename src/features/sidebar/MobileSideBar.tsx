@@ -19,6 +19,7 @@ import { logout, selectAuthUser } from '../auth/authSlice';
 import { generateSearchPath, generateUserPath } from '../../common/routePaths';
 import { openPostModal } from '../modal/modalSlice';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
+import logo from '../../images/logo.svg';
 
 const MobileSideBar = () => {
   const dispatch = useAppDispatch();
@@ -54,12 +55,15 @@ const MobileSideBar = () => {
           setOpenSideBar(false);
         }}
       ></div>
-      <header className="sm:hidden fixed w-3/4 h-screen bg-primary z-40">
+      <header className="sm:hidden fixed w-3/4 h-screen bg-primary z-40 overflow-auto">
         <div className="flex flex-col">
           {user ? (
             <>
               <div className="border-b border-primary p-3 flex justify-between">
-                <p className="font-bold">Account info</p>
+                <div className="flex items-center gap-3">
+                  <img src={logo} alt="logo" className="w-6 h-6" />
+                  <p className="font-bold">Account info</p>
+                </div>
                 <button
                   className="relative"
                   onClick={() => {
@@ -168,7 +172,10 @@ const MobileSideBar = () => {
           ) : (
             <>
               <div className="border-b border-primary p-3 flex justify-between">
-                <p className="font-bold">Not logged in</p>
+                <div className="flex items-center gap-3">
+                  <img src={logo} alt="logo" className="w-6 h-6" />
+                  <p className="font-bold">Not logged in</p>
+                </div>
                 <button
                   className="relative"
                   onClick={() => {

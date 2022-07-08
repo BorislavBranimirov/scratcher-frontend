@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectAuthUser } from '../auth/authSlice';
 import { logout } from '../auth/authSlice';
@@ -18,6 +18,7 @@ import {
 import { useState } from 'react';
 import { openPostModal } from '../modal/modalSlice';
 import { getProfileImageUrl } from '../../common/profileImageUrls';
+import logo from '../../images/logo.svg';
 
 const DefaultSideBar = () => {
   const dispatch = useAppDispatch();
@@ -32,9 +33,13 @@ const DefaultSideBar = () => {
     <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
       <div className="sticky top-0 xl:w-full h-screen flex flex-col justify-between pr-3 py-3 z-20">
         <div className="flex flex-col items-center xl:items-start">
-          <p className="font-bold text-xl hidden xl:block p-3 rounded-full transition-colors hover:bg-hover-1">
-            Scratcher
-          </p>
+          <Link
+            className="flex items-center gap-3 text-xl font-bold p-3 rounded-full transition-colors hover:bg-hover-1"
+            to="/home"
+          >
+            <img src={logo} alt="logo" className="w-6 h-6" />
+            <span className="hidden xl:block">Scratcher</span>
+          </Link>
           {user ? (
             <>
               <NavLink
