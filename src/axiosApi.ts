@@ -12,6 +12,9 @@ import {
 } from './common/types';
 import { logout, setAccessToken } from './features/auth/authSlice';
 
+axios.defaults.baseURL =
+  process.env.REACT_APP_AXIOS_BASE_URL || 'http://localhost:8000';
+
 const axiosApi = axios.create();
 
 let store: AppStore;
