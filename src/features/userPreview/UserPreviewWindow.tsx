@@ -23,12 +23,14 @@ const UserPreviewWindow = () => {
   const user = useAppSelector(selectUserPreviewUser);
   const loggedUser = useAppSelector(selectAuthUser);
   const [isUnmounting, setIsUnmounting] = useState(false);
-  const popupRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement | null>(null);
+  const offsetY = useRef(8);
   const location = useLocation();
 
   useEffect(() => {
     return () => {
       dispatch(closeUserPreview());
+      popupRef.current = null;
     };
   }, [location, dispatch]);
 
@@ -53,6 +55,7 @@ const UserPreviewWindow = () => {
         setIsUnmounting(true);
         closeTimeout = setTimeout(() => {
           dispatch(closeUserPreview());
+          popupRef.current = null;
         }, 300);
       }, 300);
 
@@ -71,10 +74,8 @@ const UserPreviewWindow = () => {
       const bottomOfViewport =
         window.scrollY + document.documentElement.clientHeight;
 
-      const offsetY = 8;
-
       let posX = parentPos.x - (popupWidth / 2 - parentPos.width / 2);
-      let posY = parentPos.y + parentPos.height + offsetY;
+      let posY = parentPos.y + parentPos.height + offsetY.current;
 
       // if cut off left of viewport, align with parent
       if (posX < leftSideOfViewport) {
@@ -82,7 +83,7 @@ const UserPreviewWindow = () => {
       }
       // if cut off below viewport, place above parent
       if (posY + popupHeight > bottomOfViewport) {
-        posY = parentPos.y - (popupHeight + offsetY);
+        posY = parentPos.y - (popupHeight + offsetY.current);
       }
 
       popupRef.current.style.left = posX + 'px';
@@ -100,6 +101,11 @@ const UserPreviewWindow = () => {
   return (
     <div
       className="absolute w-80 z-30 bg-primary shadow rounded-2xl transition-opacity duration-300 opacity-0"
+      style={{
+        // set initial top style to prevent window rendering over cursor on
+        // first render before calculation and triggering mouse leave events
+        top: parentPos.y + parentPos.height + offsetY.current,
+      }}
       ref={popupRef}
       onMouseEnter={() => {
         dispatch(setUserPreviewMouseLeft(false));
