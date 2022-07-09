@@ -157,7 +157,7 @@ export const ScratchMoreButton = ({
                         })
                       );
                     } else {
-                      navigate('/');
+                      navigate('/home');
                     }
                   }
                 }

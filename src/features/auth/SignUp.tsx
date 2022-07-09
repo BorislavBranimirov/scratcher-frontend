@@ -43,7 +43,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isLogged) {
-      navigate('/');
+      navigate('/home');
     }
   });
 

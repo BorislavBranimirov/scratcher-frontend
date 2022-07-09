@@ -32,7 +32,7 @@ const SearchPage = () => {
     } else if (searchTab === 'users') {
       dispatch(loadUserSearch({ searchPattern }));
     } else {
-      navigate('/', { replace: true });
+      navigate('/home', { replace: true });
     }
   }, [dispatch, navigate, searchParams, searchTab]);
 
