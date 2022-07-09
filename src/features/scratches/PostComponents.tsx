@@ -142,7 +142,7 @@ export const ScratchMoreButton = ({
           {showConfirmPrompt && (
             <ConfirmPrompt
               title="Delete Scratch?"
-              body="This can't be undone and it will be removed from your profile, timeline of any accounts that follow you, and from Scratcher search results."
+              body="This can't be undone and it will be removed from your profile, timeline of any accounts that follow you, and from Scratcher search results, along with any rescratches and replies."
               acceptText="Delete"
               declineText="Cancel"
               acceptCallback={async () => {
