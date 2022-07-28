@@ -202,7 +202,7 @@ export const EditProfileNameField = ({
         {name.length}/{nameLimit}
       </span>
       {nameError && (
-        <span className="text-sm text-error">
+        <span className="text-sm text-error" data-cy="form-error">
           Name can't be blank and must be a maximum of {nameLimit} characters
         </span>
       )}

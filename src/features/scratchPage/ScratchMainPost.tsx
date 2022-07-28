@@ -62,6 +62,7 @@ const ScratchMainPost = ({
     <div
       ref={mainScratchRef}
       className="border-b border-primary scroll-mt-12 px-4 pt-2 w-full"
+      data-cy={`scratch-post-${scratch.id}`}
     >
       <div className="flex gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden mt-1 shrink-0">

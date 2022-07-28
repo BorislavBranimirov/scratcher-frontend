@@ -81,7 +81,7 @@ const ReplyModal = () => {
       <ScratchModalParentScratch />
       <div className="flex gap-3">
         <ScratchModalProfileImage url={profileImageUrl} />
-        <div className="min-w-0 grow">
+        <div className="min-w-0 grow" data-cy="modal-post-scratch">
           <ScratchModalTextArea
             body={body}
             placeholder="Scratch your reply"

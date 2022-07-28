@@ -41,7 +41,9 @@ const ChangePasswordInputField = ({
         {placeholder}
       </label>
       {!!passwordError && (
-        <span className="text-sm text-error">{passwordError}</span>
+        <span className="text-sm text-error" data-cy="form-error">
+          {passwordError}
+        </span>
       )}
     </div>
   );

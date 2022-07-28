@@ -107,6 +107,7 @@ export const ScratchMoreButton = ({
     <div className="relative">
       <button
         className="text-muted transition-colors hover:text-accent h-full"
+        data-cy="scratch-more-menu-btn"
         onClick={(e) => {
           e.stopPropagation();
           setMoreOptionsToggle(true);
@@ -133,6 +134,7 @@ export const ScratchMoreButton = ({
       >
         <button
           className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3 text-danger"
+          data-cy="scratch-delete-btn"
           onClick={async (e) => {
             e.stopPropagation();
             setShowConfirmPrompt(true);
@@ -173,6 +175,7 @@ export const ScratchMoreButton = ({
         </button>
         <button
           className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
+          data-cy="scratch-pin-btn"
           onClick={(e) => {
             e.stopPropagation();
             if (userPinnedId === scratchId) {
@@ -243,6 +246,7 @@ export const ScratchReplyButton = ({
         className={`text-muted transition-colors hover:text-accent group ${
           !!text ? 'text-sm flex items-center' : ''
         }`}
+        data-cy="scratch-reply-btn"
         onClick={(e) => {
           e.stopPropagation();
           dispatch(openReplyModal({ parentId: scratchId }));
@@ -280,6 +284,7 @@ export const ScratchRescratchButton = ({
             ? 'text-btn-share'
             : 'text-muted transition-colors hover:text-btn-share'
         } group ${!!text ? 'text-sm flex items-center' : ''}`}
+        data-cy="scratch-rescratch-menu-btn"
         onClick={(e) => {
           e.stopPropagation();
           setRescratchToggle(true);
@@ -307,6 +312,7 @@ export const ScratchRescratchButton = ({
       >
         <button
           className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
+          data-cy="scratch-direct-rescratch-btn"
           onClick={(e) => {
             e.stopPropagation();
             if (scratchIsRescratched) {
@@ -322,6 +328,7 @@ export const ScratchRescratchButton = ({
         </button>
         <button
           className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
+          data-cy="scratch-quote-rescratch-btn"
           onClick={(e) => {
             e.stopPropagation();
             dispatch(openRescratchModal({ rescratchedId: scratchId }));
@@ -357,6 +364,7 @@ export const ScratchLikeButton = ({
             ? 'text-btn-like'
             : 'text-muted transition-colors hover:text-btn-like'
         } group ${!!text ? 'text-sm flex items-center' : ''}`}
+        data-cy="scratch-like-btn"
         onClick={(e) => {
           e.stopPropagation();
           if (scratchIsLiked) {
@@ -404,6 +412,7 @@ export const ScratchShareButton = ({
     <div className="relative flex justify-center items-center">
       <button
         className="text-muted transition-colors hover:text-accent"
+        data-cy="scratch-share-menu-btn"
         onClick={(e) => {
           e.stopPropagation();
           setShareToggle(true);
@@ -431,6 +440,7 @@ export const ScratchShareButton = ({
         {isLogged && (
           <button
             className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
+            data-cy="scratch-bookmark-btn"
             onClick={(e) => {
               e.stopPropagation();
               if (scratchIsBookmarked) {

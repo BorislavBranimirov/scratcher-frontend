@@ -32,6 +32,7 @@ const SettingsPage = () => {
         {!!settingsTab && (
           <button
             className="h-full mr-4"
+            data-cy="header-back-btn"
             onClick={() => {
               navigate('/settings');
             }}

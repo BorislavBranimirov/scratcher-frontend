@@ -75,7 +75,7 @@ const HomeScratchSubmit = () => {
           <img src={profileImageUrl} alt="avatar" />
         </Link>
       </div>
-      <div className="min-w-0 grow">
+      <div className="min-w-0 grow" data-cy="home-post-scratch">
         <textarea
           className="my-2 w-full resize-none bg-transparent border-none outline-none"
           name="body"

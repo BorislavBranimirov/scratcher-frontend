@@ -30,7 +30,10 @@ const DefaultSideBar = () => {
   const profileImageUrl = getProfileImageUrl(user?.profileImageUrl);
 
   return (
-    <header className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end">
+    <header
+      className="hidden col-span-1 md:col-start-2 lg:col-start-1 xl:col-start-2 xl:col-span-2 sm:flex justify-end"
+      data-cy="desktop-sidebar"
+    >
       <div className="sticky top-0 xl:w-full h-screen flex flex-col justify-between pr-3 py-3 z-20">
         <div className="flex flex-col items-center xl:items-start">
           <Link
@@ -100,6 +103,7 @@ const DefaultSideBar = () => {
               </NavLink>
               <button
                 className="xl:w-[90%] bg-accent rounded-full mt-2 p-3 font-bold text-accent-inverted transition-colors hover:bg-accent/80 active:bg-accent/60"
+                data-cy="sidebar-scratch-btn"
                 onClick={() => {
                   dispatch(openPostModal());
                 }}
@@ -176,6 +180,7 @@ const DefaultSideBar = () => {
                 </button>
                 <button
                   className="whitespace-nowrap p-4 transition-colors hover:bg-hover-1 active:bg-hover-2 flex items-center gap-3"
+                  data-cy="sidebar-log-out-btn"
                   onClick={() => {
                     dispatch(logout());
                     setUserOptionsToggle(false);
@@ -188,6 +193,7 @@ const DefaultSideBar = () => {
             </div>
             <div
               className="flex items-center justify-between p-3 rounded-full cursor-pointer transition-colors hover:bg-hover-1 active:bg-hover-2"
+              data-cy="sidebar-more-menu-btn"
               onClick={() => {
                 setUserOptionsToggle(true);
               }}

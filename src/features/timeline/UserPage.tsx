@@ -56,6 +56,7 @@ const UserPage = () => {
       <div className="sticky top-0 bg-primary border-b border-primary px-4 py-1 z-10 flex items-center">
         <button
           className="h-full mr-4"
+          data-cy="header-back-btn"
           onClick={() => {
             if (!userTab) {
               navigate(-1);

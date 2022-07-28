@@ -12,6 +12,7 @@ export const ThemeAccentPickerBtn = ({
   return (
     <button
       className={`relative w-11 h-11 rounded-full ${bgColor}`}
+      data-cy="theme-accent-btn"
       onClick={handleClick}
     >
       {condition && (
@@ -41,6 +42,7 @@ export const ThemeBackgroundPickerBtn = ({
       className={`${bgColor} hover:${bgHoverColor} ${textColor} font-bold py-4 flex-1 rounded-md w-full border border-primary${
         condition ? ' outline outline-accent' : ''
       }`}
+      data-cy="theme-background-btn"
       onClick={handleClick}
     >
       <div className="px-4 flex items-center">

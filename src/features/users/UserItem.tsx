@@ -26,6 +26,7 @@ const UserItem = ({
       className={`py-2 ${
         extended ? 'px-4' : 'px-3'
       } cursor-pointer transition-colors duration-200 hover:bg-hover-1`}
+      data-cy={`user-item-${user.id}`}
       onClick={(e) => {
         const target = e.target as Element;
         if (!target.closest('a')) navigate(userPath);

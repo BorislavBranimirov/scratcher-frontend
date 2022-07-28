@@ -33,6 +33,7 @@ const DeleteAccountPage = () => {
       </div>
       <button
         className="w-[80%] lg:w-[50%] mx-auto bg-danger rounded-full py-3 font-bold text-accent-inverted transition-colors hover:bg-danger/80 active:bg-danger/60"
+        data-cy="delete-account-btn"
         onClick={handleDelete}
       >
         Delete Account

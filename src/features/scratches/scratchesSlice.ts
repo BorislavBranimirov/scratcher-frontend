@@ -294,11 +294,6 @@ export const scratchesSlice = createSlice({
     builder.addCase(addRescratch.fulfilled, (state, action) => {
       const scratch = action.payload.scratch;
 
-      if (scratch.rescratchedId && scratch.rescratchedId in state.entities) {
-        state.entities[scratch.rescratchedId].isRescratched = true;
-        state.entities[scratch.rescratchedId].rescratchCount += 1;
-      }
-
       state.entities = {
         ...state.entities,
         [scratch.id]: scratch,
@@ -321,14 +316,6 @@ export const scratchesSlice = createSlice({
 
     builder.addCase(addQuoteRescratch.fulfilled, (state, action) => {
       const scratch = action.payload.scratch;
-
-      if (scratch.rescratchedId && scratch.rescratchedId in state.entities) {
-        if (scratch.rescratchType === 'direct') {
-          state.entities[scratch.rescratchedId].isRescratched = true;
-        }
-
-        state.entities[scratch.rescratchedId].rescratchCount += 1;
-      }
 
       state.entities = {
         ...state.entities,

@@ -25,7 +25,7 @@ const MobileSideBar = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectAuthUser);
   const location = useLocation();
-  const [openSideBar, setOpenSideBar] = useState(window.innerWidth >= 640);
+  const [openSideBar, setOpenSideBar] = useState(false);
   const searchScratchesPath = generateSearchPath({ searchTab: 'scratches' });
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const MobileSideBar = () => {
     return (
       <button
         className="sm:hidden fixed w-10 h-10 rounded-full bg-accent text-accent-inverted top-3 right-3 z-30"
+        data-cy="mobile-sidebar-btn"
         onClick={() => {
           setOpenSideBar(true);
         }}
@@ -55,7 +56,10 @@ const MobileSideBar = () => {
           setOpenSideBar(false);
         }}
       ></div>
-      <header className="sm:hidden fixed w-3/4 h-screen bg-primary z-40 overflow-auto">
+      <header
+        className="sm:hidden fixed w-3/4 h-screen bg-primary z-40 overflow-auto"
+        data-cy="mobile-sidebar"
+      >
         <div className="flex flex-col">
           {user ? (
             <>
@@ -161,6 +165,7 @@ const MobileSideBar = () => {
               </button>
               <button
                 className="border-t border-primary flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-hover-1"
+                data-cy="sidebar-log-out-btn"
                 onClick={() => {
                   dispatch(logout());
                 }}

@@ -72,22 +72,25 @@ const EditProfilePage = () => {
       setIsSubmitting(true);
       if (
         name === loggedUser.name &&
-        description === loggedUser.description &&
+        description === (loggedUser.description || '') &&
         !profileImageFile &&
         !profileBannerFile &&
         !bannerDeleted
       ) {
         dispatch(pushNotification('Profile information is already up to date'));
+        setIsSubmitting(false);
         return;
       }
 
       if (name.length === 0 || name.length > nameLimit) {
         setNameError(true);
+        setIsSubmitting(false);
         return;
       }
 
       if (description.length > descriptionLimit) {
         setDescriptionError(true);
+        setIsSubmitting(false);
         return;
       }
 
@@ -110,7 +113,7 @@ const EditProfilePage = () => {
 
         if (
           name !== loggedUser.name ||
-          description !== loggedUser.description
+          description !== (loggedUser.description || '')
         ) {
           await patchUser({ id: loggedUser.id, name, description });
         }
@@ -258,12 +261,12 @@ const EditProfilePage = () => {
         />
         <div className="flex justify-end">
           <button
+            className="bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
+            disabled={isSubmitting}
             onClick={(e) => {
               e.stopPropagation();
               handleSubmit();
             }}
-            className="bg-accent rounded-full py-1.5 px-8 font-bold text-accent-inverted transition-colors enabled:hover:bg-accent/80 enabled:active:bg-accent/60 disabled:opacity-75"
-            disabled={isSubmitting}
           >
             Save
           </button>

@@ -39,6 +39,7 @@ const ConfirmPrompt = ({
   return createPortal(
     <div
       className={`${themeAccent} ${themeBackground} fixed h-full w-full z-30 mx-auto text-main flex justify-center items-center`}
+      data-cy="confirm-prompt"
     >
       <div
         className="fixed inset-0 cursor-auto bg-hover-2"

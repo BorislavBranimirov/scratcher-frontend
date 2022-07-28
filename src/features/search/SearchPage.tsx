@@ -41,6 +41,7 @@ const SearchPage = () => {
       <div className="sticky top-0 bg-primary border-b border-primary px-4 pr-24 sm:pr-4 py-3 z-10 flex items-center">
         <button
           className="h-full mr-4"
+          data-cy="header-back-btn"
           onClick={() => {
             navigate(-1);
           }}
