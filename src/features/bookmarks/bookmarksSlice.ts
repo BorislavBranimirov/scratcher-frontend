@@ -112,8 +112,8 @@ export const bookmarksSlice = createSlice({
 
       state.isLoading = false;
     });
-    builder.addCase(loadBookmarks.rejected, (state) => {
-      state.isLoading = false;
+    builder.addCase(loadBookmarks.rejected, () => {
+      return initialState;
     });
 
     builder.addCase(loadMoreOfBookmarks.pending, (state) => {

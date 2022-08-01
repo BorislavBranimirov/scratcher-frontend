@@ -228,8 +228,8 @@ export const searchSlice = createSlice({
     );
     builder.addMatcher(
       isAnyOf(loadScratchSearch.rejected, loadUserSearch.rejected),
-      (state) => {
-        state.isLoading = false;
+      () => {
+        return initialState;
       }
     );
 

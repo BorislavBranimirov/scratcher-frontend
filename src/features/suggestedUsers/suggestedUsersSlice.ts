@@ -57,8 +57,8 @@ export const suggestedUsersSlice = createSlice({
 
       state.isLoading = false;
     });
-    builder.addCase(loadSuggestedUsers.rejected, (state) => {
-      state.isLoading = false;
+    builder.addCase(loadSuggestedUsers.rejected, () => {
+      return initialState;
     });
   },
 });

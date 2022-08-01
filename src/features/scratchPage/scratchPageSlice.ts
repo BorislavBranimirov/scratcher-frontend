@@ -84,8 +84,8 @@ export const scratchSlice = createSlice({
 
       state.isLoading = false;
     });
-    builder.addCase(loadScratchConversation.rejected, (state) => {
-      state.isLoading = false;
+    builder.addCase(loadScratchConversation.rejected, () => {
+      return initialState;
     });
 
     builder.addCase(removeScratch.fulfilled, (state, action) => {

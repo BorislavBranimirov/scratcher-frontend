@@ -212,8 +212,8 @@ export const scratchTabSlice = createSlice({
         loadScratchRescratchedUsers.rejected,
         loadScratchLikedUsers.rejected
       ),
-      (state) => {
-        state.isLoading = false;
+      () => {
+        return initialState;
       }
     );
   },

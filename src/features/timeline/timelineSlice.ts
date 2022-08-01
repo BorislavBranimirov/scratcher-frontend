@@ -523,8 +523,8 @@ export const timelineSlice = createSlice({
         loadUserFollowers.rejected,
         loadUserFollowing.rejected
       ),
-      (state) => {
-        state.isLoading = false;
+      () => {
+        return initialState;
       }
     );
 
