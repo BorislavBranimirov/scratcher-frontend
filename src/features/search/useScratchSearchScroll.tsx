@@ -14,7 +14,9 @@ function useScratchSearchScroll() {
   const isFinished = useAppSelector(selectSearchIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfScratchSearch({ after: lastId }));
+    if (lastId) {
+      dispatch(loadMoreOfScratchSearch({ after: lastId }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);

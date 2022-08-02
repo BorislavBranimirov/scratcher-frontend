@@ -14,7 +14,9 @@ function useUserSearchScroll() {
   const isFinished = useAppSelector(selectSearchIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfUserSearch({ after: lastUser.username }));
+    if (lastUser) {
+      dispatch(loadMoreOfUserSearch({ after: lastUser.username }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);

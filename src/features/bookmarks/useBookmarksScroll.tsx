@@ -14,7 +14,9 @@ function useBookmarksScroll() {
   const isFinished = useAppSelector(selectBookmarksIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfBookmarks({ after: lastId }));
+    if (lastId) {
+      dispatch(loadMoreOfBookmarks({ after: lastId }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);

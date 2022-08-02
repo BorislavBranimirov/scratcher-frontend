@@ -14,7 +14,9 @@ function useFollowersTimelineScroll() {
   const isFinished = useAppSelector(selectTimelineIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfUserFollowers({ after: lastId }));
+    if (lastId) {
+      dispatch(loadMoreOfUserFollowers({ after: lastId }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);

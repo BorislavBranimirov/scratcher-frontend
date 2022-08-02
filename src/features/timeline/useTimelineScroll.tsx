@@ -14,7 +14,9 @@ function useTimelineScroll() {
   const isFinished = useAppSelector(selectTimelineIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfTimeline({ after: lastId }));
+    if (lastId) {
+      dispatch(loadMoreOfTimeline({ after: lastId }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);

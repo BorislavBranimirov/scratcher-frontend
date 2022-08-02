@@ -14,7 +14,9 @@ function useScratchTabScroll() {
   const isFinished = useAppSelector(selectScratchTabIsFinished);
 
   const handleLoadMore = () => {
-    dispatch(loadMoreOfScratchTab({ after: lastId }));
+    if (lastId) {
+      dispatch(loadMoreOfScratchTab({ after: lastId }));
+    }
   };
 
   useInfiniteScroll(isFinished, isLoadingMore, handleLoadMore);
