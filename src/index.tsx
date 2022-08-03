@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './app/App';
@@ -9,8 +10,16 @@ injectStore(store);
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
+const StrictModeWrapper = ({ children }: { children: JSX.Element }) => {
+  if ((window as any).Cypress) {
+    return children;
+  }
+  return <React.StrictMode>{children}</React.StrictMode>;
+};
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <StrictModeWrapper>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictModeWrapper>
 );
