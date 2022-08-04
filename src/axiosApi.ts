@@ -85,7 +85,9 @@ axiosApi.interceptors.request.use(async (config) => {
         isFetchingRefreshToken = true;
         try {
           const res = await axios.post<{ accessToken: string }>(
-            '/api/auth/refresh-token'
+            '/api/auth/refresh-token',
+            {},
+            { withCredentials: true }
           );
           store.dispatch(setAccessToken(res.data.accessToken));
           processQueue(null, res.data.accessToken);

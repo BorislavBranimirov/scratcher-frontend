@@ -17,7 +17,9 @@ export const login = createAsyncThunk<
 >('auth/login', async (args, thunkApi) => {
   try {
     const accessToken = (
-      await axios.post<{ accessToken: string }>('/api/auth/login', args)
+      await axios.post<{ accessToken: string }>('/api/auth/login', args, {
+        withCredentials: true,
+      })
     ).data.accessToken;
 
     const res = await getUserByUsername(args.username);
