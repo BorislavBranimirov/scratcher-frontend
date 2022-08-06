@@ -58,7 +58,11 @@ export const loginFromToken = createAsyncThunk<
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  const res = await axios.post<{ success: boolean }>('/api/auth/logout');
+  const res = await axios.post<{ success: boolean }>(
+    '/api/auth/logout',
+    {},
+    { withCredentials: true }
+  );
   return res.data;
 });
 
