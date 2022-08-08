@@ -12,6 +12,7 @@ import {
   LogOut,
   MoreHorizontal,
   Settings,
+  Share2,
   User,
   UserPlus,
 } from 'react-feather';
@@ -66,6 +67,17 @@ const DefaultSideBar = () => {
               >
                 <Hash strokeWidth={undefined} />
                 <span className="hidden xl:block">Explore</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 text-lg stroke-2 p-3 rounded-full transition-colors hover:bg-hover-1 ${
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={'/suggested-users'}
+              >
+                <Share2 strokeWidth={undefined} />
+                <span className="hidden xl:block">Connect</span>
               </NavLink>
               <NavLink
                 className={({ isActive }) =>

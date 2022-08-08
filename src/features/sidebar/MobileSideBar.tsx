@@ -8,6 +8,7 @@ import {
   LogOut,
   Menu,
   Settings,
+  Share2,
   User,
   UserPlus,
   X,
@@ -116,6 +117,17 @@ const MobileSideBar = () => {
               >
                 <Hash strokeWidth={undefined} />
                 <span>Explore</span>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `flex items-center gap-3 stroke-2 p-3 transition-colors hover:bg-hover-1 ${
+                    isActive ? 'font-bold stroke-3' : ''
+                  }`
+                }
+                to={'/suggested-users'}
+              >
+                <Share2 strokeWidth={undefined} />
+                <span>Connect</span>
               </NavLink>
               <NavLink
                 className={({ isActive }) =>
