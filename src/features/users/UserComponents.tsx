@@ -30,7 +30,7 @@ export const FollowButton = ({
           body="Their scratches will no longer show up in your home timeline. You can still view their profile."
           acceptText="Unfollow"
           declineText="Cancel"
-          acceptCallback={async () => {
+          acceptCallback={() => {
             dispatch(unfollowUser({ id: userId }));
             setShowConfirmPrompt(false);
           }}

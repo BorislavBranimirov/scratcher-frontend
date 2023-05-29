@@ -36,7 +36,7 @@ const MobileSideBar = () => {
   if (!openSideBar) {
     return (
       <button
-        className="sm:hidden fixed w-10 h-10 rounded-full bg-accent text-accent-inverted top-3 right-3 z-30"
+        className="sm:hidden fixed w-10 h-10 rounded-full bg-accent text-accent-inverted shadow top-3 right-3 z-30"
         data-cy="mobile-sidebar-btn"
         onClick={() => {
           setOpenSideBar(true);

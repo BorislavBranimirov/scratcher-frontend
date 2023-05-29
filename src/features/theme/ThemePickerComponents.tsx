@@ -26,20 +26,18 @@ export const ThemeBackgroundPickerBtn = ({
   text,
   condition,
   bgColor,
-  bgHoverColor,
   textColor,
   handleClick,
 }: {
   text: string;
   condition: boolean;
   bgColor: string;
-  bgHoverColor: string;
   textColor: string;
   handleClick: () => void;
 }) => {
   return (
     <button
-      className={`${bgColor} hover:${bgHoverColor} ${textColor} font-bold py-4 flex-1 rounded-md w-full border border-primary${
+      className={`${bgColor} ${textColor} font-bold py-4 flex-1 rounded-md w-full border border-primary${
         condition ? ' outline outline-accent' : ''
       }`}
       data-cy="theme-background-btn"

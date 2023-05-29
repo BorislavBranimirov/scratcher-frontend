@@ -76,8 +76,7 @@ const ThemePickerPage = () => {
           <ThemeBackgroundPickerBtn
             text="Light"
             condition={themeBackground === 'theme-background-light'}
-            bgColor="bg-[rgb(255,255,255)]"
-            bgHoverColor="bg-[rgb(239,243,244)]"
+            bgColor="bg-[rgb(255,255,255)] hover:bg-[rgb(239,243,244)]"
             textColor="text-[rgb(15,20,25)]"
             handleClick={() => {
               dispatch(setBackgroundTheme('theme-background-light'));
@@ -86,8 +85,7 @@ const ThemePickerPage = () => {
           <ThemeBackgroundPickerBtn
             text="Dark"
             condition={themeBackground === 'theme-background-dark'}
-            bgColor="bg-[rgb(21,32,43)]"
-            bgHoverColor="bg-[rgb(25,39,52)]"
+            bgColor="bg-[rgb(21,32,43)] hover:bg-[rgb(25,39,52)]"
             textColor="text-[rgb(255,255,255)]"
             handleClick={() => {
               dispatch(setBackgroundTheme('theme-background-dark'));
@@ -96,8 +94,7 @@ const ThemePickerPage = () => {
           <ThemeBackgroundPickerBtn
             text="Lights out"
             condition={themeBackground === 'theme-background-lights-out'}
-            bgColor="bg-[rgb(0,0,0)]"
-            bgHoverColor="bg-[rgb(22,24,28)]"
+            bgColor="bg-[rgb(0,0,0)] hover:bg-[rgb(22,24,28)]"
             textColor="text-[rgb(255,255,255)]"
             handleClick={() => {
               dispatch(setBackgroundTheme('theme-background-lights-out'));

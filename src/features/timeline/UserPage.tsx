@@ -59,7 +59,7 @@ const UserPage = () => {
           data-cy="header-back-btn"
           onClick={() => {
             if (!userTab) {
-              navigate(-1);
+              navigate('/home');
             } else {
               navigate(userPath);
             }
@@ -94,7 +94,7 @@ const UserPage = () => {
       ) : (
         <div className="mt-4 text-center">
           <h2 className="text-lg font-bold">This account doesn't exist</h2>
-          <p className="text-sm text-muted">Try searching for another.</p>
+          <p className="text-sm text-muted">Try searching for another user.</p>
         </div>
       )}
     </PageLayout>
