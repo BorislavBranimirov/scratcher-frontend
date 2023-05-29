@@ -55,7 +55,7 @@ const Login = () => {
                 required
               />
               <label
-                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all pointer-events-none peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
                 htmlFor="username"
               >
                 Username
@@ -75,7 +75,7 @@ const Login = () => {
                 required
               />
               <label
-                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
+                className="absolute left-0 top-0 px-2 pt-1 text-sm text-muted transition-all pointer-events-none peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm peer-focus:text-accent"
                 htmlFor="password"
               >
                 Password

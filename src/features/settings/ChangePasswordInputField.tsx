@@ -35,7 +35,7 @@ const ChangePasswordInputField = ({
       <label
         className={`absolute left-0 top-0 px-2 pt-1 text-sm ${
           !!passwordError ? 'text-error' : 'text-muted'
-        } transition-all peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
+        } transition-all pointer-events-none peer-placeholder-shown:py-4 peer-placeholder-shown:text-base peer-focus:px-2 peer-focus:pt-1 peer-focus:text-sm ${
           !passwordError ? 'peer-focus:text-accent' : ''
         }`}
         htmlFor={id}
