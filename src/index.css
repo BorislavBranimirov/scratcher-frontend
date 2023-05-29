@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
 @layer base {
+  html {
+    font-family: Noto Sans, Arial, sans-serif;
+  }
+
   :root {
     --color-accent: 29 155 240;
     --color-background-primary: 21 32 43;
