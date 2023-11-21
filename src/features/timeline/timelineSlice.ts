@@ -266,10 +266,11 @@ export const loadUserFollowers = createAsyncThunk<
       LoadUserFollowersReturnObj['result']
     >(res.data.users, [userEntity]);
 
+    normalized.entities.users[user.id] = user;
+
     return {
       userId: user.id,
-      entities: { ...normalized.entities, [user.id]: user },
-      result: normalized.result,
+      ...normalized,
       isFinished: res.data.isFinished,
     };
   } catch (err) {
@@ -296,10 +297,11 @@ export const loadUserFollowing = createAsyncThunk<
       LoadUserFollowersReturnObj['result']
     >(res.data.users, [userEntity]);
 
+    normalized.entities.users[user.id] = user;
+
     return {
       userId: user.id,
-      entities: { ...normalized.entities, [user.id]: user },
-      result: normalized.result,
+      ...normalized,
       isFinished: res.data.isFinished,
     };
   } catch (err) {
